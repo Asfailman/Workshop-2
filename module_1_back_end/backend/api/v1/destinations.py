@@ -1,8 +1,16 @@
 from fastapi import APIRouter, HTTPException
+from backend.services.destination_service import DestinationService
 
 router = APIRouter()
+destination_service = DestinationService()
 
 @router.get("/")
 async def list_destinations(query: str = ""):
-    # API HASNT BEEN IMPLEMENTED YET, THIS IS JUST A PLACEHOLDER
-    raise HTTPException(status_code=501, detail="Not implemented")
+    return destination_service.search(query)
+
+@router.get("/{destination_id}")
+async def get_destination(destination_id: str):
+    destination = destination_service.get_by_id(destination_id)
+    if not destination:
+        raise HTTPException(status_code=404, detail="Destination not found")
+    return destination

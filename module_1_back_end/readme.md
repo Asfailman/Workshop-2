@@ -19,15 +19,19 @@ This repository covers ONLY Module 1.
 
 ## How to Run
 
-Run from the **root folder** (`module-1-backend/`), NOT from inside `backend/`:
+### Option 1 (Easiest — from workspace root `Workshop-2/`):
 
+    python run_backend.py
+
+### Option 2 (From inside `module_1_back_end/`):
+
+    cd module_1_back_end
     python -m uvicorn backend.main:app --reload
 
 Then open:
 
     http://127.0.0.1:8000/docs
 
-> ⚠️ If you run from inside `backend/`, you will get `ModuleNotFoundError: No module named 'backend'`. Always run from the root.
 
 ## File Structure
 
