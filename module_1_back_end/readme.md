@@ -54,21 +54,21 @@ Then open:
     │       └── data/
     │           └── locations.json   room/lab data (currently empty)
     ├── docs/
-    │   └── api_contract_draft.md    DRAFT contract (not final)
-    ├── tools/
-    │   └── robot_control.py         OPTIONAL Python tool
-    ├── requirements.txt
-    └── README.md
+    │   ├── api_contract.md          DRAFT contract (not final)
+    │   └── Change_Logs.txt          Version history
+    └── readme.md
 
 ## API Endpoints (Module 1 only)
 
-| Method | Path                            | Purpose                             | Owner       |
-|--------|---------------------------------|-------------------------------------|-------------|
-| GET    | `/api/v1/health`                | Check backend is alive              | Member 3    |
-| POST   | `/api/v1/assistant/query`       | User message → AI reply + guidance  | Member 2+3  |
-| GET    | `/api/v1/destinations/{id}`     | Look up a room/lab from KB          | Member 3    |
+| Method | Path                            | Purpose                             | Status       | Owner       |
+|--------|---------------------------------|-------------------------------------|--------------|-------------|
+| GET    | `/api/v1/health`                | Check backend is alive              | ✅ Active    | Member 3    |
+| POST   | `/api/v1/assistant/query`       | User message → AI reply + guidance  | ✅ Connected | Member 2+3  |
+| POST   | `/api/v1/assistant/reset`       | Reset conversation context          | ✅ Active    | Member 2+3  |
+| GET    | `/api/v1/destinations/{id}`     | Look up a room/lab from KB          | ⏳ In Prog.  | Member 3    |
 
-All non-health endpoints currently return `501 Not Implemented`.
+> **Note for Team Members:**
+> Make sure **Ollama** is running with `llama3.2:3b` before testing the `/assistant/query` endpoint. See the root [README.md](../README.md) for full setup instructions.
 
 ## Team Roles (Module 1)
 
