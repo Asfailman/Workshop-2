@@ -14,7 +14,7 @@ from fastapi.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from backend.api.v1.router import api_router
 
-app = FastAPI(title="Module 1 Backend", version="0.0.0")
+app = FastAPI(title="Module 1 Backend", version="0.0.1")
 
 # Enable CORS for frontend / Android connection
 app.add_middleware(
