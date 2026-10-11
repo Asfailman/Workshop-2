@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <string name="app_name">aiGuidance_bot</string>
+    <style name="Base.Theme.AiGuidance_bot" parent="Theme.Material3.DayNight.NoActionBar">
+        
+        
+    </style>
+    <style name="Theme.AiGuidance_bot" parent="Base.Theme.AiGuidance_bot"/>
+</resources>
