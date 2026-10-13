@@ -1,9 +1,7 @@
 package com.example.aiguidance_bot.data
 
-import android.util.Log
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -15,60 +13,68 @@ import java.util.concurrent.TimeUnit
 class ApiService {
     private val client = OkHttpClient.Builder()
         .connectTimeout(30, TimeUnit.SECONDS)
-        .readTimeout(30, TimeUnit.SECONDS)
+        .readTimeout(60, TimeUnit.SECONDS)
         .build()
+
     private val gson = Gson()
 
-    var apiUrl: String = "http://10.0.2.2:8000/api/v1/assistant/query"
-    var apiKey: String = ""
+    private val apiUrl =
+        "http://10.0.2.2:8000/api/v1/assistant/query"
 
-    suspend fun sendMessage(prompt: String): String = withContext(Dispatchers.IO) {
-        if (apiKey.isBlank()) {
-            delay(1000)
-            return@withContext "AI Guidance Bot (Mock Response): I received your message: \"$prompt\". How can I help you further with your BAXU3923 project or guidance task?"
-        }
-
-        try {
-            val jsonBody = mapOf(
-                "model" to "gpt-3.5-turbo",
-                "messages" to listOf(
-                    mapOf("role" to "user", "content" to prompt)
+    suspend fun sendMessage(prompt: String): String =
+        withContext(Dispatchers.IO) {
+            try {
+                val requestData = AssistantQueryRequest(
+                    session_id = "android_session",
+                    message = prompt,
+                    current_location_id = "MAIN_ENTRANCE"
                 )
-            )
-            val bodyString = gson.toJson(jsonBody)
-            val body = bodyString.toRequestBody("application/json; charset=utf-8".toMediaType())
 
-            val request = Request.Builder()
-                .url(apiUrl)
-                .addHeader("Authorization", "Bearer $apiKey")
-                .addHeader("Content-Type", "application/json")
-                .post(body)
-                .build()
+                val jsonBody = gson.toJson(requestData)
+                val body = jsonBody.toRequestBody(
+                    "application/json; charset=utf-8".toMediaType()
+                )
 
-            client.newCall(request).execute().use { response ->
-                if (!response.isSuccessful) {
-                    throw IOException("Unexpected response code: ${response.code}")
+                val request = Request.Builder()
+                    .url(apiUrl)
+                    .post(body)
+                    .build()
+
+                client.newCall(request).execute().use { response ->
+                    val responseBody = response.body?.string()
+                        ?: throw IOException("Empty response body")
+
+                    if (!response.isSuccessful) {
+                        throw IOException(
+                            "Backend returned HTTP ${response.code}: $responseBody"
+                        )
+                    }
+
+                    val result = gson.fromJson(
+                        responseBody,
+                        AssistantQueryResponse::class.java
+                    )
+
+                    result.reply
                 }
-                val responseBody = response.body?.string() ?: throw IOException("Empty response body")
-                val chatResponse = gson.fromJson(responseBody, ChatCompletionResponse::class.java)
-                return@withContext chatResponse.choices.firstOrNull()?.message?.content?.trim()
-                    ?: "No response content from AI."
+            } catch (e: Exception) {
+                "Unable to connect to the guidance backend: " +
+                    (e.message ?: "Unknown error")
             }
-        } catch (e: Exception) {
-            Log.e("ApiService", "API error", e)
-            "Error connecting to AI API: ${e.localizedMessage}. Please check your internet connection or API key."
         }
-    }
 }
 
-data class ChatCompletionResponse(
-    val choices: List<Choice>
+data class AssistantQueryRequest(
+    val session_id: String,
+    val message: String,
+    val current_location_id: String
 )
 
-data class Choice(
-    val message: MessageContent
-)
-
-data class MessageContent(
-    val content: String
+data class AssistantQueryResponse(
+    val reply: String,
+    val intent: String? = null,
+    val destination_id: String? = null,
+    val confidence: Double? = null,
+    val session_id: String? = null,
+    val error: String? = null
 )
