@@ -62,6 +62,28 @@ class MainActivity : AppCompatActivity() {
         val btnAdd = findViewById<ImageView>(R.id.btnAdd)
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
 
+        // Integrated In-Layout Attachment Card & Action Items
+        val cardAttachmentMenu = findViewById<View>(R.id.cardAttachmentMenu)
+        val btnCamera = findViewById<View>(R.id.btnCamera)
+        val btnUploadPhoto = findViewById<View>(R.id.btnUploadPhoto)
+        val btnUploadFile = findViewById<View>(R.id.btnUploadFile)
+
+        var isMenuVisible = false
+
+        fun closeAttachmentMenu() {
+            if (isMenuVisible) {
+                isMenuVisible = false
+                cardAttachmentMenu.visibility = View.GONE
+                btnAdd.animate().rotation(0f).setDuration(200).start()
+            }
+        }
+
+        fun openAttachmentMenu() {
+            isMenuVisible = true
+            cardAttachmentMenu.visibility = View.VISIBLE
+            btnAdd.animate().rotation(45f).setDuration(200).start()
+        }
+
         val layoutManager = LinearLayoutManager(this).apply {
             stackFromEnd = true
         }
@@ -82,6 +104,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnSend.setOnClickListener {
+            closeAttachmentMenu()
             val text = etMessageInput.text.toString().trim()
             if (text.isNotEmpty()) {
                 chatViewModel.sendMessage(text)
@@ -89,7 +112,15 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        // Close attachment menu if user scrolls or taps the chat list
+        recyclerView.setOnTouchListener { _, _ ->
+            closeAttachmentMenu()
+            false
+        }
+
+        // Header Top-Right Dropdown Menu
         btnMenu.setOnClickListener { view ->
+            closeAttachmentMenu()
             val inflater = layoutInflater
             val popupView = inflater.inflate(R.layout.popup_menu_options, null)
 
@@ -124,50 +155,36 @@ class MainActivity : AppCompatActivity() {
             popupWindow.showAsDropDown(view, -180, 10)
         }
 
-        btnAdd.setOnClickListener { view ->
-            val inflater = layoutInflater
-            val popupView = inflater.inflate(R.layout.popup_plus_options, null)
-
-            val popupWindow = PopupWindow(
-                popupView,
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                true
-            )
-
-            btnAdd.setImageResource(R.drawable.ic_close)
-
-            popupWindow.setOnDismissListener {
-                btnAdd.setImageResource(R.drawable.ic_add)
+        // Bottom-Left '+' / 'X' Toggle
+        btnAdd.setOnClickListener {
+            if (isMenuVisible) {
+                closeAttachmentMenu()
+            } else {
+                openAttachmentMenu()
             }
+        }
 
-            popupView.findViewById<View>(R.id.menuCamera).setOnClickListener {
-                popupWindow.dismiss()
-                val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                cameraLauncher.launch(cameraIntent)
+        // Attachment Action 1: Open Camera
+        btnCamera.setOnClickListener {
+            closeAttachmentMenu()
+            val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            cameraLauncher.launch(cameraIntent)
+        }
+
+        // Attachment Action 2: Upload Photo
+        btnUploadPhoto.setOnClickListener {
+            closeAttachmentMenu()
+            val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            galleryLauncher.launch(galleryIntent)
+        }
+
+        // Attachment Action 3: Upload File
+        btnUploadFile.setOnClickListener {
+            closeAttachmentMenu()
+            val fileIntent = Intent(Intent.ACTION_GET_CONTENT).apply {
+                type = "*/*"
             }
-
-            popupView.findViewById<View>(R.id.menuUploadPhoto).setOnClickListener {
-                popupWindow.dismiss()
-                val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                galleryLauncher.launch(galleryIntent)
-            }
-
-            popupView.findViewById<View>(R.id.menuUploadFile).setOnClickListener {
-                popupWindow.dismiss()
-                val fileIntent = Intent(Intent.ACTION_GET_CONTENT).apply {
-                    type = "*/*"
-                }
-                fileLauncher.launch(fileIntent)
-            }
-
-            // Measure popup to position it completely above the button
-            popupView.measure(
-                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED)
-            )
-            val popupHeight = popupView.measuredHeight
-            popupWindow.showAsDropDown(view, 0, -popupHeight - view.height - 24)
+            fileLauncher.launch(fileIntent)
         }
     }
 }

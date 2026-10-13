@@ -1,132 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="240dp"
+    android:id="@+id/cardAttachmentMenu"
+    android:layout_width="220dp"
     android:layout_height="wrap_content"
-    android:background="@android:color/white"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="8dp"
-    app:cardUseCompatPadding="false">
+    app:cardCornerRadius="20dp"
+    app:cardElevation="10dp"
+    app:strokeWidth="0dp"
+    app:cardBackgroundColor="@color/card_surface">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingVertical="8dp">
+        android:padding="8dp">
 
-        <!-- Camera -->
+        <!-- Option 1: Camera -->
         <LinearLayout
-            android:id="@+id/menuCamera"
+            android:id="@+id/btnCamera"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            android:gravity="center_vertical"
+            android:layout_height="52dp"
             android:orientation="horizontal"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="12dp">
+            android:gravity="center_vertical"
+            android:background="?attr/selectableItemBackground"
+            android:paddingHorizontal="10dp">
 
             <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:background="@drawable/bg_icon_circle_blue"
-                android:contentDescription="Camera"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
                 android:padding="8dp"
+                android:background="@drawable/bg_icon_badge"
                 android:src="@android:drawable/ic_menu_camera"
-                app:tint="#1987b8" />
+                app:tint="@color/primary_sky_blue"
+                android:contentDescription="Camera" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginStart="12dp"
+                android:layout_marginStart="14dp"
                 android:text="Camera"
-                android:textColor="#1E293B"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary" />
 
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:contentDescription="Arrow"
-                android:src="@android:drawable/ic_media_play"
-                app:tint="#94A3B8" />
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_chevron_right" />
         </LinearLayout>
 
-        <!-- Upload Photo -->
-        <LinearLayout
-            android:id="@+id/menuUploadPhoto"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            android:gravity="center_vertical"
+            android:layout_height="1dp"
+            android:background="@color/divider_color"
+            android:layout_marginHorizontal="10dp" />
+
+        <!-- Option 2: Upload Photo -->
+        <LinearLayout
+            android:id="@+id/btnUploadPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
             android:orientation="horizontal"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="12dp">
+            android:gravity="center_vertical"
+            android:background="?attr/selectableItemBackground"
+            android:paddingHorizontal="10dp">
 
             <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:background="@drawable/bg_icon_circle_blue"
-                android:contentDescription="Upload Photo"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
                 android:padding="8dp"
+                android:background="@drawable/bg_icon_badge"
                 android:src="@android:drawable/ic_menu_gallery"
-                app:tint="#1987b8" />
+                app:tint="@color/primary_sky_blue"
+                android:contentDescription="Upload Photo" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginStart="12dp"
+                android:layout_marginStart="14dp"
                 android:text="Upload Photo"
-                android:textColor="#1E293B"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary" />
 
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:contentDescription="Arrow"
-                android:src="@android:drawable/ic_media_play"
-                app:tint="#94A3B8" />
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_chevron_right" />
         </LinearLayout>
 
-        <!-- Upload File -->
-        <LinearLayout
-            android:id="@+id/menuUploadFile"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            android:gravity="center_vertical"
+            android:layout_height="1dp"
+            android:background="@color/divider_color"
+            android:layout_marginHorizontal="10dp" />
+
+        <!-- Option 3: Upload File -->
+        <LinearLayout
+            android:id="@+id/btnUploadFile"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
             android:orientation="horizontal"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="12dp">
+            android:gravity="center_vertical"
+            android:background="?attr/selectableItemBackground"
+            android:paddingHorizontal="10dp">
 
             <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:background="@drawable/bg_icon_circle_blue"
-                android:contentDescription="Upload File"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
                 android:padding="8dp"
-                android:src="@android:drawable/ic_menu_agenda"
-                app:tint="#1987b8" />
+                android:background="@drawable/bg_icon_badge"
+                android:src="@android:drawable/ic_menu_save"
+                app:tint="@color/primary_sky_blue"
+                android:contentDescription="Upload File" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_marginStart="12dp"
+                android:layout_marginStart="14dp"
                 android:text="Upload File"
-                android:textColor="#1E293B"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary" />
 
             <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:contentDescription="Arrow"
-                android:src="@android:drawable/ic_media_play"
-                app:tint="#94A3B8" />
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_chevron_right" />
         </LinearLayout>
 
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>
