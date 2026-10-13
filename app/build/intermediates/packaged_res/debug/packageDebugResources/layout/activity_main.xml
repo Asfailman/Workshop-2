@@ -8,7 +8,6 @@
     android:background="#F8FAFC"
     tools:context=".MainActivity">
 
-
     <LinearLayout
         android:id="@+id/headerLayout"
         android:layout_width="0dp"
@@ -87,6 +86,148 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <!-- Attachment Popup Menu (Card anchored above the + button) -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardAttachmentMenu"
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginBottom="8dp"
+        android:visibility="gone"
+        app:cardCornerRadius="18dp"
+        app:cardElevation="8dp"
+        app:strokeWidth="0dp"
+        app:cardBackgroundColor="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@id/layoutInput"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="6dp">
+
+            <!-- 1. Open Camera -->
+            <LinearLayout
+                android:id="@+id/btnCamera"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="?attr/selectableItemBackground"
+                android:paddingHorizontal="10dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:padding="8dp"
+                    android:background="@drawable/bg_icon_badge"
+                    android:src="@android:drawable/ic_menu_camera"
+                    app:tint="#1987b8"
+                    android:contentDescription="Camera" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="12dp"
+                    android:text="Camera"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="#1E293B" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_chevron_right" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#F1F5F9"
+                android:layout_marginHorizontal="10dp" />
+
+            <!-- 2. Upload Photo -->
+            <LinearLayout
+                android:id="@+id/btnUploadPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="?attr/selectableItemBackground"
+                android:paddingHorizontal="10dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:padding="8dp"
+                    android:background="@drawable/bg_icon_badge"
+                    android:src="@android:drawable/ic_menu_gallery"
+                    app:tint="#1987b8"
+                    android:contentDescription="Upload Photo" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="12dp"
+                    android:text="Upload Photo"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="#1E293B" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_chevron_right" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#F1F5F9"
+                android:layout_marginHorizontal="10dp" />
+
+            <!-- 3. Upload File -->
+            <LinearLayout
+                android:id="@+id/btnUploadFile"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:background="?attr/selectableItemBackground"
+                android:paddingHorizontal="10dp">
+
+                <ImageView
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:padding="8dp"
+                    android:background="@drawable/bg_icon_badge"
+                    android:src="@android:drawable/ic_menu_save"
+                    app:tint="#1987b8"
+                    android:contentDescription="Upload File" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="12dp"
+                    android:text="Upload File"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="#1E293B" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_chevron_right" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
     <!-- Bottom Input Bar -->
     <LinearLayout
         android:id="@+id/layoutInput"
@@ -125,10 +266,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:autofillHints=""
                 android:background="@android:color/transparent"
                 android:hint="Type a message..."
                 android:maxLines="4"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                tools:ignore="TouchTargetSizeCheck" />
 
             <ImageView
                 android:layout_width="17dp"

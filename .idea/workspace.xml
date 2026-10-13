@@ -56,7 +56,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="14ad4891-5055-4c98-94a7-5e69ba160646" name="Changes" comment="Simple UI design for chat page already done. The continue work to enhance on the UI interactions." />
+    <list default="true" id="14ad4891-5055-4c98-94a7-5e69ba160646" name="Changes" comment="Simple UI design for chat page already done. The continue work to enhance on the UI interactions.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -76,7 +78,12 @@
       <state>
         <projects_view>
           <tree_state>
-            <expand />
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="aiGuidance_bot" type="f1a62948:ProjectNode" />
+              </path>
+            </expand>
             <select />
           </tree_state>
         </projects_view>
@@ -145,7 +152,7 @@
   </component>
   <component name="RunManager">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
-      <module name="aiGuidance_bot.app.main" />
+      <module name="aiGuidance_bot.app" />
       <option name="ANDROID_RUN_CONFIGURATION_SCHEMA_VERSION" value="1" />
       <option name="DEPLOY" value="true" />
       <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
@@ -271,12 +278,12 @@
       <map>
         <entry key="com.example.aiguidance_bot">
           <value>
-            <CheckInfo lastCheckTimestamp="1791693777927" />
+            <CheckInfo lastCheckTimestamp="1791871391812" />
           </value>
         </entry>
         <entry key="com.example.aiguidance_bot.test">
           <value>
-            <CheckInfo lastCheckTimestamp="1791693777930" />
+            <CheckInfo lastCheckTimestamp="1791871391810" />
           </value>
         </entry>
       </map>

@@ -1,11 +1,19 @@
 [
     {
+        "merged": "com.example.aiguidance_bot.app-debug-40:/drawable_bg_circular_button.xml.flat",
+        "source": "com.example.aiguidance_bot.app-main-42:/drawable/bg_circular_button.xml"
+    },
+    {
         "merged": "com.example.aiguidance_bot.app-debug-40:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
         "source": "com.example.aiguidance_bot.app-main-42:/mipmap-xxhdpi/ic_launcher_round.webp"
     },
     {
         "merged": "com.example.aiguidance_bot.app-debug-40:/drawable_circle_primary.xml.flat",
         "source": "com.example.aiguidance_bot.app-main-42:/drawable/circle_primary.xml"
+    },
+    {
+        "merged": "com.example.aiguidance_bot.app-debug-40:/drawable_ic_chevron_right.xml.flat",
+        "source": "com.example.aiguidance_bot.app-main-42:/drawable/ic_chevron_right.xml"
     },
     {
         "merged": "com.example.aiguidance_bot.app-debug-40:/mipmap-mdpi_ic_launcher_round.webp.flat",
@@ -68,6 +76,14 @@
         "source": "com.example.aiguidance_bot.app-main-42:/drawable/ic_launcher_foreground.xml"
     },
     {
+        "merged": "com.example.aiguidance_bot.app-debug-40:/drawable_bg_bottom_bar.xml.flat",
+        "source": "com.example.aiguidance_bot.app-main-42:/drawable/bg_bottom_bar.xml"
+    },
+    {
+        "merged": "com.example.aiguidance_bot.app-debug-40:/drawable_bg_icon_badge.xml.flat",
+        "source": "com.example.aiguidance_bot.app-main-42:/drawable/bg_icon_badge.xml"
+    },
+    {
         "merged": "com.example.aiguidance_bot.app-debug-40:/layout_popup_plus_options.xml.flat",
         "source": "com.example.aiguidance_bot.app-main-42:/layout/popup_plus_options.xml"
     },
@@ -112,12 +128,12 @@
         "source": "com.example.aiguidance_bot.app-main-42:/mipmap-anydpi/ic_launcher_round.xml"
     },
     {
-        "merged": "com.example.aiguidance_bot.app-debug-40:/drawable_iconbot.png.flat",
-        "source": "com.example.aiguidance_bot.app-main-42:/drawable/iconbot.png"
-    },
-    {
         "merged": "com.example.aiguidance_bot.app-debug-40:/layout_popup_menu_options.xml.flat",
         "source": "com.example.aiguidance_bot.app-main-42:/layout/popup_menu_options.xml"
+    },
+    {
+        "merged": "com.example.aiguidance_bot.app-debug-40:/drawable_iconbot.png.flat",
+        "source": "com.example.aiguidance_bot.app-main-42:/drawable/iconbot.png"
     },
     {
         "merged": "com.example.aiguidance_bot.app-debug-40:/drawable_ic_send.xml.flat",
