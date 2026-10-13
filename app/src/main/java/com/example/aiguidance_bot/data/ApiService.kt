@@ -19,7 +19,7 @@ class ApiService {
         .build()
     private val gson = Gson()
 
-    var apiUrl: String = "https://api.openai.com/v1/chat/completions"
+    var apiUrl: String = "http://10.0.2.2:8000/api/v1/assistant/query"
     var apiKey: String = ""
 
     suspend fun sendMessage(prompt: String): String = withContext(Dispatchers.IO) {
