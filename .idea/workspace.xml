@@ -5,6 +5,31 @@
       <config />
     </shared>
     <layouts>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/bg_bottom_bar.xml">
+        <config>
+          <theme>@style/Theme.AiGuidance_bot</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/bg_circular_button.xml">
+        <config>
+          <theme>@style/Theme.AiGuidance_bot</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/bg_icon_badge.xml">
+        <config>
+          <theme>@style/Theme.AiGuidance_bot</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/bg_icon_circle_blue.xml">
+        <config>
+          <theme>@style/Theme.AiGuidance_bot</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_chevron_right.xml">
+        <config>
+          <theme>@style/Theme.AiGuidance_bot</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
         <config>
           <theme>@style/Theme.AiGuidance_bot</theme>
@@ -22,7 +47,7 @@
       </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/popup_plus_options.xml">
         <config>
-          <theme>@android:style/Theme.Material.Light</theme>
+          <theme>@style/Theme.AiGuidance_bot</theme>
         </config>
       </layout>
     </layouts>
@@ -40,7 +65,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[LocalEmulator::path=C:\Users\ASUS\.android\avd\Medium_Phone.avd]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
