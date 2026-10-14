@@ -138,6 +138,11 @@ API documentation will be available at:
 
 ## 📱 Connecting the Android App
 
+### ApiService.kt Location
+```bash
+app\src\main\java\com\example\aiguidance_bot\data\ApiService.kt
+```
+
 ### Option A: Testing on Local Wi-Fi
 1. Find your PC's local IP address (e.g., run `ipconfig`).
 2. In `app/src/main/java/com/example/aiguidance_bot/data/ApiService.kt`, set:
