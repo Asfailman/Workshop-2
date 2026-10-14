@@ -20,7 +20,7 @@ class ApiService {
     private val gson = Gson()
 
     private val apiUrl =
-        "http://192.168.43.211:8000/api/v1/assistant/query"
+        "https://dazzling-endurance-huddle.ngrok-free.dev/api/v1/assistant/query"
 
     suspend fun sendMessage(prompt: String): String =
         withContext(Dispatchers.IO) {
@@ -38,6 +38,7 @@ class ApiService {
 
                 val request = Request.Builder()
                     .url(apiUrl)
+                    .addHeader("ngrok-skip-browser-warning", "true")
                     .post(body)
                     .build()
 
