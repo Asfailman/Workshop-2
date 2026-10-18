@@ -8,6 +8,8 @@
         android:minSdkVersion="26"
         android:targetSdkVersion="37" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <permission
         android:name="com.example.aiguidance_bot.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
         android:protectionLevel="signature" />
@@ -25,7 +27,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AiGuidance_bot" >
+        android:theme="@style/Theme.AiGuidance_bot"
+        android:usesCleartextTraffic="true" >
         <activity
             android:name="com.example.aiguidance_bot.MainActivity"
             android:exported="true"

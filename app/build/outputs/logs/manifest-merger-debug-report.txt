@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:2:1-26:12
-INJECTED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:2:1-26:12
-INJECTED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:2:1-26:12
-INJECTED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:2:1-26:12
+ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:2:1-29:12
+INJECTED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:2:1-29:12
+INJECTED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:2:1-29:12
+INJECTED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:2:1-29:12
 MERGED from [com.google.android.material:material:1.14.0] C:\Users\ASUS\.gradle\caches\9.6.0\transforms\f563e20812502d605aa2c13a3f25b99f\transformed\material-1.14.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.2.2] C:\Users\ASUS\.gradle\caches\9.6.0\transforms\12e60834c3bd2855e81b1a429c8118a5\transformed\constraintlayout-2.2.2\AndroidManifest.xml:2:1-9:12
 MERGED from [androidx.appcompat:appcompat-resources:1.8.0] C:\Users\ASUS\.gradle\caches\9.6.0\transforms\9bace9f0b30329c75d66b03df393d579\transformed\appcompat-resources-1.8.0\AndroidManifest.xml:2:1-7:12
@@ -62,9 +62,13 @@ MERGED from [androidx.compose.runtime:runtime-annotation-android:1.9.0] C:\Users
 		INJECTED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:2:11-69
+uses-permission#android.permission.INTERNET
+ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:5:5-67
+	android:name
+		ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:5:22-64
 application
-ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:5:5-24:19
-INJECTED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:5:5-24:19
+ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:7:5-27:19
+INJECTED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:7:5-27:19
 MERGED from [com.google.android.material:material:1.14.0] C:\Users\ASUS\.gradle\caches\9.6.0\transforms\f563e20812502d605aa2c13a3f25b99f\transformed\material-1.14.0\AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.14.0] C:\Users\ASUS\.gradle\caches\9.6.0\transforms\f563e20812502d605aa2c13a3f25b99f\transformed\material-1.14.0\AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.2.2] C:\Users\ASUS\.gradle\caches\9.6.0\transforms\12e60834c3bd2855e81b1a429c8118a5\transformed\constraintlayout-2.2.2\AndroidManifest.xml:7:5-20
@@ -86,39 +90,41 @@ MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\ASUS\.gradle\cache
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.19.1] C:\Users\ASUS\.gradle\caches\9.6.0\transforms\6293521bae4a3d8d61b5a3d1fbe7135f\transformed\core-1.19.1\AndroidManifest.xml:28:18-86
 	android:supportsRtl
-		ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:12:9-35
+		ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:14:9-35
 	android:label
-		ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:10:9-41
+		ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:12:9-41
 	android:fullBackupContent
-		ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:8:9-54
+		ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:10:9-54
 	android:roundIcon
-		ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:11:9-54
+		ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:13:9-54
 	android:icon
-		ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:9:9-43
+		ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:11:9-43
 	android:allowBackup
-		ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:6:9-35
+		ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:8:9-35
 	android:theme
-		ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:13:9-52
+		ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:15:9-52
 	android:dataExtractionRules
-		ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:7:9-65
+		ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:9:9-65
+	android:usesCleartextTraffic
+		ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:16:9-44
 activity#com.example.aiguidance_bot.MainActivity
-ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:14:9-23:20
+ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:17:9-26:20
 	android:windowSoftInputMode
-		ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:17:13-55
+		ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:20:13-55
 	android:exported
-		ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:16:13-36
+		ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:19:13-36
 	android:name
-		ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:15:13-41
+		ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:18:13-41
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:18:13-22:29
+ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:21:13-25:29
 action#android.intent.action.MAIN
-ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:19:17-69
+ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:22:17-69
 	android:name
-		ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:19:25-66
+		ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:22:25-66
 category#android.intent.category.LAUNCHER
-ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:21:17-77
+ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:24:17-77
 	android:name
-		ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:21:27-74
+		ADDED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml:24:27-74
 uses-sdk
 INJECTED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from D:\Project\Flutter Project\aiGuidance_bot\app\src\main\AndroidManifest.xml

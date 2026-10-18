@@ -57,6 +57,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="14ad4891-5055-4c98-94a7-5e69ba160646" name="Changes" comment="Simple UI design for chat page already done. The continue work to enhance on the UI interactions.">
+      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -111,7 +113,7 @@
   }
 }</component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="_Designer_Tab" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8,
@@ -278,12 +280,12 @@
       <map>
         <entry key="com.example.aiguidance_bot">
           <value>
-            <CheckInfo lastCheckTimestamp="1791871391812" />
+            <CheckInfo lastCheckTimestamp="1792141663565" />
           </value>
         </entry>
         <entry key="com.example.aiguidance_bot.test">
           <value>
-            <CheckInfo lastCheckTimestamp="1791871391810" />
+            <CheckInfo lastCheckTimestamp="1792141663566" />
           </value>
         </entry>
       </map>
