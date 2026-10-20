@@ -32,4 +32,4 @@ __pycache__/
 *$py.class
 .env
 venv/
-.venv/
+.venv/
