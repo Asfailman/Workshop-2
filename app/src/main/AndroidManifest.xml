@@ -14,6 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AiGuidance_bot"
         android:usesCleartextTraffic="true">
+
+        <activity
+            android:name=".ui.CampusFinderActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

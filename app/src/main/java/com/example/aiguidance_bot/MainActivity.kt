@@ -18,6 +18,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.aiguidance_bot.ui.CampusFinderActivity
 import com.example.aiguidance_bot.ui.ChatAdapter
 import com.example.aiguidance_bot.ui.ChatViewModel
 
@@ -61,6 +62,12 @@ class MainActivity : AppCompatActivity() {
         val btnMenu = findViewById<ImageView>(R.id.btnMenu)
         val btnAdd = findViewById<ImageView>(R.id.btnAdd)
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+        val headerLayout = findViewById<View>(R.id.headerLayout)
+
+        headerLayout.setOnClickListener {
+            val intent = Intent(this, CampusFinderActivity::class.java)
+            startActivity(intent)
+        }
 
         // Integrated In-Layout Attachment Card & Action Items
         val cardAttachmentMenu = findViewById<View>(R.id.cardAttachmentMenu)

@@ -30,6 +30,10 @@
         android:theme="@style/Theme.AiGuidance_bot"
         android:usesCleartextTraffic="true" >
         <activity
+            android:name="com.example.aiguidance_bot.ui.CampusFinderActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
             android:name="com.example.aiguidance_bot.MainActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustResize" >

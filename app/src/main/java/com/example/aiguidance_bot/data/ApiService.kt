@@ -2,6 +2,7 @@ package com.example.aiguidance_bot.data
 
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -20,6 +21,38 @@ class ApiService {
 
     private val apiUrl =
         "http://10.0.2.2:8000/api/v1/assistant/query"
+
+    // Module 2 Endpoints
+    var campusApiUrl: String = "http://10.0.2.2:8000" // Replace with actual FastAPI URL
+
+    suspend fun searchDestinations(query: String, category: String?): List<RecommendationItem> = withContext(Dispatchers.IO) {
+        // Mock Implementation for Module 2 UI testing
+        delay(1000)
+        return@withContext listOf(
+            RecommendationItem("1", "Main Library", "Building B, Level 1", 120, description = "Quiet study area and printing facilities."),
+            RecommendationItem("2", "FTMK Block A", "Block A, Level 2", 250, description = "Computer science labs and lecture halls."),
+            RecommendationItem("3", "Cafeteria Utama", "Student Center, Ground Floor", 80, description = "Food and beverages.")
+        ).filter { 
+            (query.isBlank() || it.name.contains(query, ignoreCase = true)) &&
+            (category == null || category == "All" || it.description?.contains(category, ignoreCase = true) == true)
+        }
+    }
+
+    suspend fun getRoutePreview(startId: String, destId: String): RoutePreviewResponse = withContext(Dispatchers.IO) {
+        // Mock Implementation for Module 2 UI testing
+        delay(800)
+        RoutePreviewResponse(
+            startLocation = "Main Entrance",
+            destination = "Main Library",
+            totalDistanceMeters = 120,
+            estimatedMinutes = 3,
+            instructions = listOf(
+                "Walk straight for 50 meters.",
+                "Turn right at the junction.",
+                "Arrive at Building B, Level 1."
+            )
+        )
+    }
 
     suspend fun sendMessage(prompt: String): String =
         withContext(Dispatchers.IO) {
