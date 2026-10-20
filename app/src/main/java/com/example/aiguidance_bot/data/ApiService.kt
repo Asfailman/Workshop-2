@@ -12,6 +12,7 @@ import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 class ApiService {
+
     private val client = OkHttpClient.Builder()
         .connectTimeout(30, TimeUnit.SECONDS)
         .readTimeout(60, TimeUnit.SECONDS)
@@ -20,7 +21,7 @@ class ApiService {
     private val gson = Gson()
 
     private val apiUrl =
-        "http://10.0.2.2:8000/api/v1/assistant/query"
+        "https://dazzling-endurance-huddle.ngrok-free.dev/api/v1/assistant/query"
 
     // Module 2 Endpoints
     var campusApiUrl: String = "http://10.0.2.2:8000" // Replace with actual FastAPI URL
@@ -70,6 +71,7 @@ class ApiService {
 
                 val request = Request.Builder()
                     .url(apiUrl)
+                    .addHeader("ngrok-skip-browser-warning", "true")
                     .post(body)
                     .build()
 
