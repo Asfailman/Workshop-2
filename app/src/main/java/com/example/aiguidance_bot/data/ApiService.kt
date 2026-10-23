@@ -22,7 +22,11 @@ class ApiService {
     private val apiUrl =
         "https://rinse-upstart-favorable.ngrok-free.dev/api/v1/assistant/query"
 
-    suspend fun sendMessage(prompt: String): String =
+    // Robot navigation endpoint (same backend, different path)
+    private val robotNavigateUrl: String
+        get() = apiUrl.replace("/assistant/query", "/robot/navigate")
+
+    suspend fun sendMessage(prompt: String): AssistantQueryResponse =
         withContext(Dispatchers.IO) {
             try {
                 val requestData = AssistantQueryRequest(
@@ -52,24 +56,71 @@ class ApiService {
                         )
                     }
 
-                    val result = gson.fromJson(
+                    gson.fromJson(
                         responseBody,
                         AssistantQueryResponse::class.java
                     )
-
-                    result.reply
                 }
             } catch (e: Exception) {
-                "Unable to connect to the guidance backend: " +
-                        (e.message ?: "Unknown error")
+                AssistantQueryResponse(
+                    reply = "Unable to connect to the guidance backend: " +
+                            (e.message ?: "Unknown error")
+                )
+            }
+        }
+
+    /**
+     * Tell the backend to navigate the robot to a destination.
+     * The backend will resolve the route and send commands to the BridgeServer.
+     */
+    suspend fun navigateRobot(destination: String): RobotNavigateResponse =
+        withContext(Dispatchers.IO) {
+            try {
+                val requestData = mapOf("destination" to destination)
+                val jsonBody = gson.toJson(requestData)
+                val body = jsonBody.toRequestBody(
+                    "application/json; charset=utf-8".toMediaType()
+                )
+
+                val request = Request.Builder()
+                    .url(robotNavigateUrl)
+                    .addHeader("ngrok-skip-browser-warning", "true")
+                    .post(body)
+                    .build()
+
+                client.newCall(request).execute().use { response ->
+                    val responseBody = response.body?.string()
+                        ?: throw IOException("Empty response body")
+
+                    gson.fromJson(
+                        responseBody,
+                        RobotNavigateResponse::class.java
+                    )
+                }
+            } catch (e: Exception) {
+                RobotNavigateResponse(
+                    success = false,
+                    message = "Robot navigation failed: ${e.message}"
+                )
             }
         }
 }
+
+// --- Request models ---
 
 data class AssistantQueryRequest(
     val session_id: String,
     val message: String,
     val current_location_id: String
+)
+
+// --- Response models ---
+
+data class NavigationData(
+    val available: Boolean = false,
+    val destination_id: String? = null,
+    val route: List<Map<String, Any>>? = null,
+    val route_summary: String? = null
 )
 
 data class AssistantQueryResponse(
@@ -78,5 +129,13 @@ data class AssistantQueryResponse(
     val destination_id: String? = null,
     val confidence: Double? = null,
     val session_id: String? = null,
-    val error: String? = null
+    val error: String? = null,
+    val navigation: NavigationData? = null
 )
+
+data class RobotNavigateResponse(
+    val success: Boolean = false,
+    val destination_id: String? = null,
+    val message: String? = null,
+    val commands_sent: Int = 0
+)
