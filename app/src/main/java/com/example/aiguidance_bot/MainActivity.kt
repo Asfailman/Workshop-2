@@ -20,11 +20,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aiguidance_bot.ui.ChatAdapter
 import com.example.aiguidance_bot.ui.ChatViewModel
+import android.speech.tts.TextToSpeech
+import com.example.aiguidance_bot.data.Sender
 
 class MainActivity : AppCompatActivity() {
 
     private val chatViewModel: ChatViewModel by viewModels()
     private lateinit var chatAdapter: ChatAdapter
+    private lateinit var textToSpeech: TextToSpeech
+    private var isTtsReady = false
 
     private val cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
@@ -48,6 +52,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+        textToSpeech = TextToSpeech(this) { status ->
+            if (status == TextToSpeech.SUCCESS) {
+                val result = textToSpeech.setLanguage(java.util.Locale.US)
+                isTtsReady = result != TextToSpeech.LANG_MISSING_DATA &&
+                        result != TextToSpeech.LANG_NOT_SUPPORTED
+            }
+        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -89,11 +100,32 @@ class MainActivity : AppCompatActivity() {
         }
         recyclerView.layoutManager = layoutManager
 
+        var lastSpokenMessageId: String? = null
+
         chatViewModel.messages.observe(this) { messages ->
             chatAdapter = ChatAdapter(messages)
             recyclerView.adapter = chatAdapter
+
             if (messages.isNotEmpty()) {
                 recyclerView.scrollToPosition(messages.size - 1)
+
+                val latestMessage = messages.last()
+
+                if (latestMessage.sender == Sender.AI &&
+                    latestMessage.id != lastSpokenMessageId &&
+                    latestMessage.text.isNotBlank()
+                ) {
+                    lastSpokenMessageId = latestMessage.id
+
+                    if (isTtsReady) {
+                        textToSpeech.speak(
+                            latestMessage.text,
+                            TextToSpeech.QUEUE_FLUSH,
+                            null,
+                            latestMessage.id
+                        )
+                    }
+                }
             }
         }
 
@@ -186,5 +218,13 @@ class MainActivity : AppCompatActivity() {
             }
             fileLauncher.launch(fileIntent)
         }
+    }
+
+    override fun onDestroy() {
+        if (::textToSpeech.isInitialized) {
+            textToSpeech.stop()
+            textToSpeech.shutdown()
+        }
+        super.onDestroy()
     }
 }
