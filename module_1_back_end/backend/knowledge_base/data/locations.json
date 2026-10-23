@@ -1,1 +1,40 @@
-[]
+{
+  "locations": [
+    {
+      "id": "MAIN_ENTRANCE",
+      "name": "Main Entrance / Lobi Utama",
+      "aliases": ["Lobby", "Lobi", "Pintu Masuk"],
+      "category": "facility",
+      "building": "Block A",
+      "floor": 1,
+      "description": "The main entrance and lobby of FTMK."
+    },
+    {
+      "id": "B_B_L2_AI_LAB_1",
+      "name": "Makmal Kepintaran Buatan 1 / AI Lab 1",
+      "aliases": ["AI Lab 1", "Artificial Intelligence Lab 1", "Makmal AI 1"],
+      "category": "laboratory",
+      "building": "Block B",
+      "floor": 2,
+      "description": "Artificial Intelligence Lab 1 (FAIX) located on Level 2 of Block B."
+    },
+    {
+      "id": "B_B_L3_ROBOTICS_LAB",
+      "name": "Makmal Robotik (FAIX) / Robotics Lab",
+      "aliases": ["Robotics Lab", "Makmal Robotik"],
+      "category": "laboratory",
+      "building": "Block B",
+      "floor": 3,
+      "description": "Robotics Lab (FAIX) located on Level 3 of Block B."
+    },
+    {
+      "id": "B_D_L3_MINI_THEATRE",
+      "name": "Teater Mini / Mini Theatre",
+      "aliases": ["Mini Theatre", "Teater"],
+      "category": "lecture_hall",
+      "building": "Block D",
+      "floor": 3,
+      "description": "Mini theatre located on Level 3 of Block D."
+    }
+  ]
+}

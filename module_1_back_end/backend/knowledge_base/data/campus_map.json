@@ -1,0 +1,72 @@
+{
+  "nodes": [
+    { "id": "MAIN_ENTRANCE", "name": "Main Entrance", "building": "Block A", "floor": 1 },
+    { "id": "STAIRS_A_L1_L2", "name": "Block A Stairs (L1 to L2)", "building": "Block A", "floor": 1 },
+    { "id": "CORRIDOR_A_L2", "name": "Block A Level 2 Corridor", "building": "Block A", "floor": 2 },
+    { "id": "BRIDGE_A_TO_B_L2", "name": "Bridge to Block B (L2)", "building": "Block B", "floor": 2 },
+    { "id": "CORRIDOR_B_L2", "name": "Block B Level 2 Corridor", "building": "Block B", "floor": 2 },
+    
+    { "id": "B_B_L2_AI_LAB_1", "name": "AI Lab 1", "building": "Block B", "floor": 2 },
+    { "id": "B_B_L2_AI_LAB_2", "name": "AI Lab 2", "building": "Block B", "floor": 2 },
+    
+    { "id": "STAIRS_B_L2_L3", "name": "Block B Stairs (L2 to L3)", "building": "Block B", "floor": 2 },
+    { "id": "CORRIDOR_B_L3", "name": "Block B Level 3 Corridor", "building": "Block B", "floor": 3 },
+    { "id": "B_B_L3_ROBOTICS_LAB", "name": "Robotics Lab", "building": "Block B", "floor": 3 }
+  ],
+  "edges": [
+    {
+      "source": "MAIN_ENTRANCE",
+      "target": "STAIRS_A_L1_L2",
+      "distance": 15,
+      "instruction": "Walk straight past the lobby towards the Block A stairs."
+    },
+    {
+      "source": "STAIRS_A_L1_L2",
+      "target": "CORRIDOR_A_L2",
+      "distance": 10,
+      "instruction": "Take the stairs up to Level 2."
+    },
+    {
+      "source": "CORRIDOR_A_L2",
+      "target": "BRIDGE_A_TO_B_L2",
+      "distance": 20,
+      "instruction": "Walk along the Level 2 corridor towards the bridge connecting to Block B."
+    },
+    {
+      "source": "BRIDGE_A_TO_B_L2",
+      "target": "CORRIDOR_B_L2",
+      "distance": 10,
+      "instruction": "Cross the bridge into Block B."
+    },
+    {
+      "source": "CORRIDOR_B_L2",
+      "target": "B_B_L2_AI_LAB_1",
+      "distance": 5,
+      "instruction": "AI Lab 1 is the first door on your right."
+    },
+    {
+      "source": "CORRIDOR_B_L2",
+      "target": "B_B_L2_AI_LAB_2",
+      "distance": 8,
+      "instruction": "Walk further down the corridor. AI Lab 2 is on your left."
+    },
+    {
+      "source": "CORRIDOR_B_L2",
+      "target": "STAIRS_B_L2_L3",
+      "distance": 12,
+      "instruction": "Walk to the end of the corridor to find the stairs."
+    },
+    {
+      "source": "STAIRS_B_L2_L3",
+      "target": "CORRIDOR_B_L3",
+      "distance": 10,
+      "instruction": "Take the stairs up to Level 3."
+    },
+    {
+      "source": "CORRIDOR_B_L3",
+      "target": "B_B_L3_ROBOTICS_LAB",
+      "distance": 5,
+      "instruction": "The Robotics Lab is on your left."
+    }
+  ]
+}
