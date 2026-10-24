@@ -12,30 +12,42 @@ import os
 from typing import Optional
 
 
-# Path to the locations data file
-_DATA_DIR = os.path.join(os.path.dirname(__file__), "data")
-_LOCATIONS_FILE = os.path.join(_DATA_DIR, "locations.json")
+from pathlib import Path
+
+# Path to the backend locations data file
+_REPO_ROOT = Path(__file__).resolve().parents[2]
+_LOCATIONS_FILE = _REPO_ROOT / "module_1_back_end" / "backend" / "knowledge_base" / "data" / "locations.json"
 
 # Module-level cache (loaded once, reused across requests)
 _locations_cache: Optional[list[dict]] = None
 
 
-def _load_from_disk() -> list[dict]:
+def _load_from_disk(file_path: Optional[str] = None) -> list[dict]:
     """Read and parse locations.json from disk."""
-    if not os.path.exists(_LOCATIONS_FILE):
-        raise FileNotFoundError(
-            f"Locations data file not found: {_LOCATIONS_FILE}. "
-            f"Please ensure locations.json exists in AI/recommendation/data/"
-        )
+    target = Path(file_path) if file_path else _LOCATIONS_FILE
+    if not target.exists():
+        # Fallback check relative to current working directory
+        cwd_fallback = Path.cwd() / "module_1_back_end" / "backend" / "knowledge_base" / "data" / "locations.json"
+        if cwd_fallback.exists():
+            target = cwd_fallback
+        else:
+            raise FileNotFoundError(
+                f"Locations data file not found at: {target}. "
+                f"Please ensure locations.json exists in module_1_back_end/backend/knowledge_base/data/"
+            )
 
-    with open(_LOCATIONS_FILE, "r", encoding="utf-8") as f:
+    with open(target, "r", encoding="utf-8") as f:
         data = json.load(f)
 
-    if not isinstance(data, list):
-        raise ValueError("locations.json must contain a JSON array of destinations.")
+    if isinstance(data, dict):
+        locations = data.get("locations", [])
+    elif isinstance(data, list):
+        locations = data
+    else:
+        raise ValueError("locations.json must contain a JSON object with 'locations' or a list of destinations.")
 
     # Filter to only active destinations
-    return [loc for loc in data if loc.get("is_active", True)]
+    return [loc for loc in locations if loc.get("is_active", True)]
 
 
 class KnowledgeBase:
@@ -48,13 +60,12 @@ class KnowledgeBase:
         """
         Args:
             locations_file: Optional path to a custom locations JSON file.
-                            Defaults to AI/recommendation/data/locations.json.
+                            Defaults to backend/knowledge_base/data/locations.json.
         """
         global _locations_cache
 
         if locations_file:
-            with open(locations_file, "r", encoding="utf-8") as f:
-                self._locations = json.load(f)
+            self._locations = _load_from_disk(locations_file)
         elif _locations_cache is not None:
             self._locations = _locations_cache
         else:

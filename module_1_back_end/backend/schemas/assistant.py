@@ -1,4 +1,4 @@
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, List
 from pydantic import BaseModel, Field
 
 
@@ -21,6 +21,8 @@ class AssistantQueryResponse(BaseModel):
     confidence: float = Field(default=1.0, description="Confidence score")
     entities: Optional[EntitiesSchema] = Field(None, description="Extracted entities")
     handoff: Optional[Dict[str, Any]] = Field(None, description="Downstream handoff payload for navigation/recommendation")
+    route_info: Optional[Dict[str, Any]] = Field(None, description="Calculated navigation route when intent is GUIDANCE_REQUEST")
+    recommendations: Optional[List[Dict[str, Any]]] = Field(None, description="Ranked destination recommendations when applicable")
     session_id: str = Field(..., description="Active session ID")
     error: Optional[str] = Field(None, description="Error message if any parsing or fallback occurred")
 

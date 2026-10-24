@@ -1,0 +1,2052 @@
+{
+  "nodes": [
+    {
+      "id": "MAIN_ENTRANCE",
+      "name": "Main Entrance",
+      "building": "Block A",
+      "floor": 1
+    },
+    {
+      "id": "CORRIDOR_A_L2",
+      "name": "Block A Level 2 Corridor",
+      "building": "Block A",
+      "floor": 2
+    },
+    {
+      "id": "CORRIDOR_A_L3",
+      "name": "Block A Level 3 Corridor",
+      "building": "Block A",
+      "floor": 3
+    },
+    {
+      "id": "CORRIDOR_A_L4",
+      "name": "Block A Level 4 Corridor",
+      "building": "Block A",
+      "floor": 4
+    },
+    {
+      "id": "CORRIDOR_B_L1",
+      "name": "Block B Level 1 Corridor",
+      "building": "Block B",
+      "floor": 1
+    },
+    {
+      "id": "CORRIDOR_B_L2",
+      "name": "Block B Level 2 Corridor",
+      "building": "Block B",
+      "floor": 2
+    },
+    {
+      "id": "CORRIDOR_B_L3",
+      "name": "Block B Level 3 Corridor",
+      "building": "Block B",
+      "floor": 3
+    },
+    {
+      "id": "CORRIDOR_B_L4",
+      "name": "Block B Level 4 Corridor",
+      "building": "Block B",
+      "floor": 4
+    },
+    {
+      "id": "CORRIDOR_C_L1",
+      "name": "Block C Level 1 Corridor",
+      "building": "Block C",
+      "floor": 1
+    },
+    {
+      "id": "CORRIDOR_C_L2",
+      "name": "Block C Level 2 Corridor",
+      "building": "Block C",
+      "floor": 2
+    },
+    {
+      "id": "CORRIDOR_C_L3",
+      "name": "Block C Level 3 Corridor",
+      "building": "Block C",
+      "floor": 3
+    },
+    {
+      "id": "CORRIDOR_C_L4",
+      "name": "Block C Level 4 Corridor",
+      "building": "Block C",
+      "floor": 4
+    },
+    {
+      "id": "CORRIDOR_D_L1",
+      "name": "Block D Level 1 Corridor",
+      "building": "Block D",
+      "floor": 1
+    },
+    {
+      "id": "CORRIDOR_D_L2",
+      "name": "Block D Level 2 Corridor",
+      "building": "Block D",
+      "floor": 2
+    },
+    {
+      "id": "CORRIDOR_D_L3",
+      "name": "Block D Level 3 Corridor",
+      "building": "Block D",
+      "floor": 3
+    },
+    {
+      "id": "CORRIDOR_E_L1",
+      "name": "Block E Level 1 Corridor",
+      "building": "Block E",
+      "floor": 1
+    },
+    {
+      "id": "CORRIDOR_E_L2",
+      "name": "Block E Level 2 Corridor",
+      "building": "Block E",
+      "floor": 2
+    },
+    {
+      "id": "CORRIDOR_E_L3",
+      "name": "Block E Level 3 Corridor",
+      "building": "Block E",
+      "floor": 3
+    },
+    {
+      "id": "STAIRS_A_L1_L2",
+      "name": "Block A Stairs (L1 to L2)",
+      "building": "Block A",
+      "floor": 1
+    },
+    {
+      "id": "STAIRS_A_L2_L3",
+      "name": "Block A Stairs (L2 to L3)",
+      "building": "Block A",
+      "floor": 2
+    },
+    {
+      "id": "STAIRS_A_L3_L4",
+      "name": "Block A Stairs (L3 to L4)",
+      "building": "Block A",
+      "floor": 3
+    },
+    {
+      "id": "STAIRS_B_L1_L2",
+      "name": "Block B Stairs (L1 to L2)",
+      "building": "Block B",
+      "floor": 1
+    },
+    {
+      "id": "STAIRS_B_L2_L3",
+      "name": "Block B Stairs (L2 to L3)",
+      "building": "Block B",
+      "floor": 2
+    },
+    {
+      "id": "STAIRS_B_L3_L4",
+      "name": "Block B Stairs (L3 to L4)",
+      "building": "Block B",
+      "floor": 3
+    },
+    {
+      "id": "STAIRS_C_L1_L2",
+      "name": "Block C Stairs (L1 to L2)",
+      "building": "Block C",
+      "floor": 1
+    },
+    {
+      "id": "STAIRS_C_L2_L3",
+      "name": "Block C Stairs (L2 to L3)",
+      "building": "Block C",
+      "floor": 2
+    },
+    {
+      "id": "STAIRS_C_L3_L4",
+      "name": "Block C Stairs (L3 to L4)",
+      "building": "Block C",
+      "floor": 3
+    },
+    {
+      "id": "STAIRS_D_L1_L2",
+      "name": "Block D Stairs (L1 to L2)",
+      "building": "Block D",
+      "floor": 1
+    },
+    {
+      "id": "STAIRS_D_L2_L3",
+      "name": "Block D Stairs (L2 to L3)",
+      "building": "Block D",
+      "floor": 2
+    },
+    {
+      "id": "STAIRS_E_L1_L2",
+      "name": "Block E Stairs (L1 to L2)",
+      "building": "Block E",
+      "floor": 1
+    },
+    {
+      "id": "STAIRS_E_L2_L3",
+      "name": "Block E Stairs (L2 to L3)",
+      "building": "Block E",
+      "floor": 2
+    },
+    {
+      "id": "BRIDGE_A_TO_B_L2",
+      "name": "Bridge to Block B (L2)",
+      "building": "Block B",
+      "floor": 2
+    },
+    {
+      "id": "B_A_L1_C_ACT",
+      "name": "C-ACT",
+      "building": "Block A",
+      "floor": 1
+    },
+    {
+      "id": "B_B_L1_LECTURE_ROOM_6",
+      "name": "Lecture Room 6",
+      "building": "Block B",
+      "floor": 1
+    },
+    {
+      "id": "B_B_L1_LECTURE_ROOM_7",
+      "name": "Lecture Room 7",
+      "building": "Block B",
+      "floor": 1
+    },
+    {
+      "id": "B_B_L1_VIVA_ROOM",
+      "name": "VIVA Room",
+      "building": "Block B",
+      "floor": 1
+    },
+    {
+      "id": "B_B_L1_PROGRAMMING_LAB_1",
+      "name": "Programming Lab 1",
+      "building": "Block B",
+      "floor": 1
+    },
+    {
+      "id": "B_B_L1_PROGRAMMING_LAB_2",
+      "name": "Programming Lab 2",
+      "building": "Block B",
+      "floor": 1
+    },
+    {
+      "id": "B_B_L1_BIOCORE_LAB",
+      "name": "BIOCORE Lab",
+      "building": "Block B",
+      "floor": 1
+    },
+    {
+      "id": "B_B_L1_OPTIMASS_RESEARCH_LAB",
+      "name": "OPTIMASS Research Lab",
+      "building": "Block B",
+      "floor": 1
+    },
+    {
+      "id": "B_C_L1_SOFTWARE_ENGINEERING_LAB_1",
+      "name": "Software Engineering Lab 1",
+      "building": "Block C",
+      "floor": 1
+    },
+    {
+      "id": "B_C_L1_SOFTWARE_ENGINEERING_LAB_2",
+      "name": "Software Engineering Lab 2",
+      "building": "Block C",
+      "floor": 1
+    },
+    {
+      "id": "B_C_L1_SOFTWARE_ENGINEERING_LAB_3",
+      "name": "Software Engineering Lab 3",
+      "building": "Block C",
+      "floor": 1
+    },
+    {
+      "id": "B_C_L1_LECTURE_ROOM_5",
+      "name": "Lecture Room 5",
+      "building": "Block C",
+      "floor": 1
+    },
+    {
+      "id": "B_C_L1_LECTURE_ROOM_4",
+      "name": "Lecture Room 4",
+      "building": "Block C",
+      "floor": 1
+    },
+    {
+      "id": "B_C_L1_LECTURE_ROOM_3",
+      "name": "Lecture Room 3",
+      "building": "Block C",
+      "floor": 1
+    },
+    {
+      "id": "B_C_L1_LECTURE_ROOM_2",
+      "name": "Lecture Room 2",
+      "building": "Block C",
+      "floor": 1
+    },
+    {
+      "id": "B_C_L1_LECTURE_ROOM_1",
+      "name": "Lecture Room 1",
+      "building": "Block C",
+      "floor": 1
+    },
+    {
+      "id": "B_D_L1_METAVERSE_STUDIO",
+      "name": "Metaverse Studio",
+      "building": "Block D",
+      "floor": 1
+    },
+    {
+      "id": "B_D_L1_LECTURE_ROOM_14",
+      "name": "Lecture Room 14",
+      "building": "Block D",
+      "floor": 1
+    },
+    {
+      "id": "B_D_L1_STUDENTS_COMMON_ROOM",
+      "name": "Students' Common Room",
+      "building": "Block D",
+      "floor": 1
+    },
+    {
+      "id": "B_E_L1_GAME_ARENA",
+      "name": "Game Arena",
+      "building": "Block E",
+      "floor": 1
+    },
+    {
+      "id": "B_E_L1_LECTURE_ROOM_13",
+      "name": "Lecture Room 13",
+      "building": "Block E",
+      "floor": 1
+    },
+    {
+      "id": "B_E_L1_MTDS_LAB",
+      "name": "MTDS Lab",
+      "building": "Block E",
+      "floor": 1
+    },
+    {
+      "id": "B_A_L2_DISCUSSION_ROOM",
+      "name": "Discussion Room",
+      "building": "Block A",
+      "floor": 2
+    },
+    {
+      "id": "B_B_L2_AI_LAB_3",
+      "name": "AI Lab 3",
+      "building": "Block B",
+      "floor": 2
+    },
+    {
+      "id": "B_B_L2_AI_LAB_1",
+      "name": "AI Lab 1",
+      "building": "Block B",
+      "floor": 2
+    },
+    {
+      "id": "B_B_L2_AI_LAB_2",
+      "name": "AI Lab 2",
+      "building": "Block B",
+      "floor": 2
+    },
+    {
+      "id": "B_B_L2_RECAP_ROOM",
+      "name": "ReCap Room",
+      "building": "Block B",
+      "floor": 2
+    },
+    {
+      "id": "B_B_L2_AI_LAB_4",
+      "name": "AI Lab 4",
+      "building": "Block B",
+      "floor": 2
+    },
+    {
+      "id": "B_C_L2_DATABASE_LAB_3",
+      "name": "Database Lab 3",
+      "building": "Block C",
+      "floor": 2
+    },
+    {
+      "id": "B_C_L2_DATABASE_LAB_2",
+      "name": "Database Lab 2",
+      "building": "Block C",
+      "floor": 2
+    },
+    {
+      "id": "B_C_L2_DATABASE_LAB_1",
+      "name": "Database Lab 1",
+      "building": "Block C",
+      "floor": 2
+    },
+    {
+      "id": "B_C_L2_NETWORK_LAB_2",
+      "name": "Network Lab 2",
+      "building": "Block C",
+      "floor": 2
+    },
+    {
+      "id": "B_C_L2_C_ACT_ROOM",
+      "name": "C-Act Room",
+      "building": "Block C",
+      "floor": 2
+    },
+    {
+      "id": "B_D_L2_FTMK_CLEAR_ROOM",
+      "name": "FTMK CLeaR Room",
+      "building": "Block D",
+      "floor": 2
+    },
+    {
+      "id": "B_D_L2_COMPUTER_GAMES_LAB",
+      "name": "Computer Games Lab",
+      "building": "Block D",
+      "floor": 2
+    },
+    {
+      "id": "B_D_L2_MULTIMEDIA_LAB_2",
+      "name": "Multimedia Lab 2",
+      "building": "Block D",
+      "floor": 2
+    },
+    {
+      "id": "B_D_L2_MULTIMEDIA_LAB_1",
+      "name": "Multimedia Lab 1",
+      "building": "Block D",
+      "floor": 2
+    },
+    {
+      "id": "B_E_L2_CYBERSECURITY_COMPETENCE_CENTER",
+      "name": "Cybersecurity Competence Center",
+      "building": "Block E",
+      "floor": 2
+    },
+    {
+      "id": "B_E_L2_CCNA_CCNP_LAB",
+      "name": "CCNA & CCNP Lab",
+      "building": "Block E",
+      "floor": 2
+    },
+    {
+      "id": "B_E_L2_FIBER_OPTIC_LAB",
+      "name": "Fiber Optic Lab",
+      "building": "Block E",
+      "floor": 2
+    },
+    {
+      "id": "B_A_L3_ADMINISTRATIVE_DISCUSSION_ROOM",
+      "name": "Administrative Discussion Room",
+      "building": "Block A",
+      "floor": 3
+    },
+    {
+      "id": "B_B_L3_SKK_LAB",
+      "name": "SKK Lab",
+      "building": "Block B",
+      "floor": 3
+    },
+    {
+      "id": "B_B_L3_ROBOTICS_LAB",
+      "name": "Robotics Lab",
+      "building": "Block B",
+      "floor": 3
+    },
+    {
+      "id": "B_B_L3_BITI_WORKSHOP",
+      "name": "BITI Workshop",
+      "building": "Block B",
+      "floor": 3
+    },
+    {
+      "id": "B_B_L3_CMERP_LAB",
+      "name": "CMERP Lab",
+      "building": "Block B",
+      "floor": 3
+    },
+    {
+      "id": "B_B_L3_LECTURE_ROOM_15",
+      "name": "Lecture Room 15",
+      "building": "Block B",
+      "floor": 3
+    },
+    {
+      "id": "B_B_L3_IS3_RESEARCH_LAB",
+      "name": "IS3 Research Lab",
+      "building": "Block B",
+      "floor": 3
+    },
+    {
+      "id": "B_C_L3_SYSTEMS_AND_HARDWARE_LAB",
+      "name": "Systems and Hardware Lab",
+      "building": "Block C",
+      "floor": 3
+    },
+    {
+      "id": "B_C_L3_SYSTEMS_LAB",
+      "name": "Systems Lab",
+      "building": "Block C",
+      "floor": 3
+    },
+    {
+      "id": "B_C_L3_NETWORK_LAB_1",
+      "name": "Network Lab 1",
+      "building": "Block C",
+      "floor": 3
+    },
+    {
+      "id": "B_C_L3_EXECUTIVE_LAB",
+      "name": "Executive Lab",
+      "building": "Block C",
+      "floor": 3
+    },
+    {
+      "id": "B_C_L3_STUDENTS_WORKSHOP",
+      "name": "Students' Workshop",
+      "building": "Block C",
+      "floor": 3
+    },
+    {
+      "id": "B_D_L3_MULTIMEDIA_LAB_4",
+      "name": "Multimedia Lab 4",
+      "building": "Block D",
+      "floor": 3
+    },
+    {
+      "id": "B_D_L3_VIRTUAL_REALITY_LAB",
+      "name": "Virtual Reality Lab",
+      "building": "Block D",
+      "floor": 3
+    },
+    {
+      "id": "B_D_L3_MULTIMEDIA_LAB_3",
+      "name": "Multimedia Lab 3",
+      "building": "Block D",
+      "floor": 3
+    },
+    {
+      "id": "B_D_L3_MINI_THEATRE",
+      "name": "Mini Theatre",
+      "building": "Block D",
+      "floor": 3
+    },
+    {
+      "id": "B_D_L3_AUDIO_RECORDING_ROOM_1",
+      "name": "Audio Recording Room 1",
+      "building": "Block D",
+      "floor": 3
+    },
+    {
+      "id": "B_D_L3_AUDIO_RECORDING_ROOM_2",
+      "name": "Audio Recording Room 2",
+      "building": "Block D",
+      "floor": 3
+    },
+    {
+      "id": "B_D_L3_SHOOTING_STUDIO",
+      "name": "Shooting Studio",
+      "building": "Block D",
+      "floor": 3
+    },
+    {
+      "id": "B_E_L3_WIRELESS_LAB",
+      "name": "Wireless Lab",
+      "building": "Block E",
+      "floor": 3
+    },
+    {
+      "id": "B_E_L3_SECURITY_LAB_2",
+      "name": "Security Lab 2",
+      "building": "Block E",
+      "floor": 3
+    },
+    {
+      "id": "B_E_L3_CLOUD_COMPUTING_LAB",
+      "name": "Cloud Computing Lab",
+      "building": "Block E",
+      "floor": 3
+    },
+    {
+      "id": "B_A_L4_SEMINAR_HALL",
+      "name": "Seminar Hall",
+      "building": "Block A",
+      "floor": 4
+    },
+    {
+      "id": "B_A_L4_MAIN_MEETING_ROOM",
+      "name": "Main Meeting Room",
+      "building": "Block A",
+      "floor": 4
+    },
+    {
+      "id": "B_B_L4_LECTURE_ROOM_16",
+      "name": "Lecture Room 16",
+      "building": "Block B",
+      "floor": 4
+    },
+    {
+      "id": "B_B_L4_INFORSNET_RESEARCH_LAB",
+      "name": "INFORSNET Research Lab",
+      "building": "Block B",
+      "floor": 4
+    },
+    {
+      "id": "B_C_L4_PROGRAMMING_LAB_3",
+      "name": "Programming Lab 3",
+      "building": "Block C",
+      "floor": 4
+    },
+    {
+      "id": "B_C_L4_PROGRAMMING_LAB_4",
+      "name": "Programming Lab 4",
+      "building": "Block C",
+      "floor": 4
+    },
+    {
+      "id": "B_C_L4_BITD_WORKSHOP",
+      "name": "BITD Workshop",
+      "building": "Block C",
+      "floor": 4
+    },
+    {
+      "id": "TOILET_BLOCK_A_L1",
+      "name": "Block A Level 1 Restroom",
+      "building": "Block A",
+      "floor": 1
+    },
+    {
+      "id": "TOILET_BLOCK_A_L2",
+      "name": "Block A Level 2 Restroom",
+      "building": "Block A",
+      "floor": 2
+    },
+    {
+      "id": "TOILET_BLOCK_B_L1",
+      "name": "Block B Level 1 Restroom",
+      "building": "Block B",
+      "floor": 1
+    },
+    {
+      "id": "TOILET_BLOCK_B_L2",
+      "name": "Block B Level 2 Restroom",
+      "building": "Block B",
+      "floor": 2
+    },
+    {
+      "id": "TOILET_BLOCK_C_L1",
+      "name": "Block C Level 1 Restroom",
+      "building": "Block C",
+      "floor": 1
+    },
+    {
+      "id": "TOILET_BLOCK_C_L2",
+      "name": "Block C Level 2 Restroom",
+      "building": "Block C",
+      "floor": 2
+    },
+    {
+      "id": "TOILET_BLOCK_D_L1",
+      "name": "Block D Level 1 Restroom",
+      "building": "Block D",
+      "floor": 1
+    },
+    {
+      "id": "TOILET_BLOCK_D_L3",
+      "name": "Block D Level 3 Restroom",
+      "building": "Block D",
+      "floor": 3
+    },
+    {
+      "id": "TOILET_BLOCK_E_L1",
+      "name": "Block E Level 1 Restroom",
+      "building": "Block E",
+      "floor": 1
+    },
+    {
+      "id": "TOILET_BLOCK_E_L2",
+      "name": "Block E Level 2 Restroom",
+      "building": "Block E",
+      "floor": 2
+    }
+  ],
+  "edges": [
+    {
+      "source": "MAIN_ENTRANCE",
+      "target": "STAIRS_A_L1_L2",
+      "distance": 15,
+      "instruction": "Walk straight past the lobby towards the Block A stairs."
+    },
+    {
+      "source": "STAIRS_A_L1_L2",
+      "target": "CORRIDOR_A_L2",
+      "distance": 10,
+      "instruction": "Take the stairs up to Level 2."
+    },
+    {
+      "source": "CORRIDOR_A_L2",
+      "target": "STAIRS_A_L2_L3",
+      "distance": 12,
+      "instruction": "Walk to the end of the corridor to find the stairs."
+    },
+    {
+      "source": "STAIRS_A_L2_L3",
+      "target": "CORRIDOR_A_L3",
+      "distance": 10,
+      "instruction": "Take the stairs up to Level 3."
+    },
+    {
+      "source": "CORRIDOR_A_L3",
+      "target": "STAIRS_A_L3_L4",
+      "distance": 12,
+      "instruction": "Walk to the end of the corridor to find the stairs."
+    },
+    {
+      "source": "STAIRS_A_L3_L4",
+      "target": "CORRIDOR_A_L4",
+      "distance": 10,
+      "instruction": "Take the stairs up to Level 4."
+    },
+    {
+      "source": "CORRIDOR_B_L1",
+      "target": "STAIRS_B_L1_L2",
+      "distance": 12,
+      "instruction": "Walk to the end of the corridor to find the stairs."
+    },
+    {
+      "source": "STAIRS_B_L1_L2",
+      "target": "CORRIDOR_B_L2",
+      "distance": 10,
+      "instruction": "Take the stairs up to Level 2."
+    },
+    {
+      "source": "CORRIDOR_B_L2",
+      "target": "STAIRS_B_L2_L3",
+      "distance": 12,
+      "instruction": "Walk to the end of the corridor to find the stairs."
+    },
+    {
+      "source": "STAIRS_B_L2_L3",
+      "target": "CORRIDOR_B_L3",
+      "distance": 10,
+      "instruction": "Take the stairs up to Level 3."
+    },
+    {
+      "source": "CORRIDOR_B_L3",
+      "target": "STAIRS_B_L3_L4",
+      "distance": 12,
+      "instruction": "Walk to the end of the corridor to find the stairs."
+    },
+    {
+      "source": "STAIRS_B_L3_L4",
+      "target": "CORRIDOR_B_L4",
+      "distance": 10,
+      "instruction": "Take the stairs up to Level 4."
+    },
+    {
+      "source": "CORRIDOR_C_L1",
+      "target": "STAIRS_C_L1_L2",
+      "distance": 12,
+      "instruction": "Walk to the end of the corridor to find the stairs."
+    },
+    {
+      "source": "STAIRS_C_L1_L2",
+      "target": "CORRIDOR_C_L2",
+      "distance": 10,
+      "instruction": "Take the stairs up to Level 2."
+    },
+    {
+      "source": "CORRIDOR_C_L2",
+      "target": "STAIRS_C_L2_L3",
+      "distance": 12,
+      "instruction": "Walk to the end of the corridor to find the stairs."
+    },
+    {
+      "source": "STAIRS_C_L2_L3",
+      "target": "CORRIDOR_C_L3",
+      "distance": 10,
+      "instruction": "Take the stairs up to Level 3."
+    },
+    {
+      "source": "CORRIDOR_C_L3",
+      "target": "STAIRS_C_L3_L4",
+      "distance": 12,
+      "instruction": "Walk to the end of the corridor to find the stairs."
+    },
+    {
+      "source": "STAIRS_C_L3_L4",
+      "target": "CORRIDOR_C_L4",
+      "distance": 10,
+      "instruction": "Take the stairs up to Level 4."
+    },
+    {
+      "source": "CORRIDOR_D_L1",
+      "target": "STAIRS_D_L1_L2",
+      "distance": 12,
+      "instruction": "Walk to the end of the corridor to find the stairs."
+    },
+    {
+      "source": "STAIRS_D_L1_L2",
+      "target": "CORRIDOR_D_L2",
+      "distance": 10,
+      "instruction": "Take the stairs up to Level 2."
+    },
+    {
+      "source": "CORRIDOR_D_L2",
+      "target": "STAIRS_D_L2_L3",
+      "distance": 12,
+      "instruction": "Walk to the end of the corridor to find the stairs."
+    },
+    {
+      "source": "STAIRS_D_L2_L3",
+      "target": "CORRIDOR_D_L3",
+      "distance": 10,
+      "instruction": "Take the stairs up to Level 3."
+    },
+    {
+      "source": "CORRIDOR_E_L1",
+      "target": "STAIRS_E_L1_L2",
+      "distance": 12,
+      "instruction": "Walk to the end of the corridor to find the stairs."
+    },
+    {
+      "source": "STAIRS_E_L1_L2",
+      "target": "CORRIDOR_E_L2",
+      "distance": 10,
+      "instruction": "Take the stairs up to Level 2."
+    },
+    {
+      "source": "CORRIDOR_E_L2",
+      "target": "STAIRS_E_L2_L3",
+      "distance": 12,
+      "instruction": "Walk to the end of the corridor to find the stairs."
+    },
+    {
+      "source": "STAIRS_E_L2_L3",
+      "target": "CORRIDOR_E_L3",
+      "distance": 10,
+      "instruction": "Take the stairs up to Level 3."
+    },
+    {
+      "source": "CORRIDOR_A_L2",
+      "target": "BRIDGE_A_TO_B_L2",
+      "distance": 20,
+      "instruction": "Walk along the Level 2 corridor towards the bridge connecting to Block B."
+    },
+    {
+      "source": "BRIDGE_A_TO_B_L2",
+      "target": "CORRIDOR_B_L2",
+      "distance": 10,
+      "instruction": "Cross the bridge into Block B."
+    },
+    {
+      "source": "MAIN_ENTRANCE",
+      "target": "CORRIDOR_B_L1",
+      "distance": 20,
+      "instruction": "Follow the Level 1 walkway towards Block B."
+    },
+    {
+      "source": "CORRIDOR_B_L1",
+      "target": "CORRIDOR_C_L1",
+      "distance": 20,
+      "instruction": "Follow the Level 1 walkway towards Block C."
+    },
+    {
+      "source": "MAIN_ENTRANCE",
+      "target": "CORRIDOR_E_L1",
+      "distance": 20,
+      "instruction": "Follow the Level 1 walkway towards Block E."
+    },
+    {
+      "source": "CORRIDOR_E_L1",
+      "target": "CORRIDOR_D_L1",
+      "distance": 20,
+      "instruction": "Follow the Level 1 walkway towards Block D."
+    },
+    {
+      "source": "CORRIDOR_B_L2",
+      "target": "CORRIDOR_C_L2",
+      "distance": 20,
+      "instruction": "Follow the Level 2 walkway towards Block C."
+    },
+    {
+      "source": "CORRIDOR_A_L2",
+      "target": "CORRIDOR_E_L2",
+      "distance": 20,
+      "instruction": "Follow the Level 2 walkway towards Block E."
+    },
+    {
+      "source": "CORRIDOR_E_L2",
+      "target": "CORRIDOR_D_L2",
+      "distance": 20,
+      "instruction": "Follow the Level 2 walkway towards Block D."
+    },
+    {
+      "source": "CORRIDOR_A_L3",
+      "target": "CORRIDOR_B_L3",
+      "distance": 20,
+      "instruction": "Follow the Level 3 walkway towards Block B."
+    },
+    {
+      "source": "CORRIDOR_B_L3",
+      "target": "CORRIDOR_C_L3",
+      "distance": 20,
+      "instruction": "Follow the Level 3 walkway towards Block C."
+    },
+    {
+      "source": "CORRIDOR_A_L3",
+      "target": "CORRIDOR_E_L3",
+      "distance": 20,
+      "instruction": "Follow the Level 3 walkway towards Block E."
+    },
+    {
+      "source": "CORRIDOR_E_L3",
+      "target": "CORRIDOR_D_L3",
+      "distance": 20,
+      "instruction": "Follow the Level 3 walkway towards Block D."
+    },
+    {
+      "source": "CORRIDOR_A_L4",
+      "target": "CORRIDOR_B_L4",
+      "distance": 20,
+      "instruction": "Follow the Level 4 walkway towards Block B."
+    },
+    {
+      "source": "CORRIDOR_B_L4",
+      "target": "CORRIDOR_C_L4",
+      "distance": 20,
+      "instruction": "Follow the Level 4 walkway towards Block C."
+    },
+    {
+      "source": "MAIN_ENTRANCE",
+      "target": "B_A_L1_C_ACT",
+      "distance": 5,
+      "instruction": "C-ACT is along the Level 1 corridor of Block A."
+    },
+    {
+      "source": "CORRIDOR_B_L1",
+      "target": "B_B_L1_LECTURE_ROOM_6",
+      "distance": 5,
+      "instruction": "Lecture Room 6 is along the Level 1 corridor of Block B."
+    },
+    {
+      "source": "CORRIDOR_B_L1",
+      "target": "B_B_L1_LECTURE_ROOM_7",
+      "distance": 7,
+      "instruction": "Lecture Room 7 is along the Level 1 corridor of Block B."
+    },
+    {
+      "source": "CORRIDOR_B_L1",
+      "target": "B_B_L1_VIVA_ROOM",
+      "distance": 9,
+      "instruction": "VIVA Room is along the Level 1 corridor of Block B."
+    },
+    {
+      "source": "CORRIDOR_B_L1",
+      "target": "B_B_L1_PROGRAMMING_LAB_1",
+      "distance": 11,
+      "instruction": "Programming Lab 1 is along the Level 1 corridor of Block B."
+    },
+    {
+      "source": "CORRIDOR_B_L1",
+      "target": "B_B_L1_PROGRAMMING_LAB_2",
+      "distance": 5,
+      "instruction": "Programming Lab 2 is along the Level 1 corridor of Block B."
+    },
+    {
+      "source": "CORRIDOR_B_L1",
+      "target": "B_B_L1_BIOCORE_LAB",
+      "distance": 7,
+      "instruction": "BIOCORE Lab is along the Level 1 corridor of Block B."
+    },
+    {
+      "source": "CORRIDOR_B_L1",
+      "target": "B_B_L1_OPTIMASS_RESEARCH_LAB",
+      "distance": 9,
+      "instruction": "OPTIMASS Research Lab is along the Level 1 corridor of Block B."
+    },
+    {
+      "source": "CORRIDOR_C_L1",
+      "target": "B_C_L1_SOFTWARE_ENGINEERING_LAB_1",
+      "distance": 5,
+      "instruction": "Software Engineering Lab 1 is along the Level 1 corridor of Block C."
+    },
+    {
+      "source": "CORRIDOR_C_L1",
+      "target": "B_C_L1_SOFTWARE_ENGINEERING_LAB_2",
+      "distance": 7,
+      "instruction": "Software Engineering Lab 2 is along the Level 1 corridor of Block C."
+    },
+    {
+      "source": "CORRIDOR_C_L1",
+      "target": "B_C_L1_SOFTWARE_ENGINEERING_LAB_3",
+      "distance": 9,
+      "instruction": "Software Engineering Lab 3 is along the Level 1 corridor of Block C."
+    },
+    {
+      "source": "CORRIDOR_C_L1",
+      "target": "B_C_L1_LECTURE_ROOM_5",
+      "distance": 11,
+      "instruction": "Lecture Room 5 is along the Level 1 corridor of Block C."
+    },
+    {
+      "source": "CORRIDOR_C_L1",
+      "target": "B_C_L1_LECTURE_ROOM_4",
+      "distance": 5,
+      "instruction": "Lecture Room 4 is along the Level 1 corridor of Block C."
+    },
+    {
+      "source": "CORRIDOR_C_L1",
+      "target": "B_C_L1_LECTURE_ROOM_3",
+      "distance": 7,
+      "instruction": "Lecture Room 3 is along the Level 1 corridor of Block C."
+    },
+    {
+      "source": "CORRIDOR_C_L1",
+      "target": "B_C_L1_LECTURE_ROOM_2",
+      "distance": 9,
+      "instruction": "Lecture Room 2 is along the Level 1 corridor of Block C."
+    },
+    {
+      "source": "CORRIDOR_C_L1",
+      "target": "B_C_L1_LECTURE_ROOM_1",
+      "distance": 11,
+      "instruction": "Lecture Room 1 is along the Level 1 corridor of Block C."
+    },
+    {
+      "source": "CORRIDOR_D_L1",
+      "target": "B_D_L1_METAVERSE_STUDIO",
+      "distance": 5,
+      "instruction": "Metaverse Studio is along the Level 1 corridor of Block D."
+    },
+    {
+      "source": "CORRIDOR_D_L1",
+      "target": "B_D_L1_LECTURE_ROOM_14",
+      "distance": 7,
+      "instruction": "Lecture Room 14 is along the Level 1 corridor of Block D."
+    },
+    {
+      "source": "CORRIDOR_D_L1",
+      "target": "B_D_L1_STUDENTS_COMMON_ROOM",
+      "distance": 9,
+      "instruction": "Students' Common Room is along the Level 1 corridor of Block D."
+    },
+    {
+      "source": "CORRIDOR_E_L1",
+      "target": "B_E_L1_GAME_ARENA",
+      "distance": 5,
+      "instruction": "Game Arena is along the Level 1 corridor of Block E."
+    },
+    {
+      "source": "CORRIDOR_E_L1",
+      "target": "B_E_L1_LECTURE_ROOM_13",
+      "distance": 7,
+      "instruction": "Lecture Room 13 is along the Level 1 corridor of Block E."
+    },
+    {
+      "source": "CORRIDOR_E_L1",
+      "target": "B_E_L1_MTDS_LAB",
+      "distance": 9,
+      "instruction": "MTDS Lab is along the Level 1 corridor of Block E."
+    },
+    {
+      "source": "CORRIDOR_A_L2",
+      "target": "B_A_L2_DISCUSSION_ROOM",
+      "distance": 5,
+      "instruction": "Discussion Room is along the Level 2 corridor of Block A."
+    },
+    {
+      "source": "CORRIDOR_B_L2",
+      "target": "B_B_L2_AI_LAB_3",
+      "distance": 5,
+      "instruction": "AI Lab 3 is along the Level 2 corridor of Block B."
+    },
+    {
+      "source": "CORRIDOR_B_L2",
+      "target": "B_B_L2_AI_LAB_1",
+      "distance": 5,
+      "instruction": "AI Lab 1 is the first door on your right."
+    },
+    {
+      "source": "CORRIDOR_B_L2",
+      "target": "B_B_L2_AI_LAB_2",
+      "distance": 8,
+      "instruction": "Walk further down the corridor. AI Lab 2 is on your left."
+    },
+    {
+      "source": "CORRIDOR_B_L2",
+      "target": "B_B_L2_RECAP_ROOM",
+      "distance": 11,
+      "instruction": "ReCap Room is along the Level 2 corridor of Block B."
+    },
+    {
+      "source": "CORRIDOR_B_L2",
+      "target": "B_B_L2_AI_LAB_4",
+      "distance": 5,
+      "instruction": "AI Lab 4 is along the Level 2 corridor of Block B."
+    },
+    {
+      "source": "CORRIDOR_C_L2",
+      "target": "B_C_L2_DATABASE_LAB_3",
+      "distance": 5,
+      "instruction": "Database Lab 3 is along the Level 2 corridor of Block C."
+    },
+    {
+      "source": "CORRIDOR_C_L2",
+      "target": "B_C_L2_DATABASE_LAB_2",
+      "distance": 7,
+      "instruction": "Database Lab 2 is along the Level 2 corridor of Block C."
+    },
+    {
+      "source": "CORRIDOR_C_L2",
+      "target": "B_C_L2_DATABASE_LAB_1",
+      "distance": 9,
+      "instruction": "Database Lab 1 is along the Level 2 corridor of Block C."
+    },
+    {
+      "source": "CORRIDOR_C_L2",
+      "target": "B_C_L2_NETWORK_LAB_2",
+      "distance": 11,
+      "instruction": "Network Lab 2 is along the Level 2 corridor of Block C."
+    },
+    {
+      "source": "CORRIDOR_C_L2",
+      "target": "B_C_L2_C_ACT_ROOM",
+      "distance": 5,
+      "instruction": "C-Act Room is along the Level 2 corridor of Block C."
+    },
+    {
+      "source": "CORRIDOR_D_L2",
+      "target": "B_D_L2_FTMK_CLEAR_ROOM",
+      "distance": 5,
+      "instruction": "FTMK CLeaR Room is along the Level 2 corridor of Block D."
+    },
+    {
+      "source": "CORRIDOR_D_L2",
+      "target": "B_D_L2_COMPUTER_GAMES_LAB",
+      "distance": 7,
+      "instruction": "Computer Games Lab is along the Level 2 corridor of Block D."
+    },
+    {
+      "source": "CORRIDOR_D_L2",
+      "target": "B_D_L2_MULTIMEDIA_LAB_2",
+      "distance": 9,
+      "instruction": "Multimedia Lab 2 is along the Level 2 corridor of Block D."
+    },
+    {
+      "source": "CORRIDOR_D_L2",
+      "target": "B_D_L2_MULTIMEDIA_LAB_1",
+      "distance": 11,
+      "instruction": "Multimedia Lab 1 is along the Level 2 corridor of Block D."
+    },
+    {
+      "source": "CORRIDOR_E_L2",
+      "target": "B_E_L2_CYBERSECURITY_COMPETENCE_CENTER",
+      "distance": 5,
+      "instruction": "Cybersecurity Competence Center is along the Level 2 corridor of Block E."
+    },
+    {
+      "source": "CORRIDOR_E_L2",
+      "target": "B_E_L2_CCNA_CCNP_LAB",
+      "distance": 7,
+      "instruction": "CCNA & CCNP Lab is along the Level 2 corridor of Block E."
+    },
+    {
+      "source": "CORRIDOR_E_L2",
+      "target": "B_E_L2_FIBER_OPTIC_LAB",
+      "distance": 9,
+      "instruction": "Fiber Optic Lab is along the Level 2 corridor of Block E."
+    },
+    {
+      "source": "CORRIDOR_A_L3",
+      "target": "B_A_L3_ADMINISTRATIVE_DISCUSSION_ROOM",
+      "distance": 5,
+      "instruction": "Administrative Discussion Room is along the Level 3 corridor of Block A."
+    },
+    {
+      "source": "CORRIDOR_B_L3",
+      "target": "B_B_L3_SKK_LAB",
+      "distance": 5,
+      "instruction": "SKK Lab is along the Level 3 corridor of Block B."
+    },
+    {
+      "source": "CORRIDOR_B_L3",
+      "target": "B_B_L3_ROBOTICS_LAB",
+      "distance": 5,
+      "instruction": "The Robotics Lab is on your left."
+    },
+    {
+      "source": "CORRIDOR_B_L3",
+      "target": "B_B_L3_BITI_WORKSHOP",
+      "distance": 9,
+      "instruction": "BITI Workshop is along the Level 3 corridor of Block B."
+    },
+    {
+      "source": "CORRIDOR_B_L3",
+      "target": "B_B_L3_CMERP_LAB",
+      "distance": 11,
+      "instruction": "CMERP Lab is along the Level 3 corridor of Block B."
+    },
+    {
+      "source": "CORRIDOR_B_L3",
+      "target": "B_B_L3_LECTURE_ROOM_15",
+      "distance": 5,
+      "instruction": "Lecture Room 15 is along the Level 3 corridor of Block B."
+    },
+    {
+      "source": "CORRIDOR_B_L3",
+      "target": "B_B_L3_IS3_RESEARCH_LAB",
+      "distance": 7,
+      "instruction": "IS3 Research Lab is along the Level 3 corridor of Block B."
+    },
+    {
+      "source": "CORRIDOR_C_L3",
+      "target": "B_C_L3_SYSTEMS_AND_HARDWARE_LAB",
+      "distance": 5,
+      "instruction": "Systems and Hardware Lab is along the Level 3 corridor of Block C."
+    },
+    {
+      "source": "CORRIDOR_C_L3",
+      "target": "B_C_L3_SYSTEMS_LAB",
+      "distance": 7,
+      "instruction": "Systems Lab is along the Level 3 corridor of Block C."
+    },
+    {
+      "source": "CORRIDOR_C_L3",
+      "target": "B_C_L3_NETWORK_LAB_1",
+      "distance": 9,
+      "instruction": "Network Lab 1 is along the Level 3 corridor of Block C."
+    },
+    {
+      "source": "CORRIDOR_C_L3",
+      "target": "B_C_L3_EXECUTIVE_LAB",
+      "distance": 11,
+      "instruction": "Executive Lab is along the Level 3 corridor of Block C."
+    },
+    {
+      "source": "CORRIDOR_C_L3",
+      "target": "B_C_L3_STUDENTS_WORKSHOP",
+      "distance": 5,
+      "instruction": "Students' Workshop is along the Level 3 corridor of Block C."
+    },
+    {
+      "source": "CORRIDOR_D_L3",
+      "target": "B_D_L3_MULTIMEDIA_LAB_4",
+      "distance": 5,
+      "instruction": "Multimedia Lab 4 is along the Level 3 corridor of Block D."
+    },
+    {
+      "source": "CORRIDOR_D_L3",
+      "target": "B_D_L3_VIRTUAL_REALITY_LAB",
+      "distance": 7,
+      "instruction": "Virtual Reality Lab is along the Level 3 corridor of Block D."
+    },
+    {
+      "source": "CORRIDOR_D_L3",
+      "target": "B_D_L3_MULTIMEDIA_LAB_3",
+      "distance": 9,
+      "instruction": "Multimedia Lab 3 is along the Level 3 corridor of Block D."
+    },
+    {
+      "source": "CORRIDOR_D_L3",
+      "target": "B_D_L3_MINI_THEATRE",
+      "distance": 11,
+      "instruction": "Mini Theatre is along the Level 3 corridor of Block D."
+    },
+    {
+      "source": "CORRIDOR_D_L3",
+      "target": "B_D_L3_AUDIO_RECORDING_ROOM_1",
+      "distance": 5,
+      "instruction": "Audio Recording Room 1 is along the Level 3 corridor of Block D."
+    },
+    {
+      "source": "CORRIDOR_D_L3",
+      "target": "B_D_L3_AUDIO_RECORDING_ROOM_2",
+      "distance": 7,
+      "instruction": "Audio Recording Room 2 is along the Level 3 corridor of Block D."
+    },
+    {
+      "source": "CORRIDOR_D_L3",
+      "target": "B_D_L3_SHOOTING_STUDIO",
+      "distance": 9,
+      "instruction": "Shooting Studio is along the Level 3 corridor of Block D."
+    },
+    {
+      "source": "CORRIDOR_E_L3",
+      "target": "B_E_L3_WIRELESS_LAB",
+      "distance": 5,
+      "instruction": "Wireless Lab is along the Level 3 corridor of Block E."
+    },
+    {
+      "source": "CORRIDOR_E_L3",
+      "target": "B_E_L3_SECURITY_LAB_2",
+      "distance": 7,
+      "instruction": "Security Lab 2 is along the Level 3 corridor of Block E."
+    },
+    {
+      "source": "CORRIDOR_E_L3",
+      "target": "B_E_L3_CLOUD_COMPUTING_LAB",
+      "distance": 9,
+      "instruction": "Cloud Computing Lab is along the Level 3 corridor of Block E."
+    },
+    {
+      "source": "CORRIDOR_A_L4",
+      "target": "B_A_L4_SEMINAR_HALL",
+      "distance": 5,
+      "instruction": "Seminar Hall is along the Level 4 corridor of Block A."
+    },
+    {
+      "source": "CORRIDOR_A_L4",
+      "target": "B_A_L4_MAIN_MEETING_ROOM",
+      "distance": 7,
+      "instruction": "Main Meeting Room is along the Level 4 corridor of Block A."
+    },
+    {
+      "source": "CORRIDOR_B_L4",
+      "target": "B_B_L4_LECTURE_ROOM_16",
+      "distance": 5,
+      "instruction": "Lecture Room 16 is along the Level 4 corridor of Block B."
+    },
+    {
+      "source": "CORRIDOR_B_L4",
+      "target": "B_B_L4_INFORSNET_RESEARCH_LAB",
+      "distance": 7,
+      "instruction": "INFORSNET Research Lab is along the Level 4 corridor of Block B."
+    },
+    {
+      "source": "CORRIDOR_C_L4",
+      "target": "B_C_L4_PROGRAMMING_LAB_3",
+      "distance": 5,
+      "instruction": "Programming Lab 3 is along the Level 4 corridor of Block C."
+    },
+    {
+      "source": "CORRIDOR_C_L4",
+      "target": "B_C_L4_PROGRAMMING_LAB_4",
+      "distance": 7,
+      "instruction": "Programming Lab 4 is along the Level 4 corridor of Block C."
+    },
+    {
+      "source": "CORRIDOR_C_L4",
+      "target": "B_C_L4_BITD_WORKSHOP",
+      "distance": 9,
+      "instruction": "BITD Workshop is along the Level 4 corridor of Block C."
+    },
+    {
+      "source": "STAIRS_A_L1_L2",
+      "target": "MAIN_ENTRANCE",
+      "distance": 15,
+      "instruction": "Head back towards Block A Stairs (L1 to L2)."
+    },
+    {
+      "source": "CORRIDOR_A_L2",
+      "target": "STAIRS_A_L1_L2",
+      "distance": 10,
+      "instruction": "Take the stairs up to Level 2."
+    },
+    {
+      "source": "STAIRS_A_L2_L3",
+      "target": "CORRIDOR_A_L2",
+      "distance": 12,
+      "instruction": "Head back towards Block A Stairs (L2 to L3)."
+    },
+    {
+      "source": "CORRIDOR_A_L3",
+      "target": "STAIRS_A_L2_L3",
+      "distance": 10,
+      "instruction": "Take the stairs up to Level 3."
+    },
+    {
+      "source": "STAIRS_A_L3_L4",
+      "target": "CORRIDOR_A_L3",
+      "distance": 12,
+      "instruction": "Head back towards Block A Stairs (L3 to L4)."
+    },
+    {
+      "source": "CORRIDOR_A_L4",
+      "target": "STAIRS_A_L3_L4",
+      "distance": 10,
+      "instruction": "Take the stairs up to Level 4."
+    },
+    {
+      "source": "STAIRS_B_L1_L2",
+      "target": "CORRIDOR_B_L1",
+      "distance": 12,
+      "instruction": "Head back towards Block B Stairs (L1 to L2)."
+    },
+    {
+      "source": "CORRIDOR_B_L2",
+      "target": "STAIRS_B_L1_L2",
+      "distance": 10,
+      "instruction": "Take the stairs up to Level 2."
+    },
+    {
+      "source": "STAIRS_B_L2_L3",
+      "target": "CORRIDOR_B_L2",
+      "distance": 12,
+      "instruction": "Head back towards Block B Stairs (L2 to L3)."
+    },
+    {
+      "source": "CORRIDOR_B_L3",
+      "target": "STAIRS_B_L2_L3",
+      "distance": 10,
+      "instruction": "Take the stairs up to Level 3."
+    },
+    {
+      "source": "STAIRS_B_L3_L4",
+      "target": "CORRIDOR_B_L3",
+      "distance": 12,
+      "instruction": "Head back towards Block B Stairs (L3 to L4)."
+    },
+    {
+      "source": "CORRIDOR_B_L4",
+      "target": "STAIRS_B_L3_L4",
+      "distance": 10,
+      "instruction": "Take the stairs up to Level 4."
+    },
+    {
+      "source": "STAIRS_C_L1_L2",
+      "target": "CORRIDOR_C_L1",
+      "distance": 12,
+      "instruction": "Head back towards Block C Stairs (L1 to L2)."
+    },
+    {
+      "source": "CORRIDOR_C_L2",
+      "target": "STAIRS_C_L1_L2",
+      "distance": 10,
+      "instruction": "Take the stairs up to Level 2."
+    },
+    {
+      "source": "STAIRS_C_L2_L3",
+      "target": "CORRIDOR_C_L2",
+      "distance": 12,
+      "instruction": "Head back towards Block C Stairs (L2 to L3)."
+    },
+    {
+      "source": "CORRIDOR_C_L3",
+      "target": "STAIRS_C_L2_L3",
+      "distance": 10,
+      "instruction": "Take the stairs up to Level 3."
+    },
+    {
+      "source": "STAIRS_C_L3_L4",
+      "target": "CORRIDOR_C_L3",
+      "distance": 12,
+      "instruction": "Head back towards Block C Stairs (L3 to L4)."
+    },
+    {
+      "source": "CORRIDOR_C_L4",
+      "target": "STAIRS_C_L3_L4",
+      "distance": 10,
+      "instruction": "Take the stairs up to Level 4."
+    },
+    {
+      "source": "STAIRS_D_L1_L2",
+      "target": "CORRIDOR_D_L1",
+      "distance": 12,
+      "instruction": "Head back towards Block D Stairs (L1 to L2)."
+    },
+    {
+      "source": "CORRIDOR_D_L2",
+      "target": "STAIRS_D_L1_L2",
+      "distance": 10,
+      "instruction": "Take the stairs up to Level 2."
+    },
+    {
+      "source": "STAIRS_D_L2_L3",
+      "target": "CORRIDOR_D_L2",
+      "distance": 12,
+      "instruction": "Head back towards Block D Stairs (L2 to L3)."
+    },
+    {
+      "source": "CORRIDOR_D_L3",
+      "target": "STAIRS_D_L2_L3",
+      "distance": 10,
+      "instruction": "Take the stairs up to Level 3."
+    },
+    {
+      "source": "STAIRS_E_L1_L2",
+      "target": "CORRIDOR_E_L1",
+      "distance": 12,
+      "instruction": "Head back towards Block E Stairs (L1 to L2)."
+    },
+    {
+      "source": "CORRIDOR_E_L2",
+      "target": "STAIRS_E_L1_L2",
+      "distance": 10,
+      "instruction": "Take the stairs up to Level 2."
+    },
+    {
+      "source": "STAIRS_E_L2_L3",
+      "target": "CORRIDOR_E_L2",
+      "distance": 12,
+      "instruction": "Head back towards Block E Stairs (L2 to L3)."
+    },
+    {
+      "source": "CORRIDOR_E_L3",
+      "target": "STAIRS_E_L2_L3",
+      "distance": 10,
+      "instruction": "Take the stairs up to Level 3."
+    },
+    {
+      "source": "BRIDGE_A_TO_B_L2",
+      "target": "CORRIDOR_A_L2",
+      "distance": 20,
+      "instruction": "Head back towards Bridge to Block B (L2)."
+    },
+    {
+      "source": "CORRIDOR_B_L2",
+      "target": "BRIDGE_A_TO_B_L2",
+      "distance": 10,
+      "instruction": "Head back towards Block B Level 2 Corridor."
+    },
+    {
+      "source": "CORRIDOR_B_L1",
+      "target": "MAIN_ENTRANCE",
+      "distance": 20,
+      "instruction": "Head back towards Block B Level 1 Corridor."
+    },
+    {
+      "source": "CORRIDOR_C_L1",
+      "target": "CORRIDOR_B_L1",
+      "distance": 20,
+      "instruction": "Head back towards Block C Level 1 Corridor."
+    },
+    {
+      "source": "CORRIDOR_E_L1",
+      "target": "MAIN_ENTRANCE",
+      "distance": 20,
+      "instruction": "Head back towards Block E Level 1 Corridor."
+    },
+    {
+      "source": "CORRIDOR_D_L1",
+      "target": "CORRIDOR_E_L1",
+      "distance": 20,
+      "instruction": "Head back towards Block D Level 1 Corridor."
+    },
+    {
+      "source": "CORRIDOR_C_L2",
+      "target": "CORRIDOR_B_L2",
+      "distance": 20,
+      "instruction": "Head back towards Block C Level 2 Corridor."
+    },
+    {
+      "source": "CORRIDOR_E_L2",
+      "target": "CORRIDOR_A_L2",
+      "distance": 20,
+      "instruction": "Head back towards Block E Level 2 Corridor."
+    },
+    {
+      "source": "CORRIDOR_D_L2",
+      "target": "CORRIDOR_E_L2",
+      "distance": 20,
+      "instruction": "Head back towards Block D Level 2 Corridor."
+    },
+    {
+      "source": "CORRIDOR_B_L3",
+      "target": "CORRIDOR_A_L3",
+      "distance": 20,
+      "instruction": "Head back towards Block B Level 3 Corridor."
+    },
+    {
+      "source": "CORRIDOR_C_L3",
+      "target": "CORRIDOR_B_L3",
+      "distance": 20,
+      "instruction": "Head back towards Block C Level 3 Corridor."
+    },
+    {
+      "source": "CORRIDOR_E_L3",
+      "target": "CORRIDOR_A_L3",
+      "distance": 20,
+      "instruction": "Head back towards Block E Level 3 Corridor."
+    },
+    {
+      "source": "CORRIDOR_D_L3",
+      "target": "CORRIDOR_E_L3",
+      "distance": 20,
+      "instruction": "Head back towards Block D Level 3 Corridor."
+    },
+    {
+      "source": "CORRIDOR_B_L4",
+      "target": "CORRIDOR_A_L4",
+      "distance": 20,
+      "instruction": "Head back towards Block B Level 4 Corridor."
+    },
+    {
+      "source": "CORRIDOR_C_L4",
+      "target": "CORRIDOR_B_L4",
+      "distance": 20,
+      "instruction": "Head back towards Block C Level 4 Corridor."
+    },
+    {
+      "source": "B_A_L1_C_ACT",
+      "target": "MAIN_ENTRANCE",
+      "distance": 5,
+      "instruction": "Head back towards C-ACT."
+    },
+    {
+      "source": "B_B_L1_LECTURE_ROOM_6",
+      "target": "CORRIDOR_B_L1",
+      "distance": 5,
+      "instruction": "Head back towards Lecture Room 6."
+    },
+    {
+      "source": "B_B_L1_LECTURE_ROOM_7",
+      "target": "CORRIDOR_B_L1",
+      "distance": 7,
+      "instruction": "Head back towards Lecture Room 7."
+    },
+    {
+      "source": "B_B_L1_VIVA_ROOM",
+      "target": "CORRIDOR_B_L1",
+      "distance": 9,
+      "instruction": "Head back towards VIVA Room."
+    },
+    {
+      "source": "B_B_L1_PROGRAMMING_LAB_1",
+      "target": "CORRIDOR_B_L1",
+      "distance": 11,
+      "instruction": "Head back towards Programming Lab 1."
+    },
+    {
+      "source": "B_B_L1_PROGRAMMING_LAB_2",
+      "target": "CORRIDOR_B_L1",
+      "distance": 5,
+      "instruction": "Head back towards Programming Lab 2."
+    },
+    {
+      "source": "B_B_L1_BIOCORE_LAB",
+      "target": "CORRIDOR_B_L1",
+      "distance": 7,
+      "instruction": "Head back towards BIOCORE Lab."
+    },
+    {
+      "source": "B_B_L1_OPTIMASS_RESEARCH_LAB",
+      "target": "CORRIDOR_B_L1",
+      "distance": 9,
+      "instruction": "Head back towards OPTIMASS Research Lab."
+    },
+    {
+      "source": "B_C_L1_SOFTWARE_ENGINEERING_LAB_1",
+      "target": "CORRIDOR_C_L1",
+      "distance": 5,
+      "instruction": "Head back towards Software Engineering Lab 1."
+    },
+    {
+      "source": "B_C_L1_SOFTWARE_ENGINEERING_LAB_2",
+      "target": "CORRIDOR_C_L1",
+      "distance": 7,
+      "instruction": "Head back towards Software Engineering Lab 2."
+    },
+    {
+      "source": "B_C_L1_SOFTWARE_ENGINEERING_LAB_3",
+      "target": "CORRIDOR_C_L1",
+      "distance": 9,
+      "instruction": "Head back towards Software Engineering Lab 3."
+    },
+    {
+      "source": "B_C_L1_LECTURE_ROOM_5",
+      "target": "CORRIDOR_C_L1",
+      "distance": 11,
+      "instruction": "Head back towards Lecture Room 5."
+    },
+    {
+      "source": "B_C_L1_LECTURE_ROOM_4",
+      "target": "CORRIDOR_C_L1",
+      "distance": 5,
+      "instruction": "Head back towards Lecture Room 4."
+    },
+    {
+      "source": "B_C_L1_LECTURE_ROOM_3",
+      "target": "CORRIDOR_C_L1",
+      "distance": 7,
+      "instruction": "Head back towards Lecture Room 3."
+    },
+    {
+      "source": "B_C_L1_LECTURE_ROOM_2",
+      "target": "CORRIDOR_C_L1",
+      "distance": 9,
+      "instruction": "Head back towards Lecture Room 2."
+    },
+    {
+      "source": "B_C_L1_LECTURE_ROOM_1",
+      "target": "CORRIDOR_C_L1",
+      "distance": 11,
+      "instruction": "Head back towards Lecture Room 1."
+    },
+    {
+      "source": "B_D_L1_METAVERSE_STUDIO",
+      "target": "CORRIDOR_D_L1",
+      "distance": 5,
+      "instruction": "Head back towards Metaverse Studio."
+    },
+    {
+      "source": "B_D_L1_LECTURE_ROOM_14",
+      "target": "CORRIDOR_D_L1",
+      "distance": 7,
+      "instruction": "Head back towards Lecture Room 14."
+    },
+    {
+      "source": "B_D_L1_STUDENTS_COMMON_ROOM",
+      "target": "CORRIDOR_D_L1",
+      "distance": 9,
+      "instruction": "Head back towards Students' Common Room."
+    },
+    {
+      "source": "B_E_L1_GAME_ARENA",
+      "target": "CORRIDOR_E_L1",
+      "distance": 5,
+      "instruction": "Head back towards Game Arena."
+    },
+    {
+      "source": "B_E_L1_LECTURE_ROOM_13",
+      "target": "CORRIDOR_E_L1",
+      "distance": 7,
+      "instruction": "Head back towards Lecture Room 13."
+    },
+    {
+      "source": "B_E_L1_MTDS_LAB",
+      "target": "CORRIDOR_E_L1",
+      "distance": 9,
+      "instruction": "Head back towards MTDS Lab."
+    },
+    {
+      "source": "B_A_L2_DISCUSSION_ROOM",
+      "target": "CORRIDOR_A_L2",
+      "distance": 5,
+      "instruction": "Head back towards Discussion Room."
+    },
+    {
+      "source": "B_B_L2_AI_LAB_3",
+      "target": "CORRIDOR_B_L2",
+      "distance": 5,
+      "instruction": "Head back towards AI Lab 3."
+    },
+    {
+      "source": "B_B_L2_AI_LAB_1",
+      "target": "CORRIDOR_B_L2",
+      "distance": 5,
+      "instruction": "Head back towards AI Lab 1."
+    },
+    {
+      "source": "B_B_L2_AI_LAB_2",
+      "target": "CORRIDOR_B_L2",
+      "distance": 8,
+      "instruction": "Head back towards AI Lab 2."
+    },
+    {
+      "source": "B_B_L2_RECAP_ROOM",
+      "target": "CORRIDOR_B_L2",
+      "distance": 11,
+      "instruction": "Head back towards ReCap Room."
+    },
+    {
+      "source": "B_B_L2_AI_LAB_4",
+      "target": "CORRIDOR_B_L2",
+      "distance": 5,
+      "instruction": "Head back towards AI Lab 4."
+    },
+    {
+      "source": "B_C_L2_DATABASE_LAB_3",
+      "target": "CORRIDOR_C_L2",
+      "distance": 5,
+      "instruction": "Head back towards Database Lab 3."
+    },
+    {
+      "source": "B_C_L2_DATABASE_LAB_2",
+      "target": "CORRIDOR_C_L2",
+      "distance": 7,
+      "instruction": "Head back towards Database Lab 2."
+    },
+    {
+      "source": "B_C_L2_DATABASE_LAB_1",
+      "target": "CORRIDOR_C_L2",
+      "distance": 9,
+      "instruction": "Head back towards Database Lab 1."
+    },
+    {
+      "source": "B_C_L2_NETWORK_LAB_2",
+      "target": "CORRIDOR_C_L2",
+      "distance": 11,
+      "instruction": "Head back towards Network Lab 2."
+    },
+    {
+      "source": "B_C_L2_C_ACT_ROOM",
+      "target": "CORRIDOR_C_L2",
+      "distance": 5,
+      "instruction": "Head back towards C-Act Room."
+    },
+    {
+      "source": "B_D_L2_FTMK_CLEAR_ROOM",
+      "target": "CORRIDOR_D_L2",
+      "distance": 5,
+      "instruction": "Head back towards FTMK CLeaR Room."
+    },
+    {
+      "source": "B_D_L2_COMPUTER_GAMES_LAB",
+      "target": "CORRIDOR_D_L2",
+      "distance": 7,
+      "instruction": "Head back towards Computer Games Lab."
+    },
+    {
+      "source": "B_D_L2_MULTIMEDIA_LAB_2",
+      "target": "CORRIDOR_D_L2",
+      "distance": 9,
+      "instruction": "Head back towards Multimedia Lab 2."
+    },
+    {
+      "source": "B_D_L2_MULTIMEDIA_LAB_1",
+      "target": "CORRIDOR_D_L2",
+      "distance": 11,
+      "instruction": "Head back towards Multimedia Lab 1."
+    },
+    {
+      "source": "B_E_L2_CYBERSECURITY_COMPETENCE_CENTER",
+      "target": "CORRIDOR_E_L2",
+      "distance": 5,
+      "instruction": "Head back towards Cybersecurity Competence Center."
+    },
+    {
+      "source": "B_E_L2_CCNA_CCNP_LAB",
+      "target": "CORRIDOR_E_L2",
+      "distance": 7,
+      "instruction": "Head back towards CCNA & CCNP Lab."
+    },
+    {
+      "source": "B_E_L2_FIBER_OPTIC_LAB",
+      "target": "CORRIDOR_E_L2",
+      "distance": 9,
+      "instruction": "Head back towards Fiber Optic Lab."
+    },
+    {
+      "source": "B_A_L3_ADMINISTRATIVE_DISCUSSION_ROOM",
+      "target": "CORRIDOR_A_L3",
+      "distance": 5,
+      "instruction": "Head back towards Administrative Discussion Room."
+    },
+    {
+      "source": "B_B_L3_SKK_LAB",
+      "target": "CORRIDOR_B_L3",
+      "distance": 5,
+      "instruction": "Head back towards SKK Lab."
+    },
+    {
+      "source": "B_B_L3_ROBOTICS_LAB",
+      "target": "CORRIDOR_B_L3",
+      "distance": 5,
+      "instruction": "Head back towards Robotics Lab."
+    },
+    {
+      "source": "B_B_L3_BITI_WORKSHOP",
+      "target": "CORRIDOR_B_L3",
+      "distance": 9,
+      "instruction": "Head back towards BITI Workshop."
+    },
+    {
+      "source": "B_B_L3_CMERP_LAB",
+      "target": "CORRIDOR_B_L3",
+      "distance": 11,
+      "instruction": "Head back towards CMERP Lab."
+    },
+    {
+      "source": "B_B_L3_LECTURE_ROOM_15",
+      "target": "CORRIDOR_B_L3",
+      "distance": 5,
+      "instruction": "Head back towards Lecture Room 15."
+    },
+    {
+      "source": "B_B_L3_IS3_RESEARCH_LAB",
+      "target": "CORRIDOR_B_L3",
+      "distance": 7,
+      "instruction": "Head back towards IS3 Research Lab."
+    },
+    {
+      "source": "B_C_L3_SYSTEMS_AND_HARDWARE_LAB",
+      "target": "CORRIDOR_C_L3",
+      "distance": 5,
+      "instruction": "Head back towards Systems and Hardware Lab."
+    },
+    {
+      "source": "B_C_L3_SYSTEMS_LAB",
+      "target": "CORRIDOR_C_L3",
+      "distance": 7,
+      "instruction": "Head back towards Systems Lab."
+    },
+    {
+      "source": "B_C_L3_NETWORK_LAB_1",
+      "target": "CORRIDOR_C_L3",
+      "distance": 9,
+      "instruction": "Head back towards Network Lab 1."
+    },
+    {
+      "source": "B_C_L3_EXECUTIVE_LAB",
+      "target": "CORRIDOR_C_L3",
+      "distance": 11,
+      "instruction": "Head back towards Executive Lab."
+    },
+    {
+      "source": "B_C_L3_STUDENTS_WORKSHOP",
+      "target": "CORRIDOR_C_L3",
+      "distance": 5,
+      "instruction": "Head back towards Students' Workshop."
+    },
+    {
+      "source": "B_D_L3_MULTIMEDIA_LAB_4",
+      "target": "CORRIDOR_D_L3",
+      "distance": 5,
+      "instruction": "Head back towards Multimedia Lab 4."
+    },
+    {
+      "source": "B_D_L3_VIRTUAL_REALITY_LAB",
+      "target": "CORRIDOR_D_L3",
+      "distance": 7,
+      "instruction": "Head back towards Virtual Reality Lab."
+    },
+    {
+      "source": "B_D_L3_MULTIMEDIA_LAB_3",
+      "target": "CORRIDOR_D_L3",
+      "distance": 9,
+      "instruction": "Head back towards Multimedia Lab 3."
+    },
+    {
+      "source": "B_D_L3_MINI_THEATRE",
+      "target": "CORRIDOR_D_L3",
+      "distance": 11,
+      "instruction": "Head back towards Mini Theatre."
+    },
+    {
+      "source": "B_D_L3_AUDIO_RECORDING_ROOM_1",
+      "target": "CORRIDOR_D_L3",
+      "distance": 5,
+      "instruction": "Head back towards Audio Recording Room 1."
+    },
+    {
+      "source": "B_D_L3_AUDIO_RECORDING_ROOM_2",
+      "target": "CORRIDOR_D_L3",
+      "distance": 7,
+      "instruction": "Head back towards Audio Recording Room 2."
+    },
+    {
+      "source": "B_D_L3_SHOOTING_STUDIO",
+      "target": "CORRIDOR_D_L3",
+      "distance": 9,
+      "instruction": "Head back towards Shooting Studio."
+    },
+    {
+      "source": "B_E_L3_WIRELESS_LAB",
+      "target": "CORRIDOR_E_L3",
+      "distance": 5,
+      "instruction": "Head back towards Wireless Lab."
+    },
+    {
+      "source": "B_E_L3_SECURITY_LAB_2",
+      "target": "CORRIDOR_E_L3",
+      "distance": 7,
+      "instruction": "Head back towards Security Lab 2."
+    },
+    {
+      "source": "B_E_L3_CLOUD_COMPUTING_LAB",
+      "target": "CORRIDOR_E_L3",
+      "distance": 9,
+      "instruction": "Head back towards Cloud Computing Lab."
+    },
+    {
+      "source": "B_A_L4_SEMINAR_HALL",
+      "target": "CORRIDOR_A_L4",
+      "distance": 5,
+      "instruction": "Head back towards Seminar Hall."
+    },
+    {
+      "source": "B_A_L4_MAIN_MEETING_ROOM",
+      "target": "CORRIDOR_A_L4",
+      "distance": 7,
+      "instruction": "Head back towards Main Meeting Room."
+    },
+    {
+      "source": "B_B_L4_LECTURE_ROOM_16",
+      "target": "CORRIDOR_B_L4",
+      "distance": 5,
+      "instruction": "Head back towards Lecture Room 16."
+    },
+    {
+      "source": "B_B_L4_INFORSNET_RESEARCH_LAB",
+      "target": "CORRIDOR_B_L4",
+      "distance": 7,
+      "instruction": "Head back towards INFORSNET Research Lab."
+    },
+    {
+      "source": "B_C_L4_PROGRAMMING_LAB_3",
+      "target": "CORRIDOR_C_L4",
+      "distance": 5,
+      "instruction": "Head back towards Programming Lab 3."
+    },
+    {
+      "source": "B_C_L4_PROGRAMMING_LAB_4",
+      "target": "CORRIDOR_C_L4",
+      "distance": 7,
+      "instruction": "Head back towards Programming Lab 4."
+    },
+    {
+      "source": "B_C_L4_BITD_WORKSHOP",
+      "target": "CORRIDOR_C_L4",
+      "distance": 9,
+      "instruction": "Head back towards BITD Workshop."
+    },
+    {
+      "source": "MAIN_ENTRANCE",
+      "target": "TOILET_BLOCK_A_L1",
+      "distance": 8,
+      "instruction": "Walk towards the restrooms located near the lobby."
+    },
+    {
+      "source": "CORRIDOR_A_L2",
+      "target": "TOILET_BLOCK_A_L2",
+      "distance": 5,
+      "instruction": "The restrooms are near the Level 2 corridor of Block A."
+    },
+    {
+      "source": "CORRIDOR_B_L1",
+      "target": "TOILET_BLOCK_B_L1",
+      "distance": 5,
+      "instruction": "The restrooms are beside the stairs on Level 1 of Block B."
+    },
+    {
+      "source": "CORRIDOR_B_L2",
+      "target": "TOILET_BLOCK_B_L2",
+      "distance": 5,
+      "instruction": "The restrooms are located near the stairs on Level 2 of Block B."
+    },
+    {
+      "source": "CORRIDOR_C_L1",
+      "target": "TOILET_BLOCK_C_L1",
+      "distance": 5,
+      "instruction": "The restrooms are along the corridor on Level 1 of Block C."
+    },
+    {
+      "source": "CORRIDOR_C_L2",
+      "target": "TOILET_BLOCK_C_L2",
+      "distance": 5,
+      "instruction": "The restrooms are along the corridor on Level 2 of Block C."
+    },
+    {
+      "source": "CORRIDOR_D_L1",
+      "target": "TOILET_BLOCK_D_L1",
+      "distance": 5,
+      "instruction": "The restrooms are near the Common Room on Level 1 of Block D."
+    },
+    {
+      "source": "CORRIDOR_D_L3",
+      "target": "TOILET_BLOCK_D_L3",
+      "distance": 5,
+      "instruction": "The restrooms are located near the Mini Theatre on Level 3 of Block D."
+    },
+    {
+      "source": "CORRIDOR_E_L1",
+      "target": "TOILET_BLOCK_E_L1",
+      "distance": 5,
+      "instruction": "The restrooms are near the Game Arena on Level 1 of Block E."
+    },
+    {
+      "source": "CORRIDOR_E_L2",
+      "target": "TOILET_BLOCK_E_L2",
+      "distance": 5,
+      "instruction": "The restrooms are near the Cybersecurity Center on Level 2 of Block E."
+    }
+  ]
+}
