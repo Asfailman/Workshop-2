@@ -241,12 +241,12 @@ class CampusNLP:
         clean = cls.preprocess_text(message).rstrip("?.!,")
 
         patterns = [
-            # 1. "from <origin> to <dest>"
+            # 1. "from <origin> to <dest>" / "dari <origin> ke <dest>"
             r'\b(?:from|dari)\s+(.+?)\s+(?:to|ke|towards|sampai)\s+(.+)',
             # 2. "between <origin> and <dest>"
             r'\b(?:between|antara)\s+(.+?)\s+(?:and|dan|with|dengan)\s+(.+)',
-            # 3. "<dest> from <origin>"
-            r'\b(?:to|ke|towards)\s+(.+?)\s+(?:from|dari)\s+(.+)',
+            # 3. "how to get/go to <dest> from <origin>" or "<dest> from <origin>"
+            r'(?:how\s+(?:to|do\s+i|can\s+i)\s+(?:get|go|walk)\s+to|directions?\s+to|path\s+to|route\s+to|way\s+to|navigate\s+to|\bto|\bke|\btowards)\s+(.+?)\s+(?:from|dari)\s+(.+)',
             # 4. Direct "<origin> to <dest>"
             r'^(?:can\s+you\s+)?(?:show\s+(?:me\s+)?)?(?:short\s+|shortest\s+|nearest\s+)?(?:path\s+|route\s+)?(?:from\s+)?(.+?)\s+(?:to|ke|towards)\s+(.+)$',
         ]
@@ -261,7 +261,7 @@ class CampusNLP:
                     orig_cand, dest_cand = g1, g2
 
                 # Strip navigational filler words
-                filler = r'\b(please|pls|can you|can i|could you|show me|tell me|give me|short|shortest|nearest|fastest|quickest|path|route|way|walk|how to get|how do i get)\b'
+                filler = r'\b(please|pls|can you|can i|could you|show me|tell me|give me|short|shortest|nearest|fastest|quickest|path|route|way|walk|how to get to|how do i get to|how to go to|how do i go to|how to get|how do i get|how to go|how to|go to|get to|go|get)\b'
                 orig_clean = re.sub(filler, '', orig_cand, flags=re.I).strip()
                 dest_clean = re.sub(filler, '', dest_cand, flags=re.I).strip()
 

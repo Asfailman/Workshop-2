@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FTMK Campus Indoor Navigation | Mall Directory Map</title>
+  <meta name="description" content="Interactive mall-style indoor navigation and live walking directions for FTMK UTeM with animated Waze-style guidance.">
+  
+  <!-- Modern Typography from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/static/map/map.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- Top Brand & Status Bar -->
+    <header class="top-nav">
+      <div class="brand">
+        <div class="brand-icon">🏛️</div>
+        <div class="brand-text">
+          <h1>FTMK CAMPUS NAVIGATOR</h1>
+          <span class="sub-brand">Autonomous Indoor Wayfinding • IOI Mall Kiosk Style</span>
+        </div>
+      </div>
+
+      <!-- Quick stats & search -->
+      <div class="nav-center">
+        <div class="search-box-wrapper">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="quickSearchInput" placeholder="Search lab, lecture room, food, toilet..." autocomplete="off">
+          <div id="quickSearchResults" class="search-dropdown hidden"></div>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <div class="status-indicator">
+          <span class="pulse-dot"></span>
+          <span class="status-text">Indoor GPS Active</span>
+        </div>
+        <button id="btnResetView" class="icon-btn" title="Center Campus Map">⛶ Center</button>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <div class="main-layout">
+      
+      <!-- Left Navigation & Route Planning Sidebar -->
+      <aside class="sidebar" id="sidebar">
+        
+        <!-- Tab Switcher -->
+        <div class="sidebar-tabs">
+          <button class="tab-btn active" data-tab="routeTab">🧭 Route & Guide</button>
+          <button class="tab-btn" data-tab="exploreTab">🏢 Explore Places</button>
+        </div>
+
+        <!-- Tab 1: Route Planning -->
+        <div class="tab-content active" id="routeTab">
+          <div class="route-planner-card">
+            
+            <div class="route-inputs">
+              <!-- Start Point -->
+              <div class="input-group start-group">
+                <span class="node-badge start-badge">🟢 From</span>
+                <div class="custom-select-wrapper">
+                  <select id="startSelect">
+                    <option value="MAIN_ENTRANCE">🍔 Main Entrance / Food Lobby (Block A, L1)</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Swap Button -->
+              <button id="btnSwapRoute" class="btn-swap" title="Swap Origin and Destination">⇅</button>
+
+              <!-- Destination Point -->
+              <div class="input-group dest-group">
+                <span class="node-badge dest-badge">🏁 To</span>
+                <div class="custom-select-wrapper">
+                  <select id="destSelect">
+                    <option value="">Select a Destination...</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quick Preset Chips -->
+            <div class="quick-chips">
+              <span class="chip-label">Quick:</span>
+              <button class="chip" data-dest="TOILET_BLOCK_A_L1">🚻 Nearest Toilet</button>
+              <button class="chip" data-dest="MAIN_ENTRANCE">🍔 Food Lobby</button>
+              <button class="chip" data-dest="B_B_L2_AI_LAB_1">🤖 AI Lab 1</button>
+              <button class="chip" data-dest="B_A_L1_C_ACT">📚 C-ACT Study</button>
+              <button class="chip" data-dest="B_C_L4_PROGRAMMING_LAB_4">💻 Prog Lab 4</button>
+              <button class="chip" data-dest="B_C_L3_SYSTEMS_LAB">⚙️ Systems Lab</button>
+              <button class="chip" data-dest="B_C_L3_NETWORK_LAB_1">🌐 Net Lab 1</button>
+              <button class="chip" data-dest="B_D_L3_MINI_THEATRE">🎭 Mini Theatre</button>
+            </div>
+
+            <!-- Navigation Button -->
+            <button id="btnCalculateRoute" class="btn-primary-navigate">
+              <span class="btn-icon">🚀</span>
+              <span class="btn-text">Find Shortest Route</span>
+            </button>
+          </div>
+
+          <!-- Waze-Style Live Route Guidance Card -->
+          <div class="live-guidance-card hidden" id="liveGuidanceCard">
+            <div class="guidance-header">
+              <div class="hud-direction-icon" id="hudIcon">⬆️</div>
+              <div class="hud-main-text">
+                <div class="hud-instruction" id="hudInstruction">Follow the Level 1 corridor</div>
+                <div class="hud-metrics">
+                  <span class="metric-pill dist" id="hudDistance">0 m</span>
+                  <span class="metric-pill time" id="hudTime">~1 min</span>
+                  <span class="metric-pill steps" id="hudStepsCount">0 Steps</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Multi-Floor Transition Breadcrumbs -->
+            <div class="floor-breadcrumbs" id="floorBreadcrumbs"></div>
+
+            <!-- Action Controls -->
+            <div class="guidance-actions">
+              <button id="btnSimulateWalk" class="btn-secondary">
+                <span>▶</span> Simulate Walking (Waze)
+              </button>
+              <button id="btnClearRoute" class="btn-ghost">Clear</button>
+            </div>
+
+            <!-- Step by Step Turn Sheet -->
+            <div class="turn-steps-list-wrapper">
+              <div class="turn-list-title">Turn-by-Turn Directions</div>
+              <ol class="turn-steps-list" id="turnStepsList"></ol>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Explore Directory -->
+        <div class="tab-content" id="exploreTab">
+          <div class="category-filters">
+            <button class="cat-pill active" data-cat="all">All</button>
+            <button class="cat-pill" data-cat="laboratory">Labs</button>
+            <button class="cat-pill" data-cat="lecture_hall">Lectures</button>
+            <button class="cat-pill" data-cat="toilet">Restrooms</button>
+            <button class="cat-pill" data-cat="meeting_room">Meeting</button>
+            <button class="cat-pill" data-cat="facility">Services</button>
+          </div>
+          <div class="directory-list" id="directoryList"></div>
+        </div>
+
+      </aside>
+
+      <!-- Map Viewport Canvas -->
+      <main class="map-viewport" id="mapViewport">
+        
+        <!-- Floor Level Switcher (Mall Style) -->
+        <div class="floor-switcher">
+          <div class="floor-switcher-label">FLOOR</div>
+          <button class="floor-btn" data-floor="4">L4</button>
+          <button class="floor-btn" data-floor="3">L3</button>
+          <button class="floor-btn" data-floor="2">L2</button>
+          <button class="floor-btn active" data-floor="1">L1</button>
+          <button class="floor-btn all-floors-btn" data-floor="all" title="View all levels together">ALL</button>
+        </div>
+
+        <!-- Floating Zoom & Control Toolbar -->
+        <div class="map-toolbar">
+          <button id="btnZoomIn" class="map-tool-btn" title="Zoom In">+</button>
+          <button id="btnZoomOut" class="map-tool-btn" title="Zoom Out">−</button>
+          <button id="btnResetZoom" class="map-tool-btn" title="Reset Zoom">1:1</button>
+        </div>
+
+        <!-- Map Legend -->
+        <div class="map-legend">
+          <div class="legend-item"><span class="legend-color block-a"></span> Block A (Admin/Lobby)</div>
+          <div class="legend-item"><span class="legend-color block-b"></span> Block B (AI/Robotics)</div>
+          <div class="legend-item"><span class="legend-color block-c"></span> Block C (Software/Data)</div>
+          <div class="legend-item"><span class="legend-color block-d"></span> Block D (Media/VR)</div>
+          <div class="legend-item"><span class="legend-color block-e"></span> Block E (Cyber/Cloud)</div>
+        </div>
+
+        <!-- SVG Map Container -->
+        <div class="svg-container" id="svgContainer">
+          <svg id="campusSvg" viewBox="0 0 1000 800" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <!-- Glowing Filter for Navigation Path -->
+              <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="4" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              <!-- Arrow Marker for path direction -->
+              <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#00f2fe" />
+              </marker>
+            </defs>
+
+            <!-- Layer 1: Campus Zones Background (Blocks A to E) -->
+            <g id="zonesLayer"></g>
+
+            <!-- Layer 2: Connecting Bridges & Walkways -->
+            <g id="bridgesLayer"></g>
+
+            <!-- Layer 3: Floor Corridor Paths -->
+            <g id="corridorsLayer"></g>
+
+            <!-- Layer 4: Waze-Style Live Navigation Path -->
+            <g id="navPathLayer">
+              <!-- Glow underlay -->
+              <path id="pathGlow" class="nav-path-glow" d="" />
+              <!-- Solid track -->
+              <path id="pathTrack" class="nav-path-track" d="" />
+              <!-- Animated Waze 'dot-dot-dot' line -->
+              <path id="pathDots" class="nav-path-dots" d="" />
+            </g>
+
+            <!-- Layer 5: Room & Node Pins -->
+            <g id="nodesLayer"></g>
+
+            <!-- Layer 6: Dynamic Walker / Waze Beacon Pin -->
+            <g id="walkerLayer">
+              <g id="startPin" class="beacon-pin start-pin hidden">
+                <circle cx="0" cy="0" r="16" class="beacon-pulse" />
+                <circle cx="0" cy="0" r="10" class="beacon-core start" />
+                <text x="0" y="4" text-anchor="middle" font-size="10">🟢</text>
+              </g>
+              <g id="destPin" class="beacon-pin dest-pin hidden">
+                <circle cx="0" cy="0" r="18" class="beacon-pulse dest" />
+                <circle cx="0" cy="0" r="11" class="beacon-core dest" />
+                <text x="0" y="4" text-anchor="middle" font-size="11">🏁</text>
+              </g>
+              <g id="walkerPin" class="walker-pin hidden">
+                <circle cx="0" cy="0" r="14" class="walker-halo" />
+                <circle cx="0" cy="0" r="9" class="walker-body" />
+                <text x="0" y="4" text-anchor="middle" font-size="10">🚶</text>
+              </g>
+            </g>
+          </svg>
+        </div>
+
+        <!-- Interactive Node Tooltip -->
+        <div id="nodeTooltip" class="node-tooltip hidden">
+          <div class="tooltip-header">
+            <span class="tooltip-icon" id="ttIcon">📍</span>
+            <div class="tooltip-title" id="ttTitle">Room Name</div>
+          </div>
+          <div class="tooltip-body">
+            <div class="tooltip-location" id="ttLocation">Block A, Level 1</div>
+            <div class="tooltip-desc" id="ttDesc"></div>
+          </div>
+          <div class="tooltip-actions">
+            <button class="tt-btn start" id="ttSetStart">Set as Start</button>
+            <button class="tt-btn dest" id="ttSetDest">Navigate Here</button>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="/static/map/map.js"></script>
+</body>
+</html>

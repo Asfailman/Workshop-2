@@ -345,8 +345,8 @@ class AssistantService:
             r'\b(?:from|dari)\s+(.+?)\s+(?:to|ke|towards|sampai)\s+(.+)',
             # 2. "between <origin> and <dest>" / "antara <origin> dan <dest>"
             r'\b(?:between|antara)\s+(.+?)\s+(?:and|dan|with|dengan)\s+(.+)',
-            # 3. "<dest> from <origin>" / "how to get to <dest> from <origin>"
-            r'\b(?:to|ke|towards)\s+(.+?)\s+(?:from|dari)\s+(.+)',
+            # 3. "<dest> from <origin>" / "how to get/go to <dest> from <origin>"
+            r'(?:how\s+(?:to|do\s+i|can\s+i)\s+(?:get|go|walk)\s+to|directions?\s+to|path\s+to|route\s+to|way\s+to|navigate\s+to|\bto|\bke|\btowards)\s+(.+?)\s+(?:from|dari)\s+(.+)',
             # 4. Direct "<origin> to <dest>" without "from" prefix
             r'^(?:can\s+you\s+)?(?:show\s+(?:me\s+)?)?(?:short\s+|shortest\s+|nearest\s+)?(?:path\s+|route\s+)?(?:from\s+)?(.+?)\s+(?:to|ke|towards)\s+(.+)$',
         ]
@@ -361,7 +361,7 @@ class AssistantService:
                     orig_cand, dest_cand = g1, g2
 
                 # Clean polite, navigational, or filler words
-                clean_re = r'\b(please|pls|can you|can i|could you|show me|tell me|give me|short|shortest|nearest|fastest|quickest|path|route|way|walk|how to get|how do i get)\b'
+                clean_re = r'\b(please|pls|can you|can i|could you|show me|tell me|give me|short|shortest|nearest|fastest|quickest|path|route|way|walk|how to get to|how do i get to|how to go to|how do i go to|how to get|how do i get|how to go|how to|go to|get to|go|get)\b'
                 orig_clean = re.sub(clean_re, '', orig_cand, flags=re.I).strip()
                 dest_clean = re.sub(clean_re, '', dest_cand, flags=re.I).strip()
 
@@ -481,6 +481,7 @@ class AssistantService:
                 "start_id": current_loc,
                 "destination_id": dest_id,
                 "destination_name": dest_name,
+                "map_url": f"/map?start={current_loc}&dest={dest_id}",
                 "route": route_calc,
             }
             route_info = route_calc
@@ -880,6 +881,7 @@ class AssistantService:
                         "start_name": orig_name,
                         "destination_id": dest_id,
                         "destination_name": dest_name,
+                        "map_url": f"/map?start={orig_id}&dest={dest_id}",
                         "route": route_calc,
                     }
                 else:
