@@ -2,51 +2,124 @@
 # Operating System Files
 # ==========================================
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
+Thumbs.db:encryptable
 desktop.ini
+$RECYCLE.BIN/
 
 # ==========================================
 # Android & Gradle Build Artifacts
 # ==========================================
 .gradle/
 build/
-*/build/
+**/build/
+app/build/
 captures/
 .navigation/
 output.json
+output-metadata.json
 
 # Local Android SDK configuration (machine-specific)
 local.properties
+
+# Android Keystore & Signing Keys (Do not commit secrets!)
+*.jks
+*.keystore
+signing-config-versions.json
+
+# Native / NDK build cache
+.cxx/
+.externalNativeBuild/
 
 # Android Studio / IntelliJ IDEA
 .idea/
 *.iml
 *.iws
 *.ipr
+out/
 
-# Kotlin
+# Kotlin / Kotlin Multiplatform
 .kotlin/
+*.class
 
 # ==========================================
 # Python & Virtual Environments
 # ==========================================
 __pycache__/
+**/__pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
+
+# Distribution / Packaging
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
 env/
 venv/
 .venv/
 ENV/
+env.bak/
+venv.bak/
 
-# Testing & Logs
+# Testing, Coverage & Linters
 .pytest_cache/
-*.log
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+htmlcov/
+.mypy_cache/
+.ruff_cache/
 
-# Environment variables & secrets
+# Logs & Databases
+*.log
+*.sqlite
+*.sqlite3
+
+# ==========================================
+# Environment Variables & Secrets
+# ==========================================
 .env
-.env.local
+.env.*
+!.env.example
+
+# ==========================================
+# Editors & IDE Configurations
+# ==========================================
+.vscode/
+*.swp
+*.swo
+*~
+.directory
+.cursor/
+.gemini/
 
 # JVM Crash logs
 hs_err_pid*
