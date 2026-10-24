@@ -35,7 +35,7 @@ The system is organized into three main layers:
 2. **Backend Service (`module_1_back_end/`)**:
    - FastAPI server exposing RESTful endpoints for Android clients.
    - Manages routing, destination lookup, and forwards queries to the AI module.
-   - Pre-configured entry point at [backend/main.py](module_1_back_end/backend/main.py).
+   - Pre-configured entry point at [backend/main.py](module_1_back_end/backend/main.py) and runnable via [run_backend.py](run_backend.py).
 
 3. **AI & NLP Module (`AI/`)**:
    - Natural Language Processing engine powered by **Ollama (`llama3.2:3b`)**.
@@ -45,50 +45,18 @@ The system is organized into three main layers:
 
 ---
 
-## 📁 Repository Structure
-
-```text
-Workshop-2/
-├── app/                              # Android application (Kotlin / Gradle)
-│   ├── src/main/java/.../            # Activities, ViewModels, and ApiService
-│   └── src/main/res/                 # Layouts, drawables, and themes
-├── AI/                               # Conversational AI & NLP engine
-│   ├── nlp_module.py                 # Core Ollama integration & intent processor
-│   ├── main.py                       # CLI testing interface
-│   └── __init__.py
-├── module_1_back_end/                # Backend API service
-│   ├── backend/
-│   │   ├── api/v1/                   # FastAPI route handlers
-│   │   │   ├── assistant.py          # /api/v1/assistant/query
-│   │   │   ├── destinations.py       # Destination listings
-│   │   │   ├── health.py             # Server health check
-│   │   │   └── router.py             # Consolidated API router
-│   │   ├── core/                     # Configuration settings
-│   │   ├── knowledge_base/           # Location and venue data
-│   │   └── main.py                   # FastAPI application instance
-│   └── requirements.txt              # Backend dependencies
-├── requirements.txt                  # Root-level Python requirements
-├── run_backend.bat                   # Batch script to launch FastAPI backend
-├── run_ngrok.bat                     # Batch script to start ngrok tunnel
-├── run_all.bat                       # Batch script to start backend + ngrok
-├── build.gradle.kts                  # Root Gradle build configuration
-├── settings.gradle.kts               # Gradle project modules
-└── README.md                         # Project documentation
-```
-
----
-
-## 🛠️ Prerequisites
+## 🛠️ Prerequisites & Initial Setup
 
 Ensure the following tools are installed on your machine:
 
 1. **Python 3.10+**
 2. **Ollama**:
-   - Download from [ollama.com](https://ollama.com).
+   - Download from [https://ollama.com](https://ollama.com).
    - Pull the required LLM model:
-     ```bash
-     ollama pull llama3.2:3b
+     ```powershell
+     ollama run llama3.2:3b
      ```
+   *(Keep Ollama running in the background while working with the AI or Backend).*
 3. **Android Studio** (Ladybug or later recommended) with **JDK 17+** and **Android SDK 34+**.
 4. *(Optional for remote mobile testing)* **ngrok**:
    - Download from [ngrok.com](https://ngrok.com) for public URL tunneling.
@@ -99,12 +67,19 @@ Ensure the following tools are installed on your machine:
 
 ### 1. Set Up Python Dependencies
 
-From the repository root directory:
+From the repository root directory (`Workshop-2`):
 
-```bash
-# Optional: create a virtual environment
+```powershell
+# Create virtual environment
 python -m venv venv
-venv\Scripts\activate      # Windows
+
+# Activate it:
+# Windows (PowerShell):
+.\venv\Scripts\Activate.ps1
+# Windows (Command Prompt):
+.\venv\Scripts\activate.bat
+# macOS / Linux:
+source venv/bin/activate
 
 # Install required packages
 pip install -r requirements.txt
@@ -112,35 +87,55 @@ pip install -r requirements.txt
 
 ### 2. Verify AI & NLP Engine (CLI Mode)
 
-You can test the NLP conversational engine in your terminal before running the backend:
+You can test the conversational AI logic standalone in your terminal before running the backend:
 
-```bash
-python AI/main.py
+```powershell
+cd AI
+python main.py
 ```
 
-Type any guidance question (e.g. `"Where is the library?"`) to see structured intent recognition and response generation.
+Type any guidance question (e.g. `"Where is the library?"`) to inspect prompt behavior, intent classification, and entity extraction.
 
 ### 3. Run the Backend Server
 
-Start the backend using the provided batch script:
-- Double-click **`run_backend.bat`**, OR
-- Run manually in terminal:
-  ```bash
+Start the backend using any of the following options:
+
+- **Option A (Python script):**
+  ```powershell
+  python run_backend.py
+  ```
+- **Option B (Batch script):**
+  - Double-click **`run_backend.bat`**, OR
+- **Option C (Manual uvicorn command):**
+  ```powershell
   cd module_1_back_end
   python -m uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload
   ```
 
-API documentation will be available at:
-- Swagger UI: `http://localhost:8000/docs`
-- Redoc: `http://localhost:8000/redoc`
+Interactive API documentation will be available at:
+- **Swagger UI:** `http://localhost:8000/docs`
+- **Redoc:** `http://localhost:8000/redoc`
+
+#### How to Test via Swagger:
+1. Open `http://localhost:8000/docs` in your browser.
+2. Select `POST /api/v1/assistant/query` > **Try it out**.
+3. Send a test JSON request:
+   ```json
+   {
+     "session_id": "test_session",
+     "message": "Where is the library?",
+     "current_location_id": "MAIN_ENTRANCE"
+   }
+   ```
+4. Verify you receive the generated AI reply and extracted destination.
 
 ---
 
 ## 📱 Connecting the Android App
 
 ### ApiService.kt Location
-```bash
-app\src\main\java\com\example\aiguidance_bot\data\ApiService.kt
+```text
+app/src/main/java/com/example/aiguidance_bot/data/ApiService.kt
 ```
 
 ### Option A: Testing on Local Wi-Fi
@@ -168,9 +163,29 @@ app\src\main\java\com\example\aiguidance_bot\data\ApiService.kt
 |---|---|---|
 | `GET` | `/api/v1/health` | Service health status check |
 | `POST` | `/api/v1/assistant/query` | Main query endpoint for Android assistant messages |
+| `POST` | `/api/v1/assistant/reset` | Reset dialogue context for a specific session |
 | `GET` | `/api/v1/destinations` | List available campus destinations and landmarks |
+| `GET` | `/api/v1/destinations/{id}` | Retrieve specific destination details |
 | `POST` | `/api/v1/route` | Compute navigation route between points |
 | `POST` | `/api/v1/recommend` | Destination recommendation endpoint |
+
+---
+
+## 👥 Team Roles (Module 1)
+
+* **Member 1 (Android UI):** Consumes `POST /api/v1/assistant/query` and manages the user interface.
+* **Member 2 (AI / NLP):** Maintains `AI/nlp_module.py` and model responses.
+* **Member 3 (Backend API):** Maintains `module_1_back_end/` endpoints, session handling, and knowledge base.
+* **Member 4 (Integration):** Validates API contracts and coordinates multi-module integration.
+
+---
+
+## ⚠️ Common Issues & Troubleshooting
+
+* **Error: `ConnectionRefusedError` or `Ollama service unavailable`**:
+  Make sure Ollama is open and running on your machine, and that you ran `ollama run llama3.2:3b`.
+* **Port Conflict**:
+  If port `8000` is already in use by another application, change the port in `run_backend.py` (e.g. `port=8080`) or pass `--port 8080` to uvicorn.
 
 ---
 

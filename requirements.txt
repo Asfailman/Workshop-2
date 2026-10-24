@@ -1,7 +1,9 @@
-# AI Guidance Bot Backend & NLP Requirements
-fastapi>=0.100.0
-uvicorn>=0.23.0
+# FastAPI Backend Web Framework
+fastapi>=0.110.0
+uvicorn[standard]>=0.28.0
 pydantic>=2.0.0
 requests>=2.31.0
-ollama>=0.3.0
+
+# AI / NLP (Ollama Integration)
+ollama>=0.4.0
 python-dotenv>=1.0.0

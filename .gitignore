@@ -23,8 +23,6 @@ captures/
 .navigation/
 output.json
 output-metadata.json
-
-# Local Android SDK configuration (machine-specific)
 local.properties
 
 # Android Keystore & Signing Keys (Do not commit secrets!)
@@ -47,6 +45,25 @@ out/
 .kotlin/
 *.class
 
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# JVM crash logs
+hs_err_pid*
+replay_pid*
+
+# BlueJ files
+*.ctxt
+
 # ==========================================
 # Python & Virtual Environments
 # ==========================================
@@ -58,7 +75,6 @@ __pycache__/
 .Python
 
 # Distribution / Packaging
-build/
 develop-eggs/
 dist/
 downloads/
@@ -120,7 +136,3 @@ htmlcov/
 .directory
 .cursor/
 .gemini/
-
-# JVM Crash logs
-hs_err_pid*
-replay_pid*
