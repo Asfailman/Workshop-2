@@ -20,7 +20,7 @@ class ApiService {
     private val gson = Gson()
 
     private val apiUrl =
-        "https://rinse-upstart-favorable.ngrok-free.dev/api/v1/assistant/query"
+        "https://dazzling-endurance-huddle.ngrok-free.dev/api/v1/assistant/query"
 
     suspend fun sendMessage(prompt: String): String =
         withContext(Dispatchers.IO) {

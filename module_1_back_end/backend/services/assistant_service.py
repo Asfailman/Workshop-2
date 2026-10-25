@@ -252,7 +252,10 @@ class AssistantService:
             "please do", "yes i would", "yes i want", "yes bring me", "yes guide me",
             "ya tolong", "boleh tolong", "haah nak", "jom pergi", "yes tolong",
             "yes show me", "yes directions", "sure directions", "yes walk", "yes walking",
-            "show direction", "show directions", "show me directions", "show me direction"
+            "show direction", "show directions", "show me directions", "show me direction",
+            "lead the way", "lets go", "let's go", "take me there", "guide me there",
+            "bring it on", "yes please guide me", "alright guide me", "ok show me",
+            "lets do it", "let's do it", "show the way", "yes take me", "yes please lead"
         }
 
         if msg in exact_phrases:
@@ -271,13 +274,24 @@ class AssistantService:
 
     def _is_negative(self, message: str) -> bool:
         """Detects whether user is explicitly declining or canceling a direction offer."""
-        msg = re.sub(r'[^\w\s]', '', message.lower()).strip()
+        msg_lower = message.lower().strip()
+        # If user is providing an origin or correction ("no from X", "no to Y", "no I mean X"), it is NOT a decline!
+        if re.search(r'\b(?:from|dari|dr|start\s+from|starting\s+from|to|ke|i\s+mean|actually|instead|bukan|maksud\s+saya)\b', msg_lower):
+            return False
+
+        msg = re.sub(r'[^\w\s]', '', msg_lower).strip()
         negatives = {
             "no", "nope", "nah", "no thanks", "no thank you", "dont", "don't",
             "cancel", "stop", "nevermind", "never mind", "takpe", "tak nak",
-            "xnak", "tak payah", "tak mau", "not now"
+            "xnak", "tak payah", "tak mau", "not now", "tak perlu", "tak pe"
         }
-        return msg in negatives or msg.startswith("no ") or msg.startswith("tak ")
+        if msg in negatives:
+            return True
+
+        if re.match(r'^(?:no|tak|xnak|tak nak)\s+(?:thanks?|thank\s+you|need|need\s+directions?|terima\s+kasih|lah|la|je|sahaja|now)?$', msg):
+            return True
+
+        return False
 
     def _is_navigation_command(self, message: str) -> bool:
         """Detects whether user is explicitly commanding navigation / walking guidance."""
@@ -326,52 +340,82 @@ class AssistantService:
         ]
         return any(re.search(p, msg_lower) for p in patterns)
 
-    def _extract_origin_and_destination(
+    def _extract_origin_and_destination_candidates(
         self, message: str
-    ) -> Tuple[Optional[Dict[str, Any]], Optional[Dict[str, Any]]]:
+    ) -> Tuple[Optional[str], Optional[str]]:
         """
-        Extracts both an explicit origin and destination from natural human phrasing.
-        Uses CampusNLP for typo-resilient semantic slot extraction.
+        Extracts raw (origin, destination) strings from user phrasing including Manglish:
+        e.g. 'what good jalan to follow when I from vr lab to kernal', 'jalan dari A ke B'
         """
-        if CampusNLP:
-            orig, dest = CampusNLP.extract_origin_and_destination(message, self.repository)
-            if orig and dest:
-                return orig, dest
-
         msg_clean = message.strip().rstrip("?.!,")
 
         patterns = [
-            # 1. "from <origin> to <dest>" / "dari <origin> ke <dest>"
-            r'\b(?:from|dari)\s+(.+?)\s+(?:to|ke|towards|sampai)\s+(.+)',
+            # 1. "from <origin> to <dest>" / "dari <origin> ke <dest>" (prefix-resilient)
+            r'(?:.*?\b)?(?:from|dari|dr)\s+(.+?)\s+(?:to|ke|towards|sampai)\s+(.+)',
             # 2. "between <origin> and <dest>" / "antara <origin> dan <dest>"
-            r'\b(?:between|antara)\s+(.+?)\s+(?:and|dan|with|dengan)\s+(.+)',
-            # 3. "<dest> from <origin>" / "how to get to <dest> from <origin>"
-            r'\b(?:to|ke|towards)\s+(.+?)\s+(?:from|dari)\s+(.+)',
+            r'(?:.*?\b)?(?:between|antara)\s+(.+?)\s+(?:and|dan|with|dengan)\s+(.+)',
+            # 3. "<dest> from <origin>"
+            r'(?:.*?\b)?(?:to|ke|towards)\s+(.+?)\s+(?:from|dari|dr)\s+(.+)',
             # 4. Direct "<origin> to <dest>" without "from" prefix
-            r'^(?:can\s+you\s+)?(?:show\s+(?:me\s+)?)?(?:short\s+|shortest\s+|nearest\s+)?(?:path\s+|route\s+)?(?:from\s+)?(.+?)\s+(?:to|ke|towards)\s+(.+)$',
+            r'^(?:can\s+you\s+)?(?:show\s+(?:me\s+)?)?(?:short\s+|shortest\s+|nearest\s+)?(?:path\s+|route\s+|jalan\s+)?(?:from\s+)?(.+?)\s+(?:to|ke|towards)\s+(.+)$',
         ]
 
         for idx, pattern in enumerate(patterns):
             match = re.search(pattern, msg_clean, re.IGNORECASE)
             if match:
                 g1, g2 = match.group(1).strip(), match.group(2).strip()
+
+                # If pattern 4 (without explicit 'from' prefix), ensure g1 is not a navigation command or filler
+                if idx == 3:
+                    nav_command_pattern = r'\b(take\s+me|bring\s+me|guide\s+me|lead\s+me|direct\s+me|bawa\s+saya|bawa|hantar\s+saya|pandu\s+saya|go|pergi|nak\s+pergi|walk|jalan|ouhh|ohh|i\s+see)\b'
+                    if re.search(nav_command_pattern, g1, re.I):
+                        continue
+
                 if idx == 2:
                     dest_cand, orig_cand = g1, g2
                 else:
                     orig_cand, dest_cand = g1, g2
 
-                # Clean polite, navigational, or filler words
-                clean_re = r'\b(please|pls|can you|can i|could you|show me|tell me|give me|short|shortest|nearest|fastest|quickest|path|route|way|walk|how to get|how do i get)\b'
+                # If query contains sequential multi-stop clauses ("but first", "before that"), let sequential handler process it
+                if any(w in dest_cand.lower() for w in ["but first", "before that", "before this", "first then"]):
+                    continue
+
+                # Clean polite, navigational, or Manglish filler words
+                clean_re = r'\b(please|pls|can you|can i|could you|show me|tell me|give me|take me|bring me|guide me|lead me|bawa saya|short|shortest|nearest|fastest|quickest|path|route|way|jalan|laluan|walk|how to get|how do i get|good|best|what|when i|bila saya|nak|nak pegi|nak pergi|instead|ouhh|ohh|i see)\b'
                 orig_clean = re.sub(clean_re, '', orig_cand, flags=re.I).strip()
                 dest_clean = re.sub(clean_re, '', dest_cand, flags=re.I).strip()
 
-                orig_loc = self._find_location_in_text(orig_clean) or self._find_location_in_text(orig_cand)
-                dest_loc = self._find_location_in_text(dest_clean) or self._find_location_in_text(dest_cand)
+                # If orig_clean is empty after stripping filler commands, then no real origin was provided
+                if not orig_clean:
+                    continue
 
-                if orig_loc and dest_loc:
-                    return orig_loc, dest_loc
+                # For Pattern 4 (no explicit 'from'), candidate origin MUST be a recognized campus location
+                if idx == 3 and not self._find_location_in_text(orig_clean):
+                    continue
+
+                final_orig = orig_clean
+                final_dest = dest_clean if dest_clean else dest_cand
+
+                if final_orig and final_dest:
+                    return final_orig, final_dest
 
         return None, None
+
+    def _extract_origin_and_destination(
+        self, message: str
+    ) -> Tuple[Optional[Dict[str, Any]], Optional[Dict[str, Any]], Optional[str], Optional[str]]:
+        """
+        Extracts both origin and destination objects and candidate strings.
+        Returns: (orig_loc, dest_loc, orig_cand_str, dest_cand_str)
+        """
+        orig_cand, dest_cand = self._extract_origin_and_destination_candidates(message)
+        if not orig_cand or not dest_cand:
+            return None, None, None, None
+
+        orig_loc = self._find_location_in_text(orig_cand)
+        dest_loc = self._find_location_in_text(dest_cand)
+
+        return orig_loc, dest_loc, orig_cand, dest_cand
 
     def _find_nearest_facility(
         self, current_loc: str, category_or_kw: str = "toilet"
@@ -799,7 +843,1042 @@ class AssistantService:
                 "Would you like walking directions to any of these locations?"
             )
 
-        return reply
+    def _check_non_existent_facility(self, message: str) -> Optional[Dict[str, Any]]:
+        """
+        Detects requests for facilities or room numbers that do not exist in FTMK:
+        - Non-existent numbered labs (AI Lab 5+, BK 8-12, SE Lab 4+, etc.)
+        - Amenities outside FTMK (ATM, bank, gym, swimming pool, dorm, lift, etc.)
+        """
+        msg_lower = message.lower().strip()
+
+        # 1. AI Labs (FTMK only has AI Labs 1, 2, 3, 4 in Block B, Level 2)
+        ai_match = re.search(r'\b(?:makmal\s+)?(?:ai|artificial\s+intelligence)\s*(?:lab(?:oratory)?)?\s*([0-9]+)\b', msg_lower)
+        if ai_match:
+            num = int(ai_match.group(1))
+            if num < 1 or num > 4:
+                return {
+                    "reply": (
+                        f"❌ **AI Lab {num} does not exist in FTMK.**\n\n"
+                        f"FTMK only has **4 AI Labs**:\n"
+                        f"• **AI Lab 1 & AI Lab 2** (Block B, Level 2)\n"
+                        f"• **AI Lab 3 & AI Lab 4 (FAIX)** (Block B, Level 2)\n\n"
+                        f"Would you like directions to one of these AI labs?"
+                    ),
+                    "intent": "LOCATION_QUERY",
+                    "destination_id": None,
+                }
+
+        # 2. Programming Labs (FTMK only has Prog Labs 1-4)
+        prog_match = re.search(r'\b(?:makmal\s+)?(?:prog(?:ram(?:ming)?)?|pengaturcaraan)\s*(?:lab(?:oratory)?)?\s*([0-9]+)\b', msg_lower)
+        if prog_match:
+            num = int(prog_match.group(1))
+            if num < 1 or num > 4:
+                return {
+                    "reply": (
+                        f"❌ **Programming Lab {num} does not exist in FTMK.**\n\n"
+                        f"FTMK only has **Programming Labs 1, 2, 3, and 4**:\n"
+                        f"• **Programming Lab 1 & 2:** Block B, Level 1\n"
+                        f"• **Programming Lab 3 & 4:** Block C, Level 4\n\n"
+                        f"Which programming lab would you like to visit?"
+                    ),
+                    "intent": "LOCATION_QUERY",
+                    "destination_id": None,
+                }
+
+        # 3. Software Engineering Labs (FTMK only has SE Labs 1-3 in Block C, Level 1)
+        se_match = re.search(r'\b(?:makmal\s+)?(?:soft(?:ware)?\s*eng(?:ineering)?|se|kejuruteraan\s+perisian)\s*(?:lab(?:oratory)?)?\s*([0-9]+)\b', msg_lower)
+        if se_match:
+            num = int(se_match.group(1))
+            if num < 1 or num > 3:
+                return {
+                    "reply": (
+                        f"❌ **Software Engineering Lab {num} does not exist in FTMK.**\n\n"
+                        f"FTMK only has **Software Engineering Labs 1, 2, and 3** (all located in **Block C, Level 1**).\n\n"
+                        f"Would you like directions to one of them?"
+                    ),
+                    "intent": "LOCATION_QUERY",
+                    "destination_id": None,
+                }
+
+        # 4. Database Labs (FTMK only has DB Labs 1-3 in Block C, Level 2)
+        db_match = re.search(r'\b(?:makmal\s+)?(?:data(?:base)?|db|pangkalan\s+data)\s*(?:lab(?:oratory)?)?\s*([0-9]+)\b', msg_lower)
+        if db_match:
+            num = int(db_match.group(1))
+            if num < 1 or num > 3:
+                return {
+                    "reply": (
+                        f"❌ **Database Lab {num} does not exist in FTMK.**\n\n"
+                        f"FTMK only has **Database Labs 1, 2, and 3** (all located in **Block C, Level 2**).\n\n"
+                        f"Which database lab are you looking for?"
+                    ),
+                    "intent": "LOCATION_QUERY",
+                    "destination_id": None,
+                }
+
+        # 5. Multimedia Labs (FTMK only has MM Labs 1-4 in Block D)
+        mm_match = re.search(r'\b(?:makmal\s+)?(?:multi(?:media)?|mm)\s*(?:lab(?:oratory)?)?\s*([0-9]+)\b', msg_lower)
+        if mm_match:
+            num = int(mm_match.group(1))
+            if num < 1 or num > 4:
+                return {
+                    "reply": (
+                        f"❌ **Multimedia Lab {num} does not exist in FTMK.**\n\n"
+                        f"FTMK has **Multimedia Labs 1, 2, 3, and 4**:\n"
+                        f"• **Multimedia Lab 1 & 2:** Block D, Level 2\n"
+                        f"• **Multimedia Lab 3 & 4:** Block D, Level 3\n\n"
+                        f"Which multimedia lab do you need?"
+                    ),
+                    "intent": "LOCATION_QUERY",
+                    "destination_id": None,
+                }
+
+        # 6. Network Labs (FTMK only has Network Labs 1 & 2)
+        net_match = re.search(r'\b(?:makmal\s+)?(?:net(?:work)?|rangkaian)\s*(?:lab(?:oratory)?)?\s*([0-9]+)\b', msg_lower)
+        if net_match:
+            num = int(net_match.group(1))
+            if num < 1 or num > 2:
+                return {
+                    "reply": (
+                        f"❌ **Network Lab {num} does not exist in FTMK.**\n\n"
+                        f"FTMK only has **Network Labs 1 and 2**:\n"
+                        f"• **Network Lab 1:** Block C, Level 3\n"
+                        f"• **Network Lab 2:** Block C, Level 2\n\n"
+                        f"Would you like directions to either of them?"
+                    ),
+                    "intent": "LOCATION_QUERY",
+                    "destination_id": None,
+                }
+
+        # 7. Lecture Rooms (BK 1-7, 13, 14, 15, 16 exist; 8-12 and 17+ DO NOT)
+        bk_match = re.search(r'\b(?:bilik\s*kuliah|lec(?:ture)?\s*room|bk)\s*([0-9]+)\b', msg_lower)
+        if bk_match:
+            num = int(bk_match.group(1))
+            valid_bks = {1, 2, 3, 4, 5, 6, 7, 13, 14, 15, 16}
+            if num not in valid_bks:
+                return {
+                    "reply": (
+                        f"❌ **Lecture Room {num} (BK {num}) does not exist in FTMK.**\n\n"
+                        f"Available Lecture Rooms in FTMK are:\n"
+                        f"• **Block C (Level 1):** BK 1, BK 2, BK 3, BK 4, BK 5\n"
+                        f"• **Block B (Level 1):** BK 6, BK 7\n"
+                        f"• **Block E (Level 1):** BK 13\n"
+                        f"• **Block D (Level 1):** BK 14\n"
+                        f"• **Block B (Level 3 & 4):** BK 15, BK 16\n\n"
+                        f"Which lecture room are you looking for?"
+                    ),
+                    "intent": "LOCATION_QUERY",
+                    "destination_id": None,
+                }
+
+        # 8. Non-campus amenities
+        if re.search(r'\b(atm|bank|cash machine|mesin atm)\b', msg_lower):
+            return {
+                "reply": (
+                    "🏧 **ATMs are not located inside the FTMK building.**\n\n"
+                    "The nearest ATMs (CIMB and Bank Islam) are located at the **Student Affairs Building (HEPA) / Central Campus**.\n\n"
+                    "Is there a faculty facility or classroom you need help finding inside FTMK?"
+                ),
+                "intent": "FACILITY_INFO",
+                "destination_id": None,
+            }
+
+        if re.search(r'\b(gym|gymnasium|swimming pool|kolam renang|stadium)\b', msg_lower):
+            return {
+                "reply": (
+                    "🏃 **Sports and gym facilities are not located in FTMK.**\n\n"
+                    "The university Gymnasium, Sports Complex, and swimming pool are located at the **Central UTeM Campus**.\n\n"
+                    "Let me know if you need any directions within FTMK!"
+                ),
+                "intent": "FACILITY_INFO",
+                "destination_id": None,
+            }
+
+        if re.search(r'\b(lift|elevator|escalator|eskalator)\b', msg_lower):
+            return {
+                "reply": (
+                    "ℹ️ **FTMK does not have elevators (lifts) or escalators for general access.**\n\n"
+                    "Movement between levels is via the central stairs located in each block (Blocks A, B, C, D, and E) "
+                    "as well as connecting walkways and bridges on Levels 1, 2, 3, and 4."
+                ),
+                "intent": "FACILITY_INFO",
+                "destination_id": None,
+            }
+
+        if re.search(r'\b(surau|prayer room|musolla|solat)\b', msg_lower):
+            return {
+                "reply": (
+                    "🕌 **Surau / Prayer Rooms at FTMK:**\n\n"
+                    "Dedicated prayer rooms for Muslim students and staff are located at:\n"
+                    "• **Block A, Level 1 Surau** (near Main Entrance)\n"
+                    "• **Block D, Level 1 Surau**\n\n"
+                    "Both provide ablution areas for male and female prayer. Would you like directions to the Block A Surau?"
+                ),
+                "intent": "FACILITY_INFO",
+                "destination_id": "MAIN_ENTRANCE",
+            }
+
+    def _handle_sequential_destinations(
+        self, message: str, session_mem: Dict[str, Any], current_loc: str
+    ) -> Optional[Dict[str, Any]]:
+        """
+        Handles multi-stop sequential requests:
+        e.g. 'bring me to ai lab 4 but first I need to go to program lab first'
+        e.g. 'first go to program lab then ai lab 4'
+        """
+        msg_clean = message.strip().rstrip("?.!,")
+
+        # Pattern 1: "<dest_final> but first (go to) <dest_first> (first)"
+        p1 = r'(?:bring\s+me\s+to|take\s+me\s+to|guide\s+me\s+to|lead\s+me\s+to|go\s+to|navigate\s+to)?\s*(.+?)\s+(?:but\s+first|before\s+that|before\s+this)\s+(?:i\s+need\s+to\s+go\s+to\s+|i\s+want\s+to\s+go\s+to\s+|go\s+to\s+|nak\s+pergi\s+ke\s+)?(.+?)(?:\s+first)?$'
+        # Pattern 2: "first (go to) <dest_first> (and) then (go to) <dest_final>"
+        p2 = r'^(?:first\s+(?:go\s+to\s+|i\s+need\s+to\s+go\s+to\s+|i\s+want\s+to\s+go\s+to\s+)?)(.+?)\s+(?:then|after\s+that|and\s+then)\s+(?:go\s+to\s+|proceed\s+to\s+)?(.+)$'
+        # Pattern 3: "<dest_first> first (and) then <dest_final>"
+        p3 = r'^(.+?)\s+first\s+(?:then|after\s+that|and\s+then)\s+(?:go\s+to\s+|proceed\s+to\s+)?(.+)$'
+
+        match1 = re.search(p1, msg_clean, re.I)
+        match2 = re.search(p2, msg_clean, re.I)
+        match3 = re.search(p3, msg_clean, re.I)
+
+        cand_first = None
+        cand_final = None
+
+        if match1:
+            cand_final = match1.group(1).strip()
+            cand_first = match1.group(2).strip()
+        elif match2:
+            cand_first = match2.group(1).strip()
+            cand_final = match2.group(2).strip()
+        elif match3:
+            cand_first = match3.group(1).strip()
+            cand_final = match3.group(2).strip()
+
+        if not cand_first or not cand_final:
+            return None
+
+        # Clean filler words
+        clean_filler = r'\b(please|pls|can you|bring me|take me|guide me|go to|i need to go to|i want to|nak pergi ke|first|then)\b'
+        cand_first = re.sub(clean_filler, '', cand_first, flags=re.I).strip()
+        cand_final = re.sub(clean_filler, '', cand_final, flags=re.I).strip()
+
+        loc_first = self._find_location_in_text(cand_first)
+        loc_final = self._find_location_in_text(cand_final)
+
+        if not loc_first and not loc_final:
+            return None
+
+        # Case: Both locations are recognized
+        if loc_first and loc_final:
+            name1 = loc_first["name"]
+            bld1 = loc_first.get("building", "FTMK")
+            flr1 = loc_first.get("floor", 1)
+            id1 = loc_first["id"]
+
+            name2 = loc_final["name"]
+            bld2 = loc_final.get("building", "FTMK")
+            flr2 = loc_final.get("floor", 1)
+            id2 = loc_final["id"]
+
+            # Route Leg 1: current_loc -> loc_first
+            leg1_calc = self.routing_service.get_shortest_route(current_loc, id1)
+            dist1 = leg1_calc.get("total_distance", 0) if "status" in leg1_calc and leg1_calc["status"] == "success" else 0
+            steps1 = "\n".join(f"{i+1}. {step}" for i, step in enumerate(leg1_calc.get("instructions", []))) if leg1_calc else ""
+
+            # Route Leg 2: loc_first -> loc_final
+            leg2_calc = self.routing_service.get_shortest_route(id1, id2)
+            dist2 = leg2_calc.get("total_distance", 0) if "status" in leg2_calc and leg2_calc["status"] == "success" else 0
+
+            if bld1 == bld2 and flr1 == flr2:
+                leg2_note = f"Both rooms are on the same floor in **{bld1}, Level {flr1}** (~{dist2}m apart). Walk along the corridor to reach {name2}."
+            elif bld1 == bld2:
+                leg2_note = f"Both rooms are in **{bld1}**! Take the stairs between Level {flr1} and Level {flr2} (~{dist2}m walk) to reach {name2}."
+            else:
+                leg2_note = f"From {name1} ({bld1}), follow the covered walkways connecting to {bld2}, Level {flr2} (~{dist2}m walk)."
+
+            reply = (
+                f"🚶‍♂️ **Multi-Stop Route: {name1} ➔ {name2}:**\n\n"
+                f"📍 **Stop 1:** {name1} ({bld1}, Level {flr1})\n"
+                f"📍 **Stop 2:** {name2} ({bld2}, Level {flr2})\n\n"
+                f"**Step 1: Walking to Stop 1 ({name1}) from {current_loc} ({dist1}m):**\n"
+                f"{steps1}\n\n"
+                f"**Step 2: Connecting to Stop 2 ({name2}):**\n"
+                f"• {leg2_note}\n\n"
+                f"Would you like walking directions starting directly from {name1} to {name2}?"
+            )
+
+            session_mem["last_destination"] = loc_final
+            session_mem["direction_destination"] = loc_final
+            session_mem["direction_origin"] = loc_first
+            session_mem["last_building"] = bld2
+            session_mem["awaiting_direction_confirmation"] = True
+
+            return {
+                "reply": reply,
+                "intent": "GUIDANCE_REQUEST",
+                "destination_id": id1,
+                "confidence": 1.0,
+                "entities": {
+                    "destination": name1,
+                    "category": loc_first.get("category"),
+                    "building": bld1,
+                },
+                "handoff": {
+                    "type": "NAVIGATION",
+                    "start_id": current_loc,
+                    "destination_id": id1,
+                    "destination_name": name1,
+                    "route": leg1_calc,
+                },
+                "route_info": leg1_calc,
+                "recommendations": None,
+                "error": None,
+            }
+
+        return None
+
+    def _handle_faculty_overview(self, message: str) -> Optional[str]:
+        """
+        Handles general faculty / campus overview queries:
+        e.g. 'what have in ftmk', 'in ftmk what facilitity haver', 'can you give information about ftmk',
+        'what is in ftmk', 'apa ada kat ftmk', 'what does ftmk have', etc.
+        """
+        preprocessed = CampusNLP.preprocess_text(message) if CampusNLP else message.lower().strip()
+        msg_clean = re.sub(r'[^\w\s]', '', preprocessed).strip()
+
+        overview_patterns = [
+            r'\bwhat\s+(?:do\s+you\s+)?have\s+in\s+(?:the\s+)?(?:ftmk|faculty|fakulti|campus)\b',
+            r'\bin\s+(?:the\s+)?(?:ftmk|faculty|fakulti)\s+what\s+(?:facility|facilities)\s+have\b',
+            r'\bin\s+(?:the\s+)?(?:ftmk|faculty|fakulti)\s+what\s+have\b',
+            r'\bwhat\s+(?:facility|facilities)\s+(?:do\s+you\s+have|are\s+there|have)\s+in\s+(?:the\s+)?(?:ftmk|faculty|fakulti)\b',
+            r'\bwhat\s+is\s+in\s+(?:the\s+)?(?:ftmk|faculty|fakulti)\b',
+            r'\bwhat\s+are\s+in\s+(?:the\s+)?(?:ftmk|faculty|fakulti)\b',
+            r'\bwhat\s+does\s+(?:ftmk|the\s+faculty)\s+have\b',
+            r'\bwhats\s+in\s+(?:ftmk|the\s+faculty)\b',
+            r'\binformation\s+about\s+(?:ftmk|the\s+faculty)\b',
+            r'\binfo\s+about\s+(?:ftmk|the\s+faculty)\b',
+            r'\btell\s+me\s+about\s+(?:ftmk|the\s+faculty)\b',
+            r'\babout\s+ftmk\b',
+            r'\bfaculty\s+overview\b',
+            r'\bftmk\s+overview\b',
+            r'\bapa\s+ada\s+(?:kat|dekat|di|dalam)\s+(?:ftmk|fakulti)\b',
+            r'\bapa\s+kemudahan\s+(?:kat|dekat|di|dalam)\s+(?:ftmk|fakulti)\b',
+            r'\bsenarai\s+kemudahan\s+(?:ftmk|fakulti)\b',
+            r'\bfacilities\s+in\s+(?:the\s+)?(?:ftmk|faculty)\b',
+        ]
+
+        is_match = any(re.search(p, msg_clean, re.I) for p in overview_patterns) or msg_clean in {
+            "what have in ftmk", "what have in faculty", "in ftmk what facility have",
+            "information about ftmk", "give information about ftmk", "info about ftmk",
+            "tell me about ftmk", "about ftmk", "apa ada kat ftmk", "apa ada di ftmk",
+            "apa ada dalam ftmk", "apa kemudahan di ftmk", "facilities in ftmk"
+        }
+
+        if is_match:
+            return (
+                "🏛️ **Overview of FTMK (Faculty of Information & Communication Technology):**\n\n"
+                "FTMK is organized across **5 interconnected blocks (Blocks A to E)** spanning **Levels 1 to 4**:\n\n"
+                "• **🏢 Block A (Administration & Main Entrance):**\n"
+                "  - **Level 1:** Main Entrance / Lobby, C-ACT, Local Food Vendors (Nasi Lemak, Kuih & Drinks), Surau\n"
+                "  - **Level 2 & 3:** Discussion Rooms, Academic & Administrative Offices, Skybridge to Block B\n"
+                "  - **Level 4:** Seminar Hall & Main Meeting Room\n\n"
+                "• **💻 Block B (AI, Programming & Workshops):**\n"
+                "  - **Level 1:** Programming Labs 1 & 2, Bilik Kuliah 6 & 7, Bilik VIVA\n"
+                "  - **Level 2:** AI Labs 1, 2, 3 & 4 (FAIX), Skybridge to Block A\n"
+                "  - **Level 3 & 4:** Robotics Lab, BITI Workshop, Bilik Kuliah 15 & 16\n\n"
+                "• **🖥️ Block C (Software, Databases & Networks):**\n"
+                "  - **Level 1:** Software Engineering Labs 1–3, Bilik Kuliah 1–5\n"
+                "  - **Level 2:** Database Labs 1–3, Network Lab 2\n"
+                "  - **Level 3:** Systems and Hardware Lab, Network Lab 1\n"
+                "  - **Level 4:** Programming Labs 3 & 4\n\n"
+                "• **🎮 Block D (Multimedia, Metaverse & Creative Tech):**\n"
+                "  - **Level 1:** Students' Common Room, Metaverse Studio, Bilik Kuliah 14, Surau\n"
+                "  - **Level 2 & 3:** Multimedia Labs 1–4, VR Lab, Mini Theatre, Audio Recording Studios\n\n"
+                "• **🛡️ Block E (Cybersecurity, CCNA & E-Sports):**\n"
+                "  - **Level 1:** Game Arena, Bilik Kuliah 13\n"
+                "  - **Level 2 & 3:** Cybersecurity Competence Center, CCNA & Fiber Optic Labs, Wireless & Cloud Computing Labs\n\n"
+                "Would you like walking directions or more details about any of these rooms or facilities?"
+            )
+
+        return None
+
+    def _handle_proximity_comparison(
+        self, message: str, session_mem: Dict[str, Any]
+    ) -> Optional[Dict[str, Any]]:
+        """
+        Handles pairwise proximity inquiries between two locations:
+        e.g. 'kernel room near with bk1?', 'is ai lab 1 near bk1?', 'adakah bilik seminar dekat bilik viva', etc.
+        Detects if either location is non-existent in FTMK and explains clearly.
+        """
+        preprocessed = CampusNLP.preprocess_text(message) if CampusNLP else message.strip()
+        msg_clean = preprocessed.rstrip("?.!,")
+
+        # Patterns matching pairwise comparison:
+        # 1. "(is) <A> near/close to/beside (with/to) <B>"
+        # 2. "(are) <A> and <B> near/close/beside"
+        # 3. "<A> dekat / berdekatan / sebelah (dengan) <B>"
+        prox_pattern1 = r'^(?:is\s+|adakah\s+)?(.+?)\s+(?:is\s+)?(?:near|nearby|close\s+to|close|beside|next\s+to|adjacent\s+to|sebelah|dekat(?:\s+dengan)?|berdekatan(?:\s+dengan)?)\s+(?:with\s+|to\s+|and\s+|dan\s+|dgn\s+)?(.+)$'
+        prox_pattern2 = r'^(?:are\s+|adakah\s+)?(.+?)\s+(?:and|dan|with|dengan)\s+(.+?)\s+(?:near|close|close\s+to|beside|next\s+to|adjacent|sebelah|dekat|berdekatan)$'
+
+        match = re.search(prox_pattern1, msg_clean, re.I)
+        if not match:
+            match = re.search(prox_pattern2, msg_clean, re.I)
+
+        if not match:
+            return None
+
+        cand_a = match.group(1).strip()
+        cand_b = match.group(2).strip()
+
+        # Filter out question words if accidentally captured
+        strip_words = r'^(?:is\s+there\s+any|is\s+|there\s+|any\s+|the\s+)'
+        cand_a = re.sub(strip_words, '', cand_a, flags=re.I).strip()
+        strip_end = r'\s+(?:ke|kah)$'
+        cand_b = re.sub(strip_end, '', cand_b, flags=re.I).strip()
+
+        # If cand_a is a question word like "what" or "what is", this is a general surrounding query, not pairwise!
+        if cand_a.lower() in {"what", "what is", "whats", "what are", "which", "apa", "apa ada", "ada apa", "which room", "which facility"}:
+            return None
+
+        loc_a = self._find_location_in_text(cand_a)
+        loc_b = self._find_location_in_text(cand_b)
+
+        # Case 1: Both locations DO NOT exist in FTMK
+        if not loc_a and not loc_b:
+            reply = (
+                f"❌ Neither **'{cand_a.title()}'** nor **'{cand_b.title()}'** were recognized as facilities in FTMK.\n\n"
+                f"FTMK consists of 5 academic blocks (Blocks A to E) across Levels 1 to 4. "
+                f"Could you verify the room names you are searching for?"
+            )
+            return {
+                "reply": reply,
+                "intent": "LOCATION_QUERY",
+                "destination_id": None,
+                "confidence": 1.0,
+                "entities": {"destination": None, "category": None, "building": None},
+                "handoff": None,
+                "route_info": None,
+                "recommendations": None,
+                "error": None,
+            }
+
+        # Case 2: Cand A does NOT exist, but Loc B DOES exist (Exact match for 'kernel room near with bk1?')
+        if not loc_a and loc_b:
+            b_name = loc_b["name"]
+            b_bld = loc_b.get("building", "FTMK")
+            b_flr = loc_b.get("floor", 1)
+
+            # Get neighbors of B
+            neighbors = [
+                l["name"] for l in self.repository.filter_by_building(b_bld)
+                if l.get("floor") == b_flr and l["id"] != loc_b["id"]
+            ]
+            neighbor_snippet = ""
+            if neighbors:
+                neighbor_snippet = f"\nAlong the same corridor in {b_bld}, Level {b_flr}, you will find:\n" + "\n".join(f"• **{n}**" for n in neighbors[:4])
+
+            reply = (
+                f"❌ **'{cand_a.title()}' does not exist in FTMK.**\n\n"
+                f"**{b_name}** is located in **{b_bld}, Level {b_flr}**.{neighbor_snippet}\n\n"
+                f"Would you like walking directions to {b_name}?"
+            )
+            session_mem["last_destination"] = loc_b
+            session_mem["direction_destination"] = loc_b
+            session_mem["last_building"] = b_bld
+            session_mem["awaiting_direction_confirmation"] = True
+
+            return {
+                "reply": reply,
+                "intent": "LOCATION_QUERY",
+                "destination_id": loc_b["id"],
+                "confidence": 1.0,
+                "entities": {
+                    "destination": b_name,
+                    "category": loc_b.get("category"),
+                    "building": b_bld,
+                },
+                "handoff": None,
+                "route_info": None,
+                "recommendations": None,
+                "error": None,
+            }
+
+        # Case 3: Loc A DOES exist, but Cand B does NOT exist
+        if loc_a and not loc_b:
+            a_name = loc_a["name"]
+            a_bld = loc_a.get("building", "FTMK")
+            a_flr = loc_a.get("floor", 1)
+
+            neighbors = [
+                l["name"] for l in self.repository.filter_by_building(a_bld)
+                if l.get("floor") == a_flr and l["id"] != loc_a["id"]
+            ]
+            neighbor_snippet = ""
+            if neighbors:
+                neighbor_snippet = f"\nAlong the same corridor in {a_bld}, Level {a_flr}, you will find:\n" + "\n".join(f"• **{n}**" for n in neighbors[:4])
+
+            reply = (
+                f"❌ **'{cand_b.title()}' does not exist in FTMK.**\n\n"
+                f"**{a_name}** is located in **{a_bld}, Level {a_flr}**.{neighbor_snippet}\n\n"
+                f"Would you like walking directions to {a_name}?"
+            )
+            session_mem["last_destination"] = loc_a
+            session_mem["direction_destination"] = loc_a
+            session_mem["last_building"] = a_bld
+            session_mem["awaiting_direction_confirmation"] = True
+
+            return {
+                "reply": reply,
+                "intent": "LOCATION_QUERY",
+                "destination_id": loc_a["id"],
+                "confidence": 1.0,
+                "entities": {
+                    "destination": a_name,
+                    "category": loc_a.get("category"),
+                    "building": a_bld,
+                },
+                "handoff": None,
+                "route_info": None,
+                "recommendations": None,
+                "error": None,
+            }
+
+        # Case 4: BOTH locations exist in FTMK!
+        a_id = loc_a["id"]
+        b_id = loc_b["id"]
+        a_name = loc_a["name"]
+        b_name = loc_b["name"]
+        a_bld = loc_a.get("building", "FTMK")
+        a_flr = loc_a.get("floor", 1)
+        b_bld = loc_b.get("building", "FTMK")
+        b_flr = loc_b.get("floor", 1)
+
+        route_calc = self.routing_service.get_shortest_route(a_id, b_id)
+        dist = route_calc.get("total_distance", 0) if "status" in route_calc and route_calc["status"] == "success" else 0
+
+        if a_id == b_id:
+            reply = f"📍 **{a_name}** and **{b_name}** refer to the same location!"
+        elif a_bld == b_bld and a_flr == b_flr:
+            reply = (
+                f"✅ **Yes, {a_name} and {b_name} are very close to each other!**\n\n"
+                f"Both are situated along the same corridor in **{a_bld}, Level {a_flr}** "
+                f"(approximately **{dist}m** apart).\n\n"
+                f"Would you like walking directions between them?"
+            )
+        elif a_bld == b_bld and a_flr != b_flr:
+            reply = (
+                f"📍 **{a_name} and {b_name} are in the same block ({a_bld}), but on different levels:**\n"
+                f"• **{a_name}:** Level {a_flr}\n"
+                f"• **{b_name}:** Level {b_flr}\n\n"
+                f"Walking distance between them is approximately **{dist}m** (accessible via the central stairs of {a_bld}).\n\n"
+                f"Would you like walking directions between them?"
+            )
+        else:
+            reply = (
+                f"📍 **No, they are located in different blocks:**\n"
+                f"• **{a_name}:** {a_bld}, Level {a_flr}\n"
+                f"• **{b_name}:** {b_bld}, Level {b_flr}\n\n"
+                f"Walking distance between them is approximately **{dist}m**.\n\n"
+                f"Would you like walking directions between them?"
+            )
+
+        session_mem["last_destination"] = loc_b
+        session_mem["direction_destination"] = loc_b
+        session_mem["direction_origin"] = loc_a
+        session_mem["awaiting_direction_confirmation"] = True
+
+        return {
+            "reply": reply,
+            "intent": "FACILITY_INFO",
+            "destination_id": b_id,
+            "confidence": 1.0,
+            "entities": {
+                "destination": b_name,
+                "category": loc_b.get("category"),
+                "building": b_bld,
+            },
+            "handoff": None,
+            "route_info": None,
+            "recommendations": None,
+            "error": None,
+        }
+
+    def _handle_surrounding_query(
+        self, message: str, session_mem: Dict[str, Any]
+    ) -> Optional[Dict[str, Any]]:
+        """
+        Handles queries asking what is around, near, beside, or surrounding a location:
+        e.g. 'what surrond ai 1', 'what is near AI Lab 1', 'apa ada dekat bilik viva', etc.
+        """
+        msg_lower = message.lower().strip()
+        surround_kws = [
+            "surround", "surrounds", "surrounding", "surrond", "suround",
+            "around", "near", "nearby", "beside", "next to", "adjacent", "close to",
+            "sebelah", "dekat", "berdekatan", "sekitar", "keliling", "apa ada dekat", "ada apa dekat"
+        ]
+
+        if not any(kw in msg_lower for kw in surround_kws):
+            return None
+
+        # Clean filler surrounding words to isolate the location name
+        cleaned_text = re.sub(
+            r'\b(what|what is|whats|what are|which|facilities|rooms?|labs?|surround|surrounds|surrounding|surrond|suround|around|near|nearby|beside|next to|adjacent|close to|sebelah|dekat|berdekatan|sekitar|keliling|apa ada|ada apa|show me|tell me|is there|ada)\b',
+            '',
+            msg_lower,
+            flags=re.I
+        ).strip()
+
+        target_loc = (
+            self._find_location_in_text(cleaned_text)
+            or self._find_location_in_text(message)
+            or session_mem.get("last_destination")
+        )
+
+        if not target_loc:
+            return None
+
+        loc_id = target_loc["id"]
+        loc_name = target_loc["name"]
+        bld = target_loc.get("building", "Block B")
+        flr = target_loc.get("floor", 2)
+
+        # Find all other facilities in the same building on the same floor
+        same_floor_locs = [
+            loc for loc in self.repository.filter_by_building(bld)
+            if loc.get("floor") == flr and loc["id"] != loc_id
+        ]
+
+        # Check for connecting bridges on this floor
+        bridge_info = ""
+        if bld == "Block A" and flr == 2:
+            bridge_info = "• **Bridge to Block B:** Direct elevated walkway connecting to Block B (Level 2)\n"
+        elif bld == "Block B" and flr == 2:
+            bridge_info = "• **Bridge to Block A:** Direct elevated walkway connecting to Block A (Level 2)\n"
+
+        if same_floor_locs or bridge_info:
+            places_list = "\n".join(f"• **{l['name']}**" for l in same_floor_locs)
+            reply = (
+                f"🏢 **Facilities surrounding {loc_name} ({bld}, Level {flr}):**\n\n"
+                f"Along this corridor and on this same floor, you will find:\n"
+                f"{places_list}\n"
+                f"{bridge_info}\n"
+                f"Would you like walking directions to any of these neighboring rooms?"
+            )
+        else:
+            reply = (
+                f"📍 **{loc_name}** is situated in **{bld}, Level {flr}**.\n\n"
+                f"Would you like walking directions to this room?"
+            )
+
+        session_mem["last_options_list"] = same_floor_locs
+        session_mem["last_destination"] = target_loc
+        session_mem["last_building"] = bld
+        session_mem["direction_destination"] = target_loc
+        session_mem["awaiting_direction_confirmation"] = True
+
+        return {
+            "reply": reply,
+            "intent": "FACILITY_INFO",
+            "destination_id": loc_id,
+            "confidence": 1.0,
+            "entities": {
+                "destination": loc_name,
+                "category": target_loc.get("category"),
+                "building": bld,
+            },
+            "handoff": None,
+            "route_info": None,
+            "recommendations": None,
+            "error": None,
+        }
+
+    def _handle_floor_level_query(
+        self, message: str, session_mem: Dict[str, Any]
+    ) -> Optional[Dict[str, Any]]:
+        """
+        Handles queries asking what is on a specific level / floor:
+        e.g. 'what is on level 2', 'what's in block b level 1', 'apa ada kat tingkat 3', 'level 1 rooms'
+        """
+        msg_lower = message.lower().strip()
+        floor_match = re.search(r'\b(?:level|aras|tingkat|floor)\s*([1-4])\b', msg_lower)
+        if not floor_match:
+            return None
+
+        # Check if user is asking for facilities on that level
+        is_inquiry = any(w in msg_lower for w in ["what", "ada", "show", "list", "tell", "rooms", "labs", "facilities", "which"]) or len(msg_lower.split()) <= 4
+        if not is_inquiry:
+            return None
+
+        floor_num = int(floor_match.group(1))
+        block_match = re.search(r'\bblock\s+([a-e])\b', msg_lower)
+
+        if block_match:
+            block_letter = block_match.group(1).upper()
+            block_name = f"Block {block_letter}"
+            locs = [
+                l for l in self.repository.filter_by_building(block_name)
+                if l.get("floor") == floor_num
+            ]
+            if not locs:
+                return None
+
+            session_mem["last_options_list"] = locs
+            places = "\n".join(f"• **{l['name']}**" for l in locs)
+            reply = (
+                f"🏢 **Facilities on Level {floor_num} of {block_name}:**\n\n"
+                f"{places}\n\n"
+                f"Would you like walking directions to any of these rooms?"
+            )
+            return {
+                "reply": reply,
+                "intent": "FACILITY_INFO",
+                "destination_id": None,
+                "confidence": 1.0,
+                "entities": {"destination": None, "category": "floor_overview", "building": block_name},
+                "handoff": None,
+                "route_info": None,
+                "recommendations": None,
+                "error": None,
+            }
+
+        else:
+            # Query across ALL blocks for this level
+            all_locs = [l for l in self.repository.get_all() if l.get("floor") == floor_num]
+            if not all_locs:
+                return None
+
+            session_mem["last_options_list"] = all_locs
+            by_bld: Dict[str, List[str]] = {}
+            for l in all_locs:
+                bld = l.get("building", "FTMK")
+                by_bld.setdefault(bld, []).append(l["name"])
+
+            lines = [f"🏢 **Overview of Facilities on Level {floor_num} across FTMK:**\n"]
+            for bld in sorted(by_bld.keys()):
+                rooms_summary = " • ".join(by_bld[bld][:4])
+                more = f" *(+{len(by_bld[bld])-4} more)*" if len(by_bld[bld]) > 4 else ""
+                lines.append(f"• **{bld}:** {rooms_summary}{more}")
+
+            lines.append("\nWhich room or block would you like directions to?")
+            return {
+                "reply": "\n".join(lines),
+                "intent": "FACILITY_INFO",
+                "destination_id": None,
+                "confidence": 1.0,
+                "entities": {"destination": None, "category": "floor_overview", "building": None},
+                "handoff": None,
+                "route_info": None,
+                "recommendations": None,
+                "error": None,
+            }
+
+    def _handle_distance_time_query(
+        self, message: str, session_mem: Dict[str, Any], current_loc: str
+    ) -> Optional[Dict[str, Any]]:
+        """
+        Handles questions asking about distance, travel time, or effort:
+        e.g. 'how far is it?', 'how long does it take?', 'is it far from here?', 'berapa minit nak sampai?', 'jauh tak?'
+        """
+        msg_lower = message.lower().strip()
+        time_dist_patterns = [
+            r'\bhow\s+far\b',
+            r'\bhow\s+long\s+(?:to\s+walk|does\s+it\s+take|will\s+it\s+take)\b',
+            r'\bhow\s+many\s+minutes\b',
+            r'\bis\s+it\s+far\b',
+            r'\bjauh\s+tak\b',
+            r'\bjauh\s+ke\b',
+            r'\bberapa\s+jauh\b',
+            r'\bberapa\s+lama\b',
+            r'\bberapa\s+minit\b',
+            r'\bwalking\s+time\b',
+            r'\bestimated\s+time\b',
+        ]
+
+        if not any(re.search(p, msg_lower) for p in time_dist_patterns):
+            return None
+
+        # Determine target destination: either mentioned in text or from context
+        target_loc = self._find_location_in_text(message) or session_mem.get("direction_destination") or session_mem.get("last_destination")
+        if not target_loc:
+            return None
+
+        target_id = target_loc["id"]
+        target_name = target_loc["name"]
+        bld = target_loc.get("building", "FTMK")
+        flr = target_loc.get("floor", 1)
+
+        route_calc = self.routing_service.get_shortest_route(current_loc, target_id)
+        if "status" in route_calc and route_calc["status"] == "success":
+            dist = route_calc.get("total_distance", 0)
+            start_name = route_calc.get("start", current_loc)
+            # Average walking speed ~ 65 meters per minute
+            walking_mins = max(1, round(dist / 65)) if dist > 30 else 1
+
+            if dist == 0:
+                time_str = "You are already right outside this location!"
+            elif dist <= 30:
+                time_str = f"It's just **{dist}m** away — less than a 1-minute easy walk! You are practically right there."
+            elif dist <= 75:
+                time_str = f"It's approximately **{dist}m** away, which is about a **1 to 2 minute** easy walk."
+            else:
+                time_str = f"It is about **{dist}m** away, taking approximately **{walking_mins} minutes** of walking."
+
+            reply = (
+                f"⏱️ **Distance & Estimated Walking Time to {target_name}:**\n\n"
+                f"• **Location:** {bld}, Level {flr}\n"
+                f"• **From:** {start_name}\n"
+                f"• **Estimate:** {time_str}\n\n"
+                f"Would you like step-by-step walking directions there right now?"
+            )
+
+            session_mem["last_destination"] = target_loc
+            session_mem["direction_destination"] = target_loc
+            session_mem["awaiting_direction_confirmation"] = True
+
+            return {
+                "reply": reply,
+                "intent": "FACILITY_INFO",
+                "destination_id": target_id,
+                "confidence": 1.0,
+                "entities": {
+                    "destination": target_name,
+                    "category": target_loc.get("category"),
+                    "building": bld,
+                },
+                "handoff": None,
+                "route_info": None,
+                "recommendations": None,
+                "error": None,
+            }
+
+        return None
+
+    def _handle_ordinal_selection(
+        self, message: str, session_mem: Dict[str, Any], current_loc: str
+    ) -> Optional[Dict[str, Any]]:
+        """
+        Handles user selecting an item from a previously presented list:
+        e.g. 'take me to the first one', 'first room', 'the second one', 'number 1', 'no 2', 'yang pertama'
+        """
+        options = session_mem.get("last_options_list")
+        if not options:
+            return None
+
+        msg_lower = message.lower().strip()
+        ordinal_patterns = [
+            (r'\b(?:the\s+)?(?:first|1st|number\s*1|no\s*1|nombor\s*1|pertama)\b', 0),
+            (r'\b(?:the\s+)?(?:second|2nd|number\s*2|no\s*2|nombor\s*2|kedua)\b', 1),
+            (r'\b(?:the\s+)?(?:third|3rd|number\s*3|no\s*3|nombor\s*3|ketiga)\b', 2),
+            (r'\b(?:the\s+)?(?:fourth|4th|number\s*4|no\s*4|nombor\s*4|keempat)\b', 3),
+            (r'\b(?:the\s+)?(?:fifth|5th|number\s*5|no\s*5|nombor\s*5|kelima)\b', 4),
+        ]
+
+        target_idx = None
+        for pattern, idx in ordinal_patterns:
+            if re.search(pattern, msg_lower):
+                target_idx = idx
+                break
+
+        if target_idx is not None and target_idx < len(options):
+            chosen = options[target_idx]
+            session_mem["last_destination"] = chosen
+            session_mem["direction_destination"] = chosen
+            session_mem["last_building"] = chosen.get("building")
+            session_mem["last_topic"] = chosen.get("category")
+            session_mem["awaiting_direction_confirmation"] = False
+
+            return self._build_walking_directions_response(current_loc, chosen)
+
+        return None
+
+    def _handle_conversational_questions(self, message: str) -> Optional[Dict[str, Any]]:
+        """
+        Handles natural conversational small-talk and common campus queries:
+        - Greetings / introductions
+        - Gratitude & farewells
+        - Campus amenities: WiFi, printing, parking
+        - Academic / administrative offices, Dean's office
+        - Study & group work spaces
+        - Bridges & inter-block walkways
+        - Lost student triage
+        - Bot personality & vending machines
+        """
+        msg_lower = message.lower().strip()
+        msg_clean = re.sub(r'[^\w\s]', '', msg_lower).strip()
+
+        # 1. Greetings (fast-path)
+        greetings = {"hi", "hai", "hello", "hey", "helo", "assalamualaikum", "salam", "selamat pagi", "selamat petang", "selamat tengahari", "good morning", "good afternoon", "good evening"}
+        if msg_clean in greetings or any(msg_clean.startswith(g + " ") for g in greetings):
+            if len(msg_clean.split()) <= 3:
+                return {
+                    "reply": "Hello! Welcome to FTMK. I am your AI campus concierge. How can I assist you with rooms, labs, or directions today? 😊",
+                    "intent": "GREETING",
+                    "destination_id": None,
+                }
+
+        # 2. Thank you / Gratitude
+        thanks = {"thanks", "thank you", "terima kasih", "tq", "thx", "syukran", "much appreciated"}
+        if msg_clean in thanks or any(t in msg_clean for t in thanks):
+            return {
+                "reply": "You're very welcome! 😊 Feel free to ask whenever you need help finding rooms or navigating around FTMK. Have a great day!",
+                "intent": "GENERAL_HELP",
+                "destination_id": None,
+            }
+
+        # 3. Goodbye / Farewell
+        farewells = {"bye", "goodbye", "bye bye", "selamat tinggal", "jumpai lagi", "see you"}
+        if msg_clean in farewells or any(f == msg_clean for f in farewells):
+            return {
+                "reply": "Goodbye! Take care and have a wonderful day at FTMK! 👋",
+                "intent": "GENERAL_HELP",
+                "destination_id": None,
+            }
+
+        # 4. Bot identity / capabilities
+        if any(p in msg_lower for p in ["who are you", "what can you do", "siapa awak", "kamu siapa", "fungsi kamu", "what are you"]):
+            return {
+                "reply": (
+                    "👋 **Hello! I am your FTMK AI Guidance Concierge.**\n\n"
+                    "I can help you with:\n"
+                    "• 🚶 **Walking Directions:** Step-by-step route guidance with distances between any two points\n"
+                    "• 🏢 **Room & Lab Information:** Finding where any classroom, lab, or office is across Blocks A–E\n"
+                    "• 🔍 **Surrounding Rooms:** Showing what facilities are on each floor or near a specific room\n"
+                    "• ⏰ **Facility Details:** Operating hours, room capacities, and equipment\n"
+                    "• 🍴 **Food & Amenities:** Directing you to food vendors at the lobby or restrooms on any floor\n\n"
+                    "What would you like to explore?"
+                ),
+                "intent": "GENERAL_HELP",
+                "destination_id": None,
+            }
+
+        # 5. WiFi
+        if any(p in msg_lower for p in ["wifi", "wi-fi", "internet", "password wifi"]):
+            return {
+                "reply": (
+                    "📶 **Campus Wi-Fi at FTMK:**\n\n"
+                    "All blocks (A, B, C, D, E) are covered by university Wi-Fi:\n"
+                    "• **eduroam:** Recommended for students and staff (log in with your UTeM email credentials).\n"
+                    "• **UTeM-Guest:** For visitors (requires web portal registration).\n\n"
+                    "Let me know if you need directions to any lab or study area!"
+                ),
+                "intent": "FACILITY_INFO",
+                "destination_id": None,
+            }
+
+        # 6. Printing & Photostat
+        if any(p in msg_lower for p in ["print", "printing", "photostat", "fotostat", "cetak"]):
+            return {
+                "reply": (
+                    "🖨️ **Printing & Photostat Services:**\n\n"
+                    "Printing facilities for students are available at:\n"
+                    "• **C-ACT (Creative & Activity Room):** Block A, Level 1\n"
+                    "• **Campus Convenience Shop:** Central Student Center\n\n"
+                    "Would you like walking directions to C-ACT in Block A?"
+                ),
+                "intent": "FACILITY_INFO",
+                "destination_id": "B_A_L1_C_ACT",
+            }
+
+        # 7. Parking
+        if any(p in msg_lower for p in ["parking", "tempat letak kereta", "parkir", "park"]):
+            return {
+                "reply": (
+                    "🚗 **Parking Areas for FTMK:**\n\n"
+                    "• **Student Parking:** Located in the open parking lots behind Block C and adjacent to Block E.\n"
+                    "• **Staff & Visitor Parking:** Designated bays right in front of the **Main Entrance (Block A)**.\n"
+                    "• **Motorcycle Parking:** Covered bays situated near the entrance of Block E and Block B."
+                ),
+                "intent": "FACILITY_INFO",
+                "destination_id": "MAIN_ENTRANCE",
+            }
+
+        # 8. Administrative Offices / Dean / Lecturers
+        if any(p in msg_lower for p in ["dean", "dekan", "pejabat dekan", "academic office", "pejabat akademik", "admin office", "pejabat pentadbiran", "lecturer", "pensyarah", "supervisor", "general office", "pejabat am", "bilik pensyarah"]):
+            return {
+                "reply": (
+                    "🏢 **FTMK Administrative & Academic Offices (Block A):**\n\n"
+                    "• **Dean's Office (Pejabat Dekan):** Block A, Level 3\n"
+                    "• **Academic & Student Affairs Office:** Block A, Level 2\n"
+                    "• **Administrative Discussion Room:** Block A, Level 3\n"
+                    "• **Main Meeting Room & Seminar Hall:** Block A, Level 4\n\n"
+                    "Lecturer consultation rooms are located on Levels 2 and 3 of Block A.\n\n"
+                    "Would you like walking directions to the Block A administrative area?"
+                ),
+                "intent": "FACILITY_INFO",
+                "destination_id": "MAIN_ENTRANCE",
+            }
+
+        # 9. Study Areas / Group Discussion / Assignment Spaces
+        if any(p in msg_lower for p in ["study", "tempat belajar", "group work", "buat assignment", "quiet place", "discussion area", "lepak study", "revision", "tempat bincang"]):
+            return {
+                "reply": (
+                    "📚 **Best Study & Group Discussion Areas inside FTMK:**\n\n"
+                    "• **C-ACT (Block A, Level 1):** Student computing & study lounge with air-conditioning, tables, and power outlets.\n"
+                    "• **Discussion Rooms (Block A, Levels 2 & 3):** Dedicated rooms for group projects and academic discussion.\n"
+                    "• **Students' Common Room (Block D, Level 1):** Relaxed lounge with couches, tables, and vending machines.\n\n"
+                    "Would you like walking directions to C-ACT or the Discussion Room?"
+                ),
+                "intent": "FACILITY_INFO",
+                "destination_id": "B_A_L1_C_ACT",
+            }
+
+        # 10. Connecting Walkways & Bridges
+        if any(p in msg_lower for p in ["bridge", "skybridge", "jambatan", "connecting walkway", "cross block", "lintas blok", "seberang blok"]):
+            return {
+                "reply": (
+                    "🌉 **Connecting Bridges & Walkways between Blocks:**\n\n"
+                    "• **Level 2 Skybridge:** Elevated covered walkway directly linking **Block A (Level 2)** and **Block B (Level 2)** — convenient shortcut from admin to AI labs without going downstairs!\n"
+                    "• **Level 1 Covered Walkway:** Central walkway connecting the Main Entrance (Block A) to Block B, Block C, Block D, and Block E.\n"
+                    "• **Inter-block Corridors:** Direct walkways connect Block B to Block C, and Block E to Block D across Levels 1, 2, 3, and 4.\n\n"
+                    "Which block or room are you heading to?"
+                ),
+                "intent": "FACILITY_INFO",
+                "destination_id": None,
+            }
+
+        # 11. Lost / Confused Student Guidance
+        if any(p in msg_lower for p in ["i am lost", "im lost", "i'm lost", "sesat", "dont know where i am", "don't know where i am", "help me find my way", "where am i"]):
+            return {
+                "reply": (
+                    "🧭 **Don't worry, I'm here to help you find your way!**\n\n"
+                    "To locate where you are right now:\n"
+                    "1. Look at the wall or nearest door for the **Block Letter** (A, B, C, D, or E).\n"
+                    "2. Check the stairwell or doorway sign for the **Level** (Level 1, 2, 3, or 4).\n"
+                    "3. Or note down any nearby room name (e.g. *Bilik Kuliah 1*, *AI Lab 1*, or *Main Entrance*).\n\n"
+                    "Tell me any room or block you see nearby, and where you want to go — I will guide you with step-by-step walking directions!"
+                ),
+                "intent": "GENERAL_HELP",
+                "destination_id": None,
+            }
+
+        # 12. Bot mood / How are you
+        if any(p in msg_lower for p in ["how are you", "how r u", "apa khabar", "sihat ke", "how is it going", "how are u"]):
+            return {
+                "reply": "I'm doing wonderful, thank you for asking! 😊 I'm all set to help you navigate FTMK. What room, lab, or service are you looking for today?",
+                "intent": "GENERAL_HELP",
+                "destination_id": None,
+            }
+
+        # 13. Compliments
+        compliment_pattern = r'\b(good job|great job|you (?:are\s+)?(?:so\s+|very\s+)?smart|smart|clever|pandai|terbaik|good bot|nice bot|awesome|cool|hebat|helpful|you are helpful|great assistant)\b'
+        if re.search(compliment_pattern, msg_lower):
+            return {
+                "reply": "Thank you so much! 🥰 I'm always here to make navigating FTMK smooth and effortless. Let me know whenever you need directions or room info!",
+                "intent": "GENERAL_HELP",
+                "destination_id": None,
+            }
+
+        # 14. Vending machines & drinks
+        if any(p in msg_lower for p in ["vending machine", "mesin layan diri", "air tin", "coffee machine", "beli air", "buy drink", "mineral water"]):
+            return {
+                "reply": (
+                    "🥤 **Drinks & Vending Machines at FTMK:**\n\n"
+                    "• **Drink Vending Machines:** Located at the **Students' Common Room (Block D, Level 1)** and outside the **Block A Main Lobby**.\n"
+                    "• **Cold Drinks & Coffee:** Freshly prepared by local food vendors at the **Main Entrance (Block A, Level 1)** during morning and lunch hours.\n\n"
+                    "Would you like walking directions to the Students' Common Room or the Main Entrance?"
+                ),
+                "intent": "FACILITY_INFO",
+                "destination_id": "B_D_L1_STUDENTS_COMMON_ROOM",
+            }
+
+        return None
 
     async def handle_query(
         self, session_id: str, message: str, current_location_id: str = ""
@@ -815,6 +1894,33 @@ class AssistantService:
         session_id = session_id or "default"
         current_loc = (current_location_id or "").strip() or "MAIN_ENTRANCE"
         session_mem = self._get_memory(session_id)
+
+        # Step -0.3: Casual conversational preambles ("ouhh I see", "oh i see", "ok i see", "alright", etc.)
+        preamble_match = re.match(
+            r'^(?:ouhh\s+i\s+see|oh\s+i\s+see|ok\s+i\s+see|ouhh\s+see|oh\s+see|alright|ah\s+okay|ouhh|ohh|hmm|well|so|okay)\s*,?\s*',
+            message,
+            re.I
+        )
+        if preamble_match:
+            remainder = message[preamble_match.end():].strip()
+            if remainder:
+                message = remainder
+
+        # Step -0.2: Check for change of mind ("actually take me to C-ACT instead", "wait no, where is AI Lab 1?")
+        change_match = re.search(r'^(?:actually|instead|no\s+wait|wait\s+no|tak\s+jadi|tukar)\s*,?\s*(?:of\s+that\s*,?\s*)?', message, re.I)
+        if change_match:
+            session_mem["awaiting_direction_confirmation"] = False
+            session_mem["direction_destination"] = None
+            remainder = message[change_match.end():].strip()
+            if remainder:
+                message = remainder
+
+        # Step -0.1: Quick ellipsis switching ("and BK2?", "how about lab 3?", "what about block c?")
+        ellipsis_match = re.search(r'^(?:and|how\s+about|what\s+about|macam\s+mana\s+pula)\s+', message, re.I)
+        if ellipsis_match:
+            remainder = message[ellipsis_match.end():].strip()
+            if remainder:
+                message = remainder
 
         # Step 0: Check for Negative Response ("no", "no thanks", "takpe", etc.)
         if self._is_negative(message) and session_mem.get("awaiting_direction_confirmation"):
@@ -834,95 +1940,279 @@ class AssistantService:
                 "error": None,
             }
 
-        # Step 0.1: Check for explicit Origin-to-Destination routing ("from A to B", "between A and B")
-        orig_match, dest_match = self._extract_origin_and_destination(message)
-        if orig_match and dest_match:
-            orig_id = orig_match["id"]
-            dest_id = dest_match["id"]
-            orig_name = orig_match["name"]
-            dest_name = dest_match["name"]
-            orig_bld = orig_match.get("building", "FTMK")
-            orig_flr = orig_match.get("floor", 1)
-            dest_bld = dest_match.get("building", "FTMK")
-            dest_flr = dest_match.get("floor", 1)
+        # Step 0.08: Check for Sequential Multi-Stop Destinations ("bring me to X but first go to Y", "first go to Y then X")
+        seq_res = self._handle_sequential_destinations(message, session_mem, current_loc)
+        if seq_res:
+            self._record_nlp_turn(session_id, message, seq_res["reply"], seq_res.get("entities"))
+            seq_res["session_id"] = session_id
+            return seq_res
 
-            session_mem["last_destination"] = dest_match
-            session_mem["direction_destination"] = dest_match
-            session_mem["last_building"] = dest_bld
-            session_mem["last_topic"] = dest_match.get("category")
-            session_mem["awaiting_direction_confirmation"] = False
+        # Step 0.1: Check for explicit Origin-to-Destination routing ("from A to B", "between A and B", "what good jalan from A to B")
+        orig_match, dest_match, orig_cand, dest_cand = self._extract_origin_and_destination(message)
+        if orig_cand and dest_cand:
+            # Case 1: Both locations exist in FTMK
+            if orig_match and dest_match:
+                orig_id = orig_match["id"]
+                dest_id = dest_match["id"]
+                orig_name = orig_match["name"]
+                dest_name = dest_match["name"]
+                orig_bld = orig_match.get("building", "FTMK")
+                orig_flr = orig_match.get("floor", 1)
+                dest_bld = dest_match.get("building", "FTMK")
+                dest_flr = dest_match.get("floor", 1)
 
-            if orig_id == dest_id:
-                reply_text = f"📍 **{orig_name}** is already at your starting point! No walking needed."
-                route_calc = None
-                handoff = {
-                    "type": "ARRIVED",
-                    "start_id": orig_id,
-                    "destination_id": dest_id,
-                    "destination_name": dest_name,
-                }
-            else:
-                route_calc = self.routing_service.get_shortest_route(orig_id, dest_id)
-                if "status" in route_calc and route_calc["status"] == "success":
-                    dist = route_calc.get("total_distance", 0)
-                    steps_formatted = "\n".join(
-                        f"{i+1}. {step}" for i, step in enumerate(route_calc.get("instructions", []))
-                    )
-                    reply_text = (
-                        f"🚶‍♂️ **Nearest Walking Path from {orig_name} ({orig_bld}, Level {orig_flr}) "
-                        f"to {dest_name} ({dest_bld}, Level {dest_flr}) ({dist}m):**\n\n"
-                        f"{steps_formatted}\n\n"
-                        f"Feel free to ask if you need directions to anywhere else!"
-                    )
+                session_mem["last_destination"] = dest_match
+                session_mem["direction_destination"] = dest_match
+                session_mem["last_building"] = dest_bld
+                session_mem["last_topic"] = dest_match.get("category")
+                session_mem["awaiting_direction_confirmation"] = False
+
+                if orig_id == dest_id:
+                    reply_text = f"📍 **{orig_name}** is already at your starting point! No walking needed."
+                    route_calc = None
                     handoff = {
-                        "type": "NAVIGATION",
+                        "type": "ARRIVED",
                         "start_id": orig_id,
-                        "start_name": orig_name,
                         "destination_id": dest_id,
                         "destination_name": dest_name,
-                        "route": route_calc,
                     }
                 else:
-                    reply_text = (
-                        f"📍 Route from **{orig_name}** to **{dest_name}** is currently unavailable."
-                    )
-                    handoff = {
-                        "type": "NAVIGATION_UNAVAILABLE",
-                        "start_id": orig_id,
-                        "destination_id": dest_id,
-                        "error": route_calc.get("error", "Route could not be calculated"),
-                    }
+                    route_calc = self.routing_service.get_shortest_route(orig_id, dest_id)
+                    if "status" in route_calc and route_calc["status"] == "success":
+                        dist = route_calc.get("total_distance", 0)
+                        steps_formatted = "\n".join(
+                            f"{i+1}. {step}" for i, step in enumerate(route_calc.get("instructions", []))
+                        )
+                        reply_text = (
+                            f"🚶‍♂️ **Nearest Walking Path from {orig_name} ({orig_bld}, Level {orig_flr}) "
+                            f"to {dest_name} ({dest_bld}, Level {dest_flr}) ({dist}m):**\n\n"
+                            f"{steps_formatted}\n\n"
+                            f"Feel free to ask if you need directions to anywhere else!"
+                        )
+                        handoff = {
+                            "type": "NAVIGATION",
+                            "start_id": orig_id,
+                            "start_name": orig_name,
+                            "destination_id": dest_id,
+                            "destination_name": dest_name,
+                            "route": route_calc,
+                        }
+                    else:
+                        reply_text = (
+                            f"📍 Route from **{orig_name}** to **{dest_name}** is currently unavailable."
+                        )
+                        handoff = {
+                            "type": "NAVIGATION_UNAVAILABLE",
+                            "start_id": orig_id,
+                            "destination_id": dest_id,
+                            "error": route_calc.get("error", "Route could not be calculated"),
+                        }
 
-            self._record_nlp_turn(session_id, message, reply_text, {
-                "destination": dest_name,
-                "category": dest_match.get("category"),
-                "building": dest_bld
-            })
-
-            return {
-                "reply": reply_text,
-                "intent": "GUIDANCE_REQUEST",
-                "destination_id": dest_id,
-                "confidence": 1.0,
-                "entities": {
+                self._record_nlp_turn(session_id, message, reply_text, {
                     "destination": dest_name,
                     "category": dest_match.get("category"),
-                    "building": dest_bld,
-                },
-                "handoff": handoff,
-                "route_info": route_calc,
+                    "building": dest_bld
+                })
+
+                return {
+                    "reply": reply_text,
+                    "intent": "GUIDANCE_REQUEST",
+                    "destination_id": dest_id,
+                    "confidence": 1.0,
+                    "entities": {
+                        "destination": dest_name,
+                        "category": dest_match.get("category"),
+                        "building": dest_bld,
+                    },
+                    "handoff": handoff,
+                    "route_info": route_calc,
+                    "recommendations": None,
+                    "session_id": session_id,
+                    "error": None,
+                }
+
+            # Case 2: Starting point found, but destination DOES NOT exist in FTMK (e.g. 'kernal')
+            elif orig_match and not dest_match:
+                orig_name = orig_match["name"]
+                orig_bld = orig_match.get("building", "FTMK")
+                orig_flr = orig_match.get("floor", 1)
+                reply_text = (
+                    f"📍 I recognized your starting location as **{orig_name}** ({orig_bld}, Level {orig_flr}), "
+                    f"but **'{dest_cand}'** was not found in the FTMK Faculty.\n\n"
+                    f"FTMK consists of 5 main blocks (A, B, C, D, E) across Levels 1 to 4. "
+                    f"Please verify the destination room name or tell me what facility you are looking for!"
+                )
+                self._record_nlp_turn(session_id, message, reply_text)
+                return {
+                    "reply": reply_text,
+                    "intent": "LOCATION_QUERY",
+                    "destination_id": None,
+                    "confidence": 1.0,
+                    "entities": {"destination": dest_cand, "category": None, "building": None},
+                    "handoff": None,
+                    "route_info": None,
+                    "recommendations": None,
+                    "session_id": session_id,
+                    "error": None,
+                }
+
+            # Case 3: Destination found, but starting point DOES NOT exist in FTMK
+            elif not orig_match and dest_match:
+                dest_name = dest_match["name"]
+                dest_bld = dest_match.get("building", "FTMK")
+                dest_flr = dest_match.get("floor", 1)
+                reply_text = (
+                    f"📍 I recognized your destination as **{dest_name}** ({dest_bld}, Level {dest_flr}), "
+                    f"but starting location **'{orig_cand}'** was not recognized in FTMK.\n\n"
+                    f"Would you like walking directions starting from the **Main Entrance** instead?"
+                )
+                session_mem["last_destination"] = dest_match
+                session_mem["direction_destination"] = dest_match
+                session_mem["awaiting_direction_confirmation"] = True
+                self._record_nlp_turn(session_id, message, reply_text)
+                return {
+                    "reply": reply_text,
+                    "intent": "LOCATION_QUERY",
+                    "destination_id": dest_match["id"],
+                    "confidence": 1.0,
+                    "entities": {"destination": dest_name, "category": dest_match.get("category"), "building": dest_bld},
+                    "handoff": None,
+                    "route_info": None,
+                    "recommendations": None,
+                    "session_id": session_id,
+                    "error": None,
+                }
+
+        # Step 0.2: Check for Non-Existent Facilities or Invalid Room Numbers (e.g. AI Lab 6, BK 8, ATM, etc.)
+        non_exist = self._check_non_existent_facility(message)
+        if non_exist:
+            self._record_nlp_turn(session_id, message, non_exist["reply"])
+            return {
+                "reply": non_exist["reply"],
+                "intent": non_exist.get("intent", "LOCATION_QUERY"),
+                "destination_id": non_exist.get("destination_id"),
+                "confidence": 1.0,
+                "entities": {"destination": None, "category": None, "building": None},
+                "handoff": None,
+                "route_info": None,
                 "recommendations": None,
                 "session_id": session_id,
                 "error": None,
             }
 
-        # Step 0.5: Check for Affirmative Confirmation or Follow-up Navigation Command
+        # Step 0.25: Check for Faculty / Campus Overview ("what have in ftmk", "in ftmk what facilitity haver", "can you give information about ftmk")
+        overview_reply = self._handle_faculty_overview(message)
+        if overview_reply:
+            self._record_nlp_turn(session_id, message, overview_reply)
+            return {
+                "reply": overview_reply,
+                "intent": "FACILITY_INFO",
+                "destination_id": None,
+                "confidence": 1.0,
+                "entities": {"destination": None, "category": "faculty_overview", "building": None},
+                "handoff": None,
+                "route_info": None,
+                "recommendations": None,
+                "session_id": session_id,
+                "error": None,
+            }
+
+        # Step 0.28: Check for Floor / Level queries ("what is on level 2", "what's in block b level 1", "apa ada kat tingkat 3")
+        floor_res = self._handle_floor_level_query(message, session_mem)
+        if floor_res:
+            self._record_nlp_turn(session_id, message, floor_res["reply"], floor_res.get("entities"))
+            floor_res["session_id"] = session_id
+            return floor_res
+
+        # Step 0.3: Check for Pairwise Proximity Comparison ("kernel room near with bk1?", "is ai lab 1 near bk1?")
+        prox_res = self._handle_proximity_comparison(message, session_mem)
+        if prox_res:
+            self._record_nlp_turn(session_id, message, prox_res["reply"], prox_res.get("entities"))
+            prox_res["session_id"] = session_id
+            return prox_res
+
+        # Step 0.32: Check for Walking Distance & Estimated Travel Time ("how far is it?", "how long does it take?", "berapa jauh?")
+        dist_res = self._handle_distance_time_query(message, session_mem, current_loc)
+        if dist_res:
+            self._record_nlp_turn(session_id, message, dist_res["reply"], dist_res.get("entities"))
+            dist_res["session_id"] = session_id
+            return dist_res
+
+        # Step 0.35: Check for Surrounding / Nearby Queries ("what surround ai 1", "what is near X", etc.)
+        surround_res = self._handle_surrounding_query(message, session_mem)
+        if surround_res:
+            self._record_nlp_turn(session_id, message, surround_res["reply"], surround_res.get("entities"))
+            surround_res["session_id"] = session_id
+            return surround_res
+
+        # Step 0.38: Check for Ordinal Selection from previous options ("take me to the first one", "the second one", "number 1")
+        ordinal_res = self._handle_ordinal_selection(message, session_mem, current_loc)
+        if ordinal_res:
+            ordinal_res["session_id"] = session_id
+            self._record_nlp_turn(session_id, message, ordinal_res["reply"], ordinal_res.get("entities"))
+            return ordinal_res
+
+        # Step 0.4: Check for Conversational / Small-talk queries ("who are you", "thank you", "wifi", etc.)
+        conv_res = self._handle_conversational_questions(message)
+        if conv_res:
+            self._record_nlp_turn(session_id, message, conv_res["reply"])
+            return {
+                "reply": conv_res["reply"],
+                "intent": conv_res.get("intent", "GENERAL_HELP"),
+                "destination_id": conv_res.get("destination_id"),
+                "confidence": 1.0,
+                "entities": {"destination": None, "category": None, "building": None},
+                "handoff": None,
+                "route_info": None,
+                "recommendations": None,
+                "session_id": session_id,
+                "error": None,
+            }
+
+        # Step 0.5: Check for Affirmative Confirmation or Follow-up Navigation Command (including custom origin e.g. "yes from ai lab3")
         is_aff = self._is_affirmative(message)
         is_nav = self._is_navigation_command(message)
-        direct_loc_check = self._find_location_in_text(message)
+
+        # Check if the user specified an explicit starting point in this turn:
+        # e.g. "yes from ai lab3", "from ai lab 3", "yes start from bk 1", "dari bilik viva"
+        origin_from_match = re.search(
+            r'\b(?:from|dari|dr|starting\s+from|start\s+from)\s+(.+)', message, re.IGNORECASE
+        )
+        custom_origin_loc = None
+        if origin_from_match:
+            raw_orig_text = origin_from_match.group(1).strip().rstrip("?.!,")
+            if not re.search(r'\b(?:to|ke|towards)\b', raw_orig_text, re.I):
+                custom_origin_loc = self._find_location_in_text(raw_orig_text)
+                if not custom_origin_loc:
+                    # User specified an origin that does not exist in FTMK!
+                    target_dest = session_mem.get("direction_destination") or session_mem.get("last_destination")
+                    dest_str = f" to **{target_dest['name']}**" if target_dest else ""
+                    reply_text = (
+                        f"📍 I would be happy to guide you{dest_str}, but starting location "
+                        f"**'{raw_orig_text}'** was not recognized in FTMK.\n\n"
+                        f"Would you like walking directions starting from the **Main Entrance** instead?"
+                    )
+                    self._record_nlp_turn(session_id, message, reply_text)
+                    return {
+                        "reply": reply_text,
+                        "intent": "LOCATION_QUERY",
+                        "destination_id": target_dest["id"] if target_dest else None,
+                        "confidence": 1.0,
+                        "entities": {"destination": target_dest["name"] if target_dest else None, "category": None, "building": None},
+                        "handoff": None,
+                        "route_info": None,
+                        "recommendations": None,
+                        "session_id": session_id,
+                        "error": None,
+                    }
+
+        # Check if user specified a destination directly in text WITHOUT "from"
+        direct_loc_check = None
+        if not origin_from_match:
+            direct_loc_check = self._find_location_in_text(message)
 
         # Did the user say "can you bring me" / "bring me" with NO location, and NO previous destination in memory?
-        if is_nav and not direct_loc_check and not session_mem.get("last_destination") and not session_mem.get("direction_destination"):
+        if is_nav and not direct_loc_check and not custom_origin_loc and not session_mem.get("last_destination") and not session_mem.get("direction_destination"):
             reply_text = (
                 "I'd be glad to guide you! Where would you like to go? "
                 "You can ask for any room, lab, or area in FTMK (such as C-ACT, AI Lab 1, or the food vendors at the lobby)."
@@ -942,8 +2232,8 @@ class AssistantService:
             }
 
         # Confirmation / Follow-up direction trigger:
-        # User confirmed ("yes", "sure", "susre", "ok") OR requested navigation ("can you bring me", "bring me there")
-        if (is_aff or is_nav) and (session_mem.get("awaiting_direction_confirmation") or session_mem.get("last_destination")):
+        # User confirmed ("yes", "sure", "susre", "ok", "yes from ai lab3") OR requested navigation ("can you bring me", "bring me there")
+        if (is_aff or is_nav or (custom_origin_loc and session_mem.get("awaiting_direction_confirmation"))) and (session_mem.get("awaiting_direction_confirmation") or session_mem.get("last_destination")):
             target_dest = direct_loc_check or session_mem.get("direction_destination") or session_mem.get("last_destination")
             if not target_dest and session_mem.get("last_topic") == "library":
                 target_dest = self.repository.get("C-ACT") or self.repository.search_by_name("C-ACT")
@@ -954,11 +2244,22 @@ class AssistantService:
                 session_mem["last_building"] = target_dest.get("building")
                 session_mem["last_topic"] = target_dest.get("category")
 
+                # Determine starting origin:
+                # 1. Custom origin explicitly given by user ("yes from ai lab3")
+                # 2. Or stored direction_origin from a previous pairwise comparison
+                # 3. Or current_loc passed into handle_query
+                route_origin_id = current_loc
+                if custom_origin_loc:
+                    route_origin_id = custom_origin_loc["id"]
+                elif session_mem.get("direction_origin") and is_aff:
+                    route_origin_id = session_mem["direction_origin"]["id"]
+                    session_mem["direction_origin"] = None
+
                 extra_tip = None
                 if target_dest.get("id") == "MAIN_ENTRANCE" or session_mem.get("last_topic") == "food":
                     extra_tip = "Once you arrive at the lobby on Level 1, the food vendors (selling Nasi Lemak, Karipap, Pau, snacks & drinks) are set up right near the entrance!"
 
-                res = self._build_walking_directions_response(current_loc, target_dest, extra_tip)
+                res = self._build_walking_directions_response(route_origin_id, target_dest, extra_tip)
                 res["session_id"] = session_id
                 self._record_nlp_turn(session_id, message, res["reply"], res["entities"])
                 return res
@@ -1123,6 +2424,14 @@ class AssistantService:
                 }
 
                 if recommendations_list:
+                    rec_objs = []
+                    for r in recommendations_list:
+                        obj = self.repository.get(r.get("destination_id")) or self.repository.search_by_name(r.get("name", ""))
+                        if obj:
+                            rec_objs.append(obj)
+                    if rec_objs:
+                        session_mem["last_options_list"] = rec_objs
+
                     recs_text = "\n".join(
                         f"• **{r['name']}** — {r.get('building', '')}, Level {r.get('floor', '')}"
                         for r in recommendations_list[:4]
@@ -1130,7 +2439,7 @@ class AssistantService:
                     reply = (
                         f"💡 **Recommended destinations for your request:**\n\n"
                         f"{recs_text}\n\n"
-                        f"Ask me for directions to any of these places!"
+                        f"Would you like walking directions to the first one, or another specific room?"
                     )
 
         # Step 9: Handle LOCATION_QUERY / FACILITY_INFO with identified destination
@@ -1158,6 +2467,20 @@ class AssistantService:
                 "type": "LOCATION_INFO",
                 "location": loc_match,
             }
+
+        # Step 9.5: Safeguard for location queries that did not match any place in FTMK
+        elif any(kw in msg_lower for kw in ["where is", "where are", "where", "kat mana", "kat mane", "mana", "di mana", "how to get to", "cari", "find"]):
+            query_target = raw_dest or re.sub(
+                r'\b(where is|where are|where|kat mana|kat mane|mana|di mana|how to get to|how do i get to|find|cari|the|show me|tell me|room|lab)\b',
+                '',
+                msg_lower
+            ).strip()
+            if query_target and len(query_target) >= 2:
+                reply = (
+                    f"📍 **'{query_target}' was not found in the FTMK Faculty.**\n\n"
+                    f"FTMK consists of 5 main connected blocks (Blocks A, B, C, D, and E) across Levels 1 to 4. "
+                    f"Please double-check the room name or let me know what faculty facility you are searching for!"
+                )
 
         # Step 10: Default / Greeting / General Help
         elif not reply:

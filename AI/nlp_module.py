@@ -74,34 +74,58 @@ FACILITY RESTRICTIONS & KNOWN NON-EXISTENT FACILITIES:
 1. NO LIBRARY: FTMK building does NOT have a library. The main university library (Perpustakaan Laman Hikmah) is at the central UTeM campus. If user asks for "lib", "library", or study place, clarify that FTMK has no library inside, and recommend C-ACT (Block A, Level 1), Discussion Room (Block A, Level 2), or Students' Common Room (Block D, Level 1).
 2. NO CAFE / CANTEEN: FTMK does NOT have a cafeteria inside the building.
 3. FOOD & SNACKS AT LOBBY: Local food vendors in the MAIN ENTRANCE / LOBBY (Block A, Level 1) sell breakfast and snacks: Nasi Lemak, Karipap, Pau, and drinks. Direct all food, snack, hungry, cafe, and breakfast inquiries to the Main Entrance / Lobby!
-4. NO ESCALATORS: FTMK only has stairs (Blocks A, B, C, D, E) and walkways/bridges. Never mention escalators or lifts.
-5. STRICT DATA BOUNDARY: Only recommend places that exist in FTMK. Never invent fictional rooms.
+4. NO ESCALATORS OR LIFTS: FTMK only has stairs (Blocks A, B, C, D, E) and walkways/bridges. Never mention escalators or lifts.
+5. STRICT DATA BOUNDARY & EXACT ROOM NUMBERS:
+   Never invent fictional rooms. Only the following numbered rooms exist:
+   • AI Labs: ONLY AI Lab 1, 2, 3, 4 (Block B, Level 2). AI Lab 5, 6, 7+ DO NOT EXIST!
+   • Programming Labs: ONLY 1 & 2 (Block B, Level 1) and 3 & 4 (Block C, Level 4). Prog Lab 5+ DO NOT EXIST!
+   • Software Engineering Labs: ONLY 1, 2, 3 (Block C, Level 1). SE Lab 4+ DO NOT EXIST!
+   • Database Labs: ONLY 1, 2, 3 (Block C, Level 2). DB Lab 4+ DO NOT EXIST!
+   • Multimedia Labs: ONLY 1 & 2 (Block D, Level 2) and 3 & 4 (Block D, Level 3). MM Lab 5+ DO NOT EXIST!
+   • Network Labs: ONLY 1 (Block C, Level 3) and 2 (Block C, Level 2). Network Lab 3+ DO NOT EXIST!
+   • Audio Recording Rooms: ONLY 1 & 2 (Block D, Level 3).
+   • Lecture Rooms (BK): ONLY BK 1-5 (Block C, L1), BK 6-7 (Block B, L1), BK 13 (Block E, L1), BK 14 (Block D, L1), BK 15 (Block B, L3), BK 16 (Block B, L4). (BK 8-12, 17+ DO NOT EXIST!)
+   • ATMs / Banks / Gym / Swimming Pool: NOT inside FTMK (located at central UTeM campus).
+   • If user asks about a room or facility that DOES NOT exist (e.g. 'where ai 6', 'where is bk 8'), you MUST explicitly state that it does not exist in FTMK, explain what rooms do exist, and set 'destination': null.
 
 SPECIAL QUERY & CONTEXT RULES:
-1. When user asks "which block", "what blocks are there", or asks about buildings in general:
+1. Surrounding / Nearby Queries ("what surround X", "what is near X", "what is around X", "sebelah X", "apa ada dekat X"):
+   - Classify as FACILITY_INFO (NOT GUIDANCE_REQUEST).
+   - Describe what rooms and facilities are located along the same floor and block corridor near X.
+2. Mixed Language (Manglish) Comprehension:
+   - Understand casual mixed terms: "jalan" = way/route, "dari"/"dr" = from, "ke" = to, "nak pergi"/"nak ke" = want to go to, "sebelah" = beside, "dekat" = near.
+   - Reply in natural, conversational English like a real human concierge.
+3. When user asks "which block", "what blocks are there", or asks about buildings in general:
    - If a specific destination was previously discussed in conversation context (e.g., "AI Lab 1"), state clearly which block and floor that destination is located in (e.g. "AI Lab 1 is located in Block B on Level 2.").
    - If no destination was previously mentioned, list the 5 main blocks (Block A, B, C, D, E) with a brief summary of what each block houses, and ask what facility they need.
-2. When user asks where a lab/room is located (LOCATION_QUERY or GUIDANCE_REQUEST):
+4. When user asks where a lab/room is located (LOCATION_QUERY or GUIDANCE_REQUEST):
    - State the destination name, the exact Block, and the Floor level clearly.
    - Set "destination" to the matched destination name or ID.
    - Set "building" in entities to the block (e.g. "Block B").
-3. When user asks "when it open", "what time", "hours", or OPENING_HOURS:
+5. When user asks "when it open", "what time", "hours", or OPENING_HOURS:
    - Resolve "it" to the previously discussed location from context.
    - Provide the opening hours for that location.
-4. Understand both English and Malay terms:
+6. Understand both English and Malay terms:
    - "makmal" = lab, "bilik kuliah" = lecture room, "teater" = theatre, "bengkel" = workshop, "pintu masuk" / "lobi" = entrance/lobby.
-5. NAVIGATION COMMANDS ("bring me", "can you bring me", "take me to", "lead me", "guide me", "show me the way"):
+7. NAVIGATION COMMANDS ("bring me", "can you bring me", "take me to", "lead me", "guide me", "show me the way", "what good jalan to follow"):
    - The user is asking for walking guidance or navigation to a destination in FTMK.
    - NEVER interpret "bring me" as physical delivery or fetching objects!
-   - Always classify as GUIDANCE_REQUEST.
+   - Classify as GUIDANCE_REQUEST.
    - If a destination is mentioned (e.g. "bring me to food area", "bring me to AI lab"), set "destination" to that location.
    - If no destination is specified (e.g. "can you bring me", "bring me there"), resolve "destination" from the previous context.
-6. AFFIRMATIONS & DIRECTION CONFIRMATIONS ("yes", "sure", "yes sure", "yes susre", "ok", "please", "yes please"):
+8. AFFIRMATIONS & DIRECTION CONFIRMATIONS ("yes", "sure", "yes sure", "yes susre", "ok", "please", "yes please"):
    - When the user answers affirmatively to an offer of walking directions, classify as GUIDANCE_REQUEST and set "destination" to the previously discussed location from context.
-7. ORIGIN-TO-DESTINATION & ROUTE COMMANDS ("short path from X to Y", "shortest path from X to Y", "from X to Y", "route between X and Y"):
-   - Always classify as GUIDANCE_REQUEST.
+9. ORIGIN-TO-DESTINATION & ROUTE COMMANDS ("short path from X to Y", "shortest path from X to Y", "from X to Y", "route between X and Y", "what good jalan from X to Y"):
+   - Classify as GUIDANCE_REQUEST.
    - Set "destination" to the target destination (Y).
    - Set "building" to the block where Y is located.
+10. FACULTY & CAMPUS OVERVIEW ("what have in ftmk", "in ftmk what facilitity haver", "can you give information about ftmk", "apa ada kat ftmk"):
+   - Classify as FACILITY_INFO.
+   - Summarize the 5 main interconnected blocks (Blocks A-E across Levels 1-4) and main facilities (labs, lecture rooms, seminar halls, food at lobby, C-ACT).
+   - Set "destination": null.
+11. PAIRWISE PROXIMITY COMPARISONS ("is X near Y", "X near with Y", "X near Y?"):
+   - If one of the rooms does NOT exist in FTMK (e.g. 'kernel room'), state clearly that it does not exist in FTMK, explain where the valid room is, and set destination to the valid room.
+   - If both exist, specify whether they are on the same floor/block or different blocks.
 
 ALLOWED INTENTS:
 The system must classify each user message into one of the following intents:
@@ -216,11 +240,21 @@ class NLPModule:
         # Call Ollama
         raw_response = self._call_ollama()
 
-        # Append assistant turn to history
-        self._history.append({"role": "assistant", "content": raw_response})
-
         # Parse and validate JSON
         result = self._parse_response(raw_response)
+
+        # Store clean JSON in history so subsequent turns never inherit formatting errors
+        clean_content = json.dumps({
+            "intent": result.get("intent", "GENERAL_HELP"),
+            "entities": result.get("entities", {}),
+            "reply": result.get("reply", ""),
+            "destination": result.get("destination"),
+        })
+        self._history.append({"role": "assistant", "content": clean_content})
+
+        # Cap history to avoid infinite growth (system prompt + last 12 turns)
+        if len(self._history) > 13:
+            self._history = [self._history[0]] + self._history[-12:]
 
         # Update internal context
         self._update_context(result.get("entities", {}))
@@ -345,8 +379,18 @@ class NLPModule:
 
         # --- reply ---
         reply = data.get("reply", "")
-        if not reply:
-            reply = "I'm sorry, I couldn't generate a response. Please try again."
+        if not reply or not str(reply).strip() or str(reply).strip() in ("", "null", "None"):
+            for alt in ["response", "message", "text", "content", "answer"]:
+                alt_val = data.get(alt)
+                if alt_val and str(alt_val).strip() not in ("", "null", "None"):
+                    reply = str(alt_val).strip()
+                    break
+
+        if not reply or not str(reply).strip() or str(reply).strip() in ("", "null", "None"):
+            if intent == "GREETING":
+                reply = "Hello! Welcome to FTMK. How can I assist you today?"
+            else:
+                reply = "I'm sorry, I couldn't generate a response. Please try again."
             errors.append("'reply' field is empty.")
 
         # --- destination ---
