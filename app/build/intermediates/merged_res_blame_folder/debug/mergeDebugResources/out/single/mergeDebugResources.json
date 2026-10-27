@@ -1,9 +1,5 @@
 [
     {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\drawable_ic_close.xml.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\drawable\\ic_close.xml"
-    },
-    {
         "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\drawable_bg_circular_button.xml.flat",
         "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\drawable\\bg_circular_button.xml"
     },
@@ -16,6 +12,10 @@
         "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\layout\\popup_menu_options.xml"
     },
     {
+        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\drawable_map_ftmk_level_4.xml.flat",
+        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\drawable\\map_ftmk_level_4.xml"
+    },
+    {
         "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\mipmap-anydpi_ic_launcher.xml.flat",
         "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\mipmap-anydpi\\ic_launcher.xml"
     },
@@ -24,16 +24,12 @@
         "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\mipmap-hdpi\\ic_launcher.webp"
     },
     {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\drawable_iconbot.png.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\drawable\\iconbot.png"
-    },
-    {
         "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\xml_backup_rules.xml.flat",
         "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\xml\\backup_rules.xml"
     },
     {
-        "merged": "com.example.aiguidance_bot.app-debug-40:/layout_activity_campus_finder.xml.flat",
-        "source": "com.example.aiguidance_bot.app-main-42:/layout/activity_campus_finder.xml"
+        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\drawable_map_ftmk_level_1.xml.flat",
+        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\drawable\\map_ftmk_level_1.xml"
     },
     {
         "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\drawable_ic_launcher_background.xml.flat",
@@ -44,16 +40,8 @@
         "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\drawable\\bg_icon_circle_red.xml"
     },
     {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\xml_data_extraction_rules.xml.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\xml\\data_extraction_rules.xml"
-    },
-    {
         "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\mipmap-xhdpi_ic_launcher.webp.flat",
         "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\mipmap-xhdpi\\ic_launcher.webp"
-    },
-    {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\mipmap-xhdpi_ic_launcher_round.webp.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\mipmap-xhdpi\\ic_launcher_round.webp"
     },
     {
         "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\drawable_bg_user_bubble.xml.flat",
@@ -68,20 +56,104 @@
         "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\layout\\item_chat_ai.xml"
     },
     {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\drawable_circle_primary.xml.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\drawable\\circle_primary.xml"
-    },
-    {
         "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\mipmap-xxhdpi_ic_launcher.webp.flat",
         "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\mipmap-xxhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\drawable_bg_chip_selected.xml.flat",
+        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\drawable\\bg_chip_selected.xml"
+    },
+    {
+        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\drawable_bg_bottom_bar.xml.flat",
+        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\drawable\\bg_bottom_bar.xml"
+    },
+    {
+        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\mipmap-xxhdpi_ic_launcher_foreground.webp.flat",
+        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\mipmap-xxhdpi\\ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\drawable_map_ftmk_level_3.xml.flat",
+        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\drawable\\map_ftmk_level_3.xml"
+    },
+    {
+        "merged": "com.example.aiguidance_bot.app-debug-40:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.example.aiguidance_bot.app-main-42:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\layout_dialog_settings.xml.flat",
+        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\layout\\dialog_settings.xml"
+    },
+    {
+        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\layout_item_recommendation.xml.flat",
+        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\layout\\item_recommendation.xml"
+    },
+    {
+        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\drawable_bg_input_container.xml.flat",
+        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\drawable\\bg_input_container.xml"
+    },
+    {
+        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\layout_activity_campus_finder.xml.flat",
+        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\layout\\activity_campus_finder.xml"
+    },
+    {
+        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\layout_activity_ftmk_map.xml.flat",
+        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\layout\\activity_ftmk_map.xml"
+    },
+    {
+        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\mipmap-hdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\mipmap-xhdpi_ic_launcher_foreground.webp.flat",
+        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\mipmap-xhdpi\\ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\mipmap-xxxhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\drawable_ic_close.xml.flat",
+        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\drawable\\ic_close.xml"
+    },
+    {
+        "merged": "com.example.aiguidance_bot.app-debug-40:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.example.aiguidance_bot.app-main-42:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\drawable_iconbot.png.flat",
+        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\drawable\\iconbot.png"
+    },
+    {
+        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\drawable_bg_chip_unselected.xml.flat",
+        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\drawable\\bg_chip_unselected.xml"
+    },
+    {
+        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\layout_item_floor_room.xml.flat",
+        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\layout\\item_floor_room.xml"
+    },
+    {
+        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\xml_data_extraction_rules.xml.flat",
+        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\xml\\data_extraction_rules.xml"
+    },
+    {
+        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\mipmap-xhdpi\\ic_launcher_round.webp"
     },
     {
         "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\mipmap-mdpi_ic_launcher.webp.flat",
         "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\mipmap-mdpi\\ic_launcher.webp"
     },
     {
+        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\drawable_circle_primary.xml.flat",
+        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\drawable\\circle_primary.xml"
+    },
+    {
         "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\drawable_ic_launcher_foreground.xml.flat",
         "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\drawable\\ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\mipmap-hdpi_ic_launcher_foreground.webp.flat",
+        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\mipmap-hdpi\\ic_launcher_foreground.webp"
     },
     {
         "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\layout_popup_plus_options.xml.flat",
@@ -92,12 +164,12 @@
         "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\drawable\\ic_chevron_right.xml"
     },
     {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\drawable_ic_add.xml.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\drawable\\ic_add.xml"
+        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\mipmap-mdpi_ic_launcher_foreground.webp.flat",
+        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\mipmap-mdpi\\ic_launcher_foreground.webp"
     },
     {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\drawable_bg_bottom_bar.xml.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\drawable\\bg_bottom_bar.xml"
+        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\drawable_ic_add.xml.flat",
+        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\drawable\\ic_add.xml"
     },
     {
         "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\drawable_bg_icon_circle_blue.xml.flat",
@@ -116,47 +188,43 @@
         "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\mipmap-xxxhdpi\\ic_launcher_round.webp"
     },
     {
+        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+    },
+    {
         "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\drawable_ic_send.xml.flat",
         "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\drawable\\ic_send.xml"
+    },
+    {
+        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\drawable_bg_red_dot_marker.xml.flat",
+        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\drawable\\bg_red_dot_marker.xml"
     },
     {
         "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\mipmap-anydpi_ic_launcher_round.xml.flat",
         "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\mipmap-anydpi\\ic_launcher_round.xml"
     },
     {
-        "merged": "com.example.aiguidance_bot.app-debug-40:/layout_item_recommendation.xml.flat",
-        "source": "com.example.aiguidance_bot.app-main-42:/layout/item_recommendation.xml"
+        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\mipmap-xxxhdpi_ic_launcher_foreground.webp.flat",
+        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\mipmap-xxxhdpi\\ic_launcher_foreground.webp"
+    },
+    {
+        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\drawable_map_ftmk_level_2.xml.flat",
+        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\drawable\\map_ftmk_level_2.xml"
     },
     {
         "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\drawable_ic_bot_avatar.xml.flat",
         "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\drawable\\ic_bot_avatar.xml"
     },
     {
-        "merged": "com.example.aiguidance_bot.app-debug-40:/drawable_bg_chip_unselected.xml.flat",
-        "source": "com.example.aiguidance_bot.app-main-42:/drawable/bg_chip_unselected.xml"
-    },
-    {
-        "merged": "com.example.aiguidance_bot.app-debug-40:/drawable_bg_chip_selected.xml.flat",
-        "source": "com.example.aiguidance_bot.app-main-42:/drawable/bg_chip_selected.xml"
+        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\layout\\activity_main.xml"
     },
     {
         "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\drawable_bg_ai_bubble.xml.flat",
         "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\drawable\\bg_ai_bubble.xml"
     },
     {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\layout_activity_main.xml.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\layout\\activity_main.xml"
-    },
-    {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\drawable_bg_input_container.xml.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\drawable\\bg_input_container.xml"
-    },
-    {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\mipmap-hdpi_ic_launcher_round.webp.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\mipmap-hdpi\\ic_launcher_round.webp"
-    },
-    {
-        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
-        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\mipmap-xxxhdpi\\ic_launcher.webp"
+        "merged": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-debug-40:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\ASUS\\.gradle\\daemon\\9.6.0\\com.example.aiguidance_bot.app-main-42:\\mipmap-anydpi-v26\\ic_launcher.xml"
     }
 ]

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="240dp"
+    android:layout_width="220dp"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
     app:cardCornerRadius="16dp"
@@ -14,83 +14,7 @@
         android:orientation="vertical"
         android:paddingVertical="8dp">
 
-        <!-- Rename -->
-        <LinearLayout
-            android:id="@+id/menuRename"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="12dp">
-
-            <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:background="@drawable/bg_icon_circle_blue"
-                android:contentDescription="Rename"
-                android:padding="8dp"
-                android:src="@android:drawable/ic_menu_edit"
-                app:tint="#1987b8" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="12dp"
-                android:text="Rename"
-                android:textColor="#1E293B"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:contentDescription="Arrow"
-                android:src="@android:drawable/ic_media_play"
-                app:tint="#94A3B8" />
-        </LinearLayout>
-
-        <!-- Share Chat -->
-        <LinearLayout
-            android:id="@+id/menuShare"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="12dp">
-
-            <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:background="@drawable/bg_icon_circle_blue"
-                android:contentDescription="Share Chat"
-                android:padding="8dp"
-                android:src="@android:drawable/ic_menu_share"
-                app:tint="#1987b8" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginStart="12dp"
-                android:text="Share Chat"
-                android:textColor="#1E293B"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:contentDescription="Arrow"
-                android:src="@android:drawable/ic_media_play"
-                app:tint="#94A3B8" />
-        </LinearLayout>
-
-        <!-- Delete -->
+        <!-- Clear Chat -->
         <LinearLayout
             android:id="@+id/menuDelete"
             android:layout_width="match_parent"
@@ -105,7 +29,7 @@
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:background="@drawable/bg_icon_circle_red"
-                android:contentDescription="Delete"
+                android:contentDescription="Clear Chat"
                 android:padding="8dp"
                 android:src="@android:drawable/ic_menu_delete"
                 app:tint="#EF4444" />
@@ -115,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="12dp"
-                android:text="Delete"
+                android:text="Clear Chat"
                 android:textColor="#EF4444"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -128,9 +52,9 @@
                 app:tint="#94A3B8" />
         </LinearLayout>
 
-        <!-- Help -->
+        <!-- Settings (Appearance & Accessibility) -->
         <LinearLayout
-            android:id="@+id/menuHelp"
+            android:id="@+id/menuSettings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/selectableItemBackground"
@@ -143,9 +67,9 @@
                 android:layout_width="36dp"
                 android:layout_height="36dp"
                 android:background="@drawable/bg_icon_circle_blue"
-                android:contentDescription="Help"
+                android:contentDescription="Settings"
                 android:padding="8dp"
-                android:src="@android:drawable/ic_menu_help"
+                android:src="@android:drawable/ic_menu_preferences"
                 app:tint="#1987b8" />
 
             <TextView
@@ -153,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginStart="12dp"
-                android:text="Help"
+                android:text="Settings"
                 android:textColor="#1E293B"
                 android:textSize="16sp"
                 android:textStyle="bold" />

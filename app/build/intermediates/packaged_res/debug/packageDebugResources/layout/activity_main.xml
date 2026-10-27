@@ -27,8 +27,8 @@
             android:src="@android:drawable/ic_menu_revert" />
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginStart="12dp"
             android:src="@drawable/iconbot" />
 

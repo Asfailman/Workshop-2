@@ -27,10 +27,15 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:testOnly="true"
         android:theme="@style/Theme.AiGuidance_bot"
         android:usesCleartextTraffic="true" >
         <activity
             android:name="com.example.aiguidance_bot.ui.CampusFinderActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name="com.example.aiguidance_bot.ui.FtmkMapActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity

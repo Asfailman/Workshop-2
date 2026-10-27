@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="400dp"
+    android:height="300dp"
+    android:viewportWidth="400"
+    android:viewportHeight="300">
+    <!-- FTMK Level 4 Background -->
+    <path
+        android:fillColor="#FDFBF7"
+        android:pathData="M0,0h400v300h-400z" />
+
+    <!-- Arch Corridor -->
+    <path
+        android:fillColor="#F5EFE6"
+        android:pathData="M 180,40 L 220,40 L 370,250 L 330,280 L 200,90 L 70,280 L 30,250 Z" />
+
+    <!-- BLOK A (Seminar Hall & Main Meeting) -->
+    <path
+        android:fillColor="#1E3A8A"
+        android:pathData="M170,45h60v35h-60z" />
+
+    <!-- BLOK E1 (Programming 3 & 4) -->
+    <path
+        android:fillColor="#581C87"
+        android:pathData="M275,100 L355,210 L335,225 L255,115 Z" />
+
+    <!-- BLOK E2 (AdViT & INFORSNET Labs) -->
+    <path
+        android:fillColor="#854D0E"
+        android:pathData="M240,150 L300,240 L280,255 L220,165 Z" />
+</vector>

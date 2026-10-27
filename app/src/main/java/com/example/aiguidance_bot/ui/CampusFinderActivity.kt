@@ -1,6 +1,6 @@
 package com.example.aiguidance_bot.ui
 
-import android.content.res.ColorStateList
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
@@ -9,17 +9,16 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aiguidance_bot.R
 import com.example.aiguidance_bot.data.DestinationCategory
+import com.example.aiguidance_bot.data.FtmkLocationDatabase
 
 class CampusFinderActivity : AppCompatActivity() {
 
@@ -45,15 +44,17 @@ class CampusFinderActivity : AppCompatActivity() {
         val progressBar = findViewById<ProgressBar>(R.id.progressBarFinder)
         val tvError = findViewById<TextView>(R.id.tvErrorFinder)
 
-        val cvRoutePreview = findViewById<CardView>(R.id.cvRoutePreview)
-        val tvPreviewDetails = findViewById<TextView>(R.id.tvPreviewDetails)
-        val btnClosePreview = findViewById<ImageView>(R.id.btnClosePreview)
-
         btnBack.setOnClickListener { finish() }
 
         recommendationAdapter = RecommendationAdapter(emptyList()) { selectedDest ->
-            // Simulate selecting "Main Entrance" as start point for MVP
-            viewModel.loadRoutePreview("start_main_entrance", selectedDest.id)
+            val matchedRoom = FtmkLocationDatabase.rooms.find { it.id == selectedDest.id }
+            val intent = Intent(this, FtmkMapActivity::class.java).apply {
+                putExtra(FtmkMapActivity.EXTRA_ROOM_ID, selectedDest.id)
+                putExtra(FtmkMapActivity.EXTRA_ROOM_NAME, selectedDest.name)
+                putExtra(FtmkMapActivity.EXTRA_ROOM_LEVEL, matchedRoom?.level ?: 1)
+                putExtra(FtmkMapActivity.EXTRA_ROOM_BLOCK, matchedRoom?.block ?: "Blok E1")
+            }
+            startActivity(intent)
         }
         rvRecommendations.layoutManager = LinearLayoutManager(this)
         rvRecommendations.adapter = recommendationAdapter
@@ -102,19 +103,6 @@ class CampusFinderActivity : AppCompatActivity() {
             } else {
                 tvError.visibility = View.GONE
             }
-        }
-
-        viewModel.routePreview.observe(this) { preview ->
-            if (preview != null) {
-                cvRoutePreview.visibility = View.VISIBLE
-                tvPreviewDetails.text = "${preview.startLocation} to ${preview.destination}\n${preview.totalDistanceMeters}m (${preview.estimatedMinutes} mins)"
-            } else {
-                cvRoutePreview.visibility = View.GONE
-            }
-        }
-
-        btnClosePreview.setOnClickListener {
-            cvRoutePreview.visibility = View.GONE
         }
     }
 
