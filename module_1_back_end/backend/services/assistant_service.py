@@ -843,6 +843,11 @@ class AssistantService:
                 "Would you like walking directions to any of these locations?"
             )
 
+        # Ensure no accidental mention of elevators/lifts in FTMK (FTMK only uses stairs)
+        cleaned_reply = re.sub(r'\b(?:stairs\s+or\s+)?(?:elevator|escalator|lift)s?\b', 'stairs', reply, flags=re.IGNORECASE)
+        cleaned_reply = re.sub(r'\bstairs\s+or\s+stairs\b', 'stairs', cleaned_reply, flags=re.IGNORECASE)
+        return cleaned_reply
+
     def _check_non_existent_facility(self, message: str) -> Optional[Dict[str, Any]]:
         """
         Detects requests for facilities or room numbers that do not exist in FTMK:
@@ -1703,50 +1708,36 @@ class AssistantService:
         msg_lower = message.lower().strip()
         msg_clean = re.sub(r'[^\w\s]', '', msg_lower).strip()
 
-        # 1. Greetings (fast-path)
+        # 1. Greetings (fast-path only for standalone greetings)
         greetings = {"hi", "hai", "hello", "hey", "helo", "assalamualaikum", "salam", "selamat pagi", "selamat petang", "selamat tengahari", "good morning", "good afternoon", "good evening"}
-        if msg_clean in greetings or any(msg_clean.startswith(g + " ") for g in greetings):
-            if len(msg_clean.split()) <= 3:
-                return {
-                    "reply": "Hello! Welcome to FTMK. I am your AI campus concierge. How can I assist you with rooms, labs, or directions today? 😊",
-                    "intent": "GREETING",
-                    "destination_id": None,
-                }
+        has_substantive = any(w in msg_lower for w in ["joke", "tell", "explain", "why", "who", "what", "where", "how", "code", "guide", "navigate", "help"])
+        if (msg_clean in greetings or (len(msg_clean.split()) <= 2 and any(msg_clean == g for g in greetings))) and not has_substantive:
+            return {
+                "reply": "Hello! Welcome to FTMK. I am your AI campus concierge. How can I assist you with rooms, labs, or directions today? 😊",
+                "intent": "GREETING",
+                "destination_id": None,
+            }
 
-        # 2. Thank you / Gratitude
+        # 2. Thank you / Gratitude (standalone)
         thanks = {"thanks", "thank you", "terima kasih", "tq", "thx", "syukran", "much appreciated"}
-        if msg_clean in thanks or any(t in msg_clean for t in thanks):
+        if (msg_clean in thanks or len(msg_clean.split()) <= 3 and any(t in msg_clean for t in thanks)) and not has_substantive:
             return {
                 "reply": "You're very welcome! 😊 Feel free to ask whenever you need help finding rooms or navigating around FTMK. Have a great day!",
                 "intent": "GENERAL_HELP",
                 "destination_id": None,
             }
 
-        # 3. Goodbye / Farewell
+        # 3. Goodbye / Farewell (standalone)
         farewells = {"bye", "goodbye", "bye bye", "selamat tinggal", "jumpai lagi", "see you"}
-        if msg_clean in farewells or any(f == msg_clean for f in farewells):
+        if msg_clean in farewells or (len(msg_clean.split()) <= 2 and any(f in msg_clean for f in farewells)):
             return {
                 "reply": "Goodbye! Take care and have a wonderful day at FTMK! 👋",
                 "intent": "GENERAL_HELP",
                 "destination_id": None,
             }
 
-        # 4. Bot identity / capabilities
-        if any(p in msg_lower for p in ["who are you", "what can you do", "siapa awak", "kamu siapa", "fungsi kamu", "what are you"]):
-            return {
-                "reply": (
-                    "👋 **Hello! I am your FTMK AI Guidance Concierge.**\n\n"
-                    "I can help you with:\n"
-                    "• 🚶 **Walking Directions:** Step-by-step route guidance with distances between any two points\n"
-                    "• 🏢 **Room & Lab Information:** Finding where any classroom, lab, or office is across Blocks A–E\n"
-                    "• 🔍 **Surrounding Rooms:** Showing what facilities are on each floor or near a specific room\n"
-                    "• ⏰ **Facility Details:** Operating hours, room capacities, and equipment\n"
-                    "• 🍴 **Food & Amenities:** Directing you to food vendors at the lobby or restrooms on any floor\n\n"
-                    "What would you like to explore?"
-                ),
-                "intent": "GENERAL_HELP",
-                "destination_id": None,
-            }
+        # Note: Bot personality, mood ("how are you"), and compliments flow through to Ollama
+        # so the assistant speaks with dynamic AI intelligence like Gemini!
 
         # 5. WiFi
         if any(p in msg_lower for p in ["wifi", "wi-fi", "internet", "password wifi"]):
@@ -1848,22 +1839,6 @@ class AssistantService:
                 "destination_id": None,
             }
 
-        # 12. Bot mood / How are you
-        if any(p in msg_lower for p in ["how are you", "how r u", "apa khabar", "sihat ke", "how is it going", "how are u"]):
-            return {
-                "reply": "I'm doing wonderful, thank you for asking! 😊 I'm all set to help you navigate FTMK. What room, lab, or service are you looking for today?",
-                "intent": "GENERAL_HELP",
-                "destination_id": None,
-            }
-
-        # 13. Compliments
-        compliment_pattern = r'\b(good job|great job|you (?:are\s+)?(?:so\s+|very\s+)?smart|smart|clever|pandai|terbaik|good bot|nice bot|awesome|cool|hebat|helpful|you are helpful|great assistant)\b'
-        if re.search(compliment_pattern, msg_lower):
-            return {
-                "reply": "Thank you so much! 🥰 I'm always here to make navigating FTMK smooth and effortless. Let me know whenever you need directions or room info!",
-                "intent": "GENERAL_HELP",
-                "destination_id": None,
-            }
 
         # 14. Vending machines & drinks
         if any(p in msg_lower for p in ["vending machine", "mesin layan diri", "air tin", "coffee machine", "beli air", "buy drink", "mineral water"]):
@@ -2392,10 +2367,23 @@ class AssistantService:
                 extra_tip = "Once you arrive at the lobby on Level 1, the food vendors (selling Nasi Lemak, Karipap, Pau, snacks & drinks) are set up right near the entrance!"
 
             dir_res = self._build_walking_directions_response(current_loc, loc_match, extra_tip)
-            reply = dir_res["reply"]
             route_info = dir_res["route_info"]
             handoff = dir_res["handoff"]
             session_mem["awaiting_direction_confirmation"] = False
+
+            # Intelligently blend Ollama's conversational opening with the verified walking route
+            if reply and reply.strip() and not reply.startswith("🚶‍♂️"):
+                clean_ollama = re.sub(
+                    r'(?:Would you like|Do you want|Shall I|Would you need).*?(?:directions?|walk|guide).*?\??',
+                    'Here are your walking directions:',
+                    reply,
+                    flags=re.IGNORECASE
+                ).strip()
+                if not clean_ollama.endswith(":") and not clean_ollama.endswith("."):
+                    clean_ollama += ":"
+                reply = f"{clean_ollama}\n\n{dir_res['reply']}"
+            else:
+                reply = dir_res["reply"]
 
         # Step 8: Handle DESTINATION_RECOMMENDATION
         elif intent == "DESTINATION_RECOMMENDATION" or any(kw in msg_lower for kw in ["recommend", "cadang", "where can i", "suggest"]):
@@ -2455,14 +2443,19 @@ class AssistantService:
             session_mem["direction_destination"] = loc_match
             session_mem["awaiting_direction_confirmation"] = True
 
-            reply = (
-                f"📍 **{destination_name}**\n"
-                f"• **Location:** {bld}, Level {flr}\n"
-                f"• **Description:** {desc}\n"
-                f"• **Facilities:** {facs}\n"
-                f"• **Hours:** {hours_str}\n\n"
-                f"Would you like walking directions from {current_loc}?"
-            )
+            # If Ollama already generated an intelligent, personalized explanation, preserve Ollama's voice!
+            if reply and reply.strip() and len(reply) > 20 and (destination_name.lower() in reply.lower() or bld.lower() in reply.lower()):
+                if not any(w in reply.lower() for w in ["walking directions", "directions from", "guide you"]):
+                    reply = f"{reply}\n\n📍 **Location:** {bld}, Level {flr}\nWould you like walking directions from {current_loc}?"
+            else:
+                reply = (
+                    f"📍 **{destination_name}**\n"
+                    f"• **Location:** {bld}, Level {flr}\n"
+                    f"• **Description:** {desc}\n"
+                    f"• **Facilities:** {facs}\n"
+                    f"• **Hours:** {hours_str}\n\n"
+                    f"Would you like walking directions from {current_loc}?"
+                )
             handoff = {
                 "type": "LOCATION_INFO",
                 "location": loc_match,
