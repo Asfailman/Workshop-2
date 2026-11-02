@@ -1,1 +1,2689 @@
-[]
+{
+  "locations": [
+    {
+      "id": "MAIN_ENTRANCE",
+      "name": "Main Entrance / Lobi Utama",
+      "aliases": [
+        "Lobby",
+        "Lobi",
+        "Pintu Masuk",
+        "Front Gate",
+        "Entrance",
+        "Food Corner",
+        "Food Area",
+        "Food Court",
+        "Snack Kiosk",
+        "Gerai Makanan",
+        "Cafe",
+        "Canteen"
+      ],
+      "category": "facility",
+      "purposes": [
+        "enter",
+        "exit",
+        "pickup",
+        "dropoff",
+        "meeting point",
+        "food",
+        "snacks",
+        "breakfast",
+        "eat"
+      ],
+      "keywords": [
+        "entrance",
+        "gate",
+        "front",
+        "door",
+        "lobby",
+        "enter",
+        "exit",
+        "pickup",
+        "meeting",
+        "lobi",
+        "food",
+        "nasi lemak",
+        "karipap",
+        "pau",
+        "makan",
+        "hungry",
+        "cafe",
+        "canteen",
+        "kiosk",
+        "snacks",
+        "breakfast",
+        "sarapan",
+        "kuih"
+      ],
+      "building": "Block A",
+      "floor": 1,
+      "room_number": null,
+      "description": "The main entrance and lobby of FTMK (Block A, Level 1). Local food vendors here sell breakfast and snacks such as Nasi Lemak, Karipap, Pau, and drinks.",
+      "opening_hours": {
+        "weekday": "06:00-23:00",
+        "weekend": "07:00-22:00"
+      },
+      "capacity": null,
+      "facilities": [
+        "reception",
+        "security",
+        "seating"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "B_B_L2_AI_LAB_1",
+      "name": "Makmal Kepintaran Buatan 1 / AI Lab 1",
+      "aliases": [
+        "AI Lab 1",
+        "Artificial Intelligence Lab 1",
+        "Makmal AI 1",
+        "AI Laboratory 1",
+        "AI 1",
+        "Makmal Kepintaran Buatan 1"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "AI research",
+        "programming",
+        "project",
+        "machine learning"
+      ],
+      "keywords": [
+        "AI",
+        "artificial",
+        "intelligence",
+        "lab",
+        "machine",
+        "learning",
+        "programming",
+        "research",
+        "deep learning"
+      ],
+      "building": "Block B",
+      "floor": 2,
+      "room_number": null,
+      "description": "Artificial Intelligence Lab 1 (FAIX) located on Level 2 of Block B. Equipped for AI and machine learning coursework.",
+      "opening_hours": {
+        "weekday": "08:00-18:00",
+        "weekend": "closed"
+      },
+      "capacity": 40,
+      "facilities": [
+        "computers",
+        "wifi",
+        "projector",
+        "air_conditioning",
+        "power_outlets"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "B_B_L2_AI_LAB_2",
+      "name": "Makmal Kepintaran Buatan 2 / AI Lab 2",
+      "aliases": [
+        "AI Lab 2",
+        "Artificial Intelligence Lab 2",
+        "Makmal AI 2",
+        "AI Laboratory 2",
+        "AI 2",
+        "Makmal Kepintaran Buatan 2"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "AI research",
+        "programming",
+        "project",
+        "deep learning"
+      ],
+      "keywords": [
+        "AI",
+        "artificial",
+        "intelligence",
+        "lab",
+        "machine",
+        "learning",
+        "programming",
+        "research",
+        "neural network"
+      ],
+      "building": "Block B",
+      "floor": 2,
+      "room_number": null,
+      "description": "Artificial Intelligence Lab 2 (FAIX) located on Level 2 of Block B. Specialized for advanced AI projects and research.",
+      "opening_hours": {
+        "weekday": "08:00-18:00",
+        "weekend": "closed"
+      },
+      "capacity": 35,
+      "facilities": [
+        "computers",
+        "wifi",
+        "projector",
+        "air_conditioning",
+        "power_outlets"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "B_B_L3_ROBOTICS_LAB",
+      "name": "Makmal Robotik (FAIX) / Robotics Lab",
+      "aliases": [
+        "Robotics Lab",
+        "Makmal Robotik",
+        "Robot Lab",
+        "Automation Lab",
+        "Robotic Lab"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "robotics",
+        "automation",
+        "research",
+        "lab work",
+        "project",
+        "workshop"
+      ],
+      "keywords": [
+        "robot",
+        "robotics",
+        "automation",
+        "mechanical",
+        "project",
+        "workshop",
+        "lab",
+        "research",
+        "sensor",
+        "arduino"
+      ],
+      "building": "Block B",
+      "floor": 3,
+      "room_number": null,
+      "description": "Robotics Lab (FAIX) located on Level 3 of Block B. Equipped with robotics kits, workbenches, and tools.",
+      "opening_hours": {
+        "weekday": "09:00-17:00",
+        "weekend": "closed"
+      },
+      "capacity": 25,
+      "facilities": [
+        "workbench",
+        "tools",
+        "computers",
+        "3d_printer",
+        "air_conditioning"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "B_D_L3_MINI_THEATRE",
+      "name": "Teater Mini / Mini Theatre",
+      "aliases": [
+        "Mini Theatre",
+        "Teater",
+        "Lecture Theatre",
+        "Dewan Kuliah",
+        "Teater Mini",
+        "Mini Theater",
+        "Theater"
+      ],
+      "category": "lecture_hall",
+      "purposes": [
+        "lecture",
+        "presentation",
+        "seminar",
+        "exam",
+        "talk",
+        "event"
+      ],
+      "keywords": [
+        "theatre",
+        "theater",
+        "lecture",
+        "hall",
+        "presentation",
+        "seminar",
+        "exam",
+        "talk",
+        "event",
+        "mini"
+      ],
+      "building": "Block D",
+      "floor": 3,
+      "room_number": null,
+      "description": "Mini theatre located on Level 3 of Block D. Used for lectures, seminars, and events.",
+      "opening_hours": {
+        "weekday": "08:00-18:00",
+        "weekend": "closed"
+      },
+      "capacity": 100,
+      "facilities": [
+        "projector",
+        "microphone",
+        "air_conditioning",
+        "seating"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "B_A_L1_C_ACT",
+      "name": "C-ACT",
+      "aliases": [
+        "C-ACT",
+        "CACT",
+        "C ACT",
+        "Bilik C-ACT",
+        "C-ACT Study Area",
+        "CACT Lab"
+      ],
+      "category": "facility",
+      "purposes": [
+        "gathering",
+        "relaxing",
+        "events"
+      ],
+      "keywords": [
+        "c-act"
+      ],
+      "building": "Block A",
+      "floor": 1,
+      "room_number": null,
+      "description": "C-ACT located on Level 1 of Block A.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_B_L1_LECTURE_ROOM_6",
+      "name": "Bilik Kuliah 6 / Lecture Room 6",
+      "aliases": [
+        "Lecture Room 6",
+        "Bilik Kuliah 6",
+        "BK 6",
+        "BK6",
+        "Lec Room 6",
+        "Kuliah 6"
+      ],
+      "category": "lecture_hall",
+      "purposes": [
+        "lecture",
+        "class",
+        "presentation",
+        "exam"
+      ],
+      "keywords": [
+        "bilik",
+        "kuliah",
+        "lecture",
+        "room"
+      ],
+      "building": "Block B",
+      "floor": 1,
+      "room_number": null,
+      "description": "Lecture Room 6 located on Level 1 of Block B.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_B_L1_LECTURE_ROOM_7",
+      "name": "Bilik Kuliah 7 / Lecture Room 7",
+      "aliases": [
+        "Lecture Room 7",
+        "Bilik Kuliah 7",
+        "BK 7",
+        "BK7",
+        "Lec Room 7",
+        "Kuliah 7"
+      ],
+      "category": "lecture_hall",
+      "purposes": [
+        "lecture",
+        "class",
+        "presentation",
+        "exam"
+      ],
+      "keywords": [
+        "bilik",
+        "kuliah",
+        "lecture",
+        "room"
+      ],
+      "building": "Block B",
+      "floor": 1,
+      "room_number": null,
+      "description": "Lecture Room 7 located on Level 1 of Block B.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_B_L1_VIVA_ROOM",
+      "name": "Bilik VIVA / VIVA Room",
+      "aliases": [
+        "VIVA Room",
+        "Bilik VIVA",
+        "Viva Room",
+        "Viva Presentation Room"
+      ],
+      "category": "meeting_room",
+      "purposes": [
+        "meeting",
+        "discussion",
+        "consultation"
+      ],
+      "keywords": [
+        "bilik",
+        "room",
+        "viva"
+      ],
+      "building": "Block B",
+      "floor": 1,
+      "room_number": null,
+      "description": "VIVA Room located on Level 1 of Block B.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_B_L1_PROGRAMMING_LAB_1",
+      "name": "Makmal Pengaturcaraan 1 / Programming Lab 1",
+      "aliases": [
+        "Programming Lab 1",
+        "Makmal Pengaturcaraan 1",
+        "Program Lab 1",
+        "Prog Lab 1",
+        "Makmal Program 1"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "lab",
+        "makmal",
+        "pengaturcaraan",
+        "programming"
+      ],
+      "building": "Block B",
+      "floor": 1,
+      "room_number": null,
+      "description": "Programming Lab 1 located on Level 1 of Block B.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_B_L1_PROGRAMMING_LAB_2",
+      "name": "Makmal Pengaturcaraan 2 / Programming Lab 2",
+      "aliases": [
+        "Programming Lab 2",
+        "Makmal Pengaturcaraan 2",
+        "Program Lab 2",
+        "Prog Lab 2",
+        "Makmal Program 2"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "lab",
+        "makmal",
+        "pengaturcaraan",
+        "programming"
+      ],
+      "building": "Block B",
+      "floor": 1,
+      "room_number": null,
+      "description": "Programming Lab 2 located on Level 1 of Block B.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_B_L1_BIOCORE_LAB",
+      "name": "Makmal Penyelidikan BIOCORE / BIOCORE Lab",
+      "aliases": [
+        "BIOCORE Lab",
+        "Makmal Penyelidikan BIOCORE"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "biocore",
+        "lab",
+        "makmal",
+        "penyelidikan"
+      ],
+      "building": "Block B",
+      "floor": 1,
+      "room_number": null,
+      "description": "BIOCORE Lab located on Level 1 of Block B.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_B_L1_OPTIMASS_RESEARCH_LAB",
+      "name": "Makmal Penyelidikan OPTIMASS / OPTIMASS Research Lab",
+      "aliases": [
+        "OPTIMASS Research Lab",
+        "Makmal Penyelidikan OPTIMASS"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "lab",
+        "makmal",
+        "optimass",
+        "penyelidikan",
+        "research"
+      ],
+      "building": "Block B",
+      "floor": 1,
+      "room_number": null,
+      "description": "OPTIMASS Research Lab located on Level 1 of Block B.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_C_L1_SOFTWARE_ENGINEERING_LAB_1",
+      "name": "Makmal Kejuruteraan Perisian 1 / Software Engineering Lab 1",
+      "aliases": [
+        "Software Engineering Lab 1",
+        "Makmal Kejuruteraan Perisian 1",
+        "SE Lab 1",
+        "Soft Eng Lab 1",
+        "Software Lab 1",
+        "SE 1"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "engineering",
+        "kejuruteraan",
+        "lab",
+        "makmal",
+        "perisian",
+        "software"
+      ],
+      "building": "Block C",
+      "floor": 1,
+      "room_number": null,
+      "description": "Software Engineering Lab 1 located on Level 1 of Block C.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_C_L1_SOFTWARE_ENGINEERING_LAB_2",
+      "name": "Makmal Kejuruteraan Perisian 2 / Software Engineering Lab 2",
+      "aliases": [
+        "Software Engineering Lab 2",
+        "Makmal Kejuruteraan Perisian 2",
+        "SE Lab 2",
+        "Soft Eng Lab 2",
+        "Software Lab 2",
+        "SE 2"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "engineering",
+        "kejuruteraan",
+        "lab",
+        "makmal",
+        "perisian",
+        "software"
+      ],
+      "building": "Block C",
+      "floor": 1,
+      "room_number": null,
+      "description": "Software Engineering Lab 2 located on Level 1 of Block C.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_C_L1_SOFTWARE_ENGINEERING_LAB_3",
+      "name": "Makmal Kejuruteraan Perisian 3 / Software Engineering Lab 3",
+      "aliases": [
+        "Software Engineering Lab 3",
+        "Makmal Kejuruteraan Perisian 3",
+        "SE Lab 3",
+        "Soft Eng Lab 3",
+        "Software Lab 3",
+        "SE 3"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "engineering",
+        "kejuruteraan",
+        "lab",
+        "makmal",
+        "perisian",
+        "software"
+      ],
+      "building": "Block C",
+      "floor": 1,
+      "room_number": null,
+      "description": "Software Engineering Lab 3 located on Level 1 of Block C.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_C_L1_LECTURE_ROOM_5",
+      "name": "Bilik Kuliah 5 / Lecture Room 5",
+      "aliases": [
+        "Lecture Room 5",
+        "Bilik Kuliah 5",
+        "BK 5",
+        "BK5",
+        "Lec Room 5",
+        "Kuliah 5"
+      ],
+      "category": "lecture_hall",
+      "purposes": [
+        "lecture",
+        "class",
+        "presentation",
+        "exam"
+      ],
+      "keywords": [
+        "bilik",
+        "kuliah",
+        "lecture",
+        "room"
+      ],
+      "building": "Block C",
+      "floor": 1,
+      "room_number": null,
+      "description": "Lecture Room 5 located on Level 1 of Block C.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_C_L1_LECTURE_ROOM_4",
+      "name": "Bilik Kuliah 4 / Lecture Room 4",
+      "aliases": [
+        "Lecture Room 4",
+        "Bilik Kuliah 4",
+        "BK 4",
+        "BK4",
+        "Lec Room 4",
+        "Kuliah 4"
+      ],
+      "category": "lecture_hall",
+      "purposes": [
+        "lecture",
+        "class",
+        "presentation",
+        "exam"
+      ],
+      "keywords": [
+        "bilik",
+        "kuliah",
+        "lecture",
+        "room"
+      ],
+      "building": "Block C",
+      "floor": 1,
+      "room_number": null,
+      "description": "Lecture Room 4 located on Level 1 of Block C.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_C_L1_LECTURE_ROOM_3",
+      "name": "Bilik Kuliah 3 / Lecture Room 3",
+      "aliases": [
+        "Lecture Room 3",
+        "Bilik Kuliah 3",
+        "BK 3",
+        "BK3",
+        "Lec Room 3",
+        "Kuliah 3"
+      ],
+      "category": "lecture_hall",
+      "purposes": [
+        "lecture",
+        "class",
+        "presentation",
+        "exam"
+      ],
+      "keywords": [
+        "bilik",
+        "kuliah",
+        "lecture",
+        "room"
+      ],
+      "building": "Block C",
+      "floor": 1,
+      "room_number": null,
+      "description": "Lecture Room 3 located on Level 1 of Block C.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_C_L1_LECTURE_ROOM_2",
+      "name": "Bilik Kuliah 2 / Lecture Room 2",
+      "aliases": [
+        "Lecture Room 2",
+        "Bilik Kuliah 2",
+        "BK 2",
+        "BK2",
+        "Lec Room 2",
+        "Kuliah 2"
+      ],
+      "category": "lecture_hall",
+      "purposes": [
+        "lecture",
+        "class",
+        "presentation",
+        "exam"
+      ],
+      "keywords": [
+        "bilik",
+        "kuliah",
+        "lecture",
+        "room"
+      ],
+      "building": "Block C",
+      "floor": 1,
+      "room_number": null,
+      "description": "Lecture Room 2 located on Level 1 of Block C.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_C_L1_LECTURE_ROOM_1",
+      "name": "Bilik Kuliah 1 / Lecture Room 1",
+      "aliases": [
+        "Lecture Room 1",
+        "Bilik Kuliah 1",
+        "BK 1",
+        "BK1",
+        "Lec Room 1",
+        "Kuliah 1"
+      ],
+      "category": "lecture_hall",
+      "purposes": [
+        "lecture",
+        "class",
+        "presentation",
+        "exam"
+      ],
+      "keywords": [
+        "bilik",
+        "kuliah",
+        "lecture",
+        "room"
+      ],
+      "building": "Block C",
+      "floor": 1,
+      "room_number": null,
+      "description": "Lecture Room 1 located on Level 1 of Block C.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_D_L1_METAVERSE_STUDIO",
+      "name": "Studio Metasemesta / Metaverse Studio",
+      "aliases": [
+        "Metaverse Studio",
+        "Studio Metasemesta",
+        "Metaverse Lab"
+      ],
+      "category": "studio",
+      "purposes": [
+        "recording",
+        "filming",
+        "creative project"
+      ],
+      "keywords": [
+        "metasemesta",
+        "metaverse",
+        "studio"
+      ],
+      "building": "Block D",
+      "floor": 1,
+      "room_number": null,
+      "description": "Metaverse Studio located on Level 1 of Block D.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_D_L1_LECTURE_ROOM_14",
+      "name": "Bilik Kuliah 14 / Lecture Room 14",
+      "aliases": [
+        "Lecture Room 14",
+        "Bilik Kuliah 14",
+        "BK 14",
+        "BK14",
+        "Lec Room 14",
+        "Kuliah 14"
+      ],
+      "category": "lecture_hall",
+      "purposes": [
+        "lecture",
+        "class",
+        "presentation",
+        "exam"
+      ],
+      "keywords": [
+        "bilik",
+        "kuliah",
+        "lecture",
+        "room"
+      ],
+      "building": "Block D",
+      "floor": 1,
+      "room_number": null,
+      "description": "Lecture Room 14 located on Level 1 of Block D.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_D_L1_STUDENTS_COMMON_ROOM",
+      "name": "Bilik Umum Pelajar / Students' Common Room",
+      "aliases": [
+        "Students' Common Room",
+        "Bilik Umum Pelajar",
+        "Students Common Room",
+        "Common Room",
+        "Student Lounge",
+        "Bilik Rehat Pelajar"
+      ],
+      "category": "facility",
+      "purposes": [
+        "gathering",
+        "relaxing",
+        "events"
+      ],
+      "keywords": [
+        "bilik",
+        "common",
+        "pelajar",
+        "room",
+        "students'",
+        "umum"
+      ],
+      "building": "Block D",
+      "floor": 1,
+      "room_number": null,
+      "description": "Students' Common Room located on Level 1 of Block D.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_E_L1_GAME_ARENA",
+      "name": "Arena Permainan / Game Arena",
+      "aliases": [
+        "Game Arena",
+        "Arena Permainan",
+        "Esports Arena"
+      ],
+      "category": "facility",
+      "purposes": [
+        "gathering",
+        "relaxing",
+        "events"
+      ],
+      "keywords": [
+        "arena",
+        "game",
+        "permainan"
+      ],
+      "building": "Block E",
+      "floor": 1,
+      "room_number": null,
+      "description": "Game Arena located on Level 1 of Block E.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_E_L1_LECTURE_ROOM_13",
+      "name": "Bilik Kuliah 13 / Lecture Room 13",
+      "aliases": [
+        "Lecture Room 13",
+        "Bilik Kuliah 13",
+        "BK 13",
+        "BK13",
+        "Lec Room 13",
+        "Kuliah 13"
+      ],
+      "category": "lecture_hall",
+      "purposes": [
+        "lecture",
+        "class",
+        "presentation",
+        "exam"
+      ],
+      "keywords": [
+        "bilik",
+        "kuliah",
+        "lecture",
+        "room"
+      ],
+      "building": "Block E",
+      "floor": 1,
+      "room_number": null,
+      "description": "Lecture Room 13 located on Level 1 of Block E.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_E_L1_MTDS_LAB",
+      "name": "Makmal MTDS (FAIX) / MTDS Lab (FAIX)",
+      "aliases": [
+        "MTDS Lab",
+        "Makmal MTDS (FAIX)"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "(faix)",
+        "lab",
+        "makmal",
+        "mtds"
+      ],
+      "building": "Block E",
+      "floor": 1,
+      "room_number": null,
+      "description": "MTDS Lab located on Level 1 of Block E. Part of FAIX.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_A_L2_DISCUSSION_ROOM",
+      "name": "Bilik Bincang / Discussion Room",
+      "aliases": [
+        "Discussion Room",
+        "Bilik Bincang",
+        "Bilik Perbincangan",
+        "Study Discussion Room",
+        "Discussion Area"
+      ],
+      "category": "meeting_room",
+      "purposes": [
+        "meeting",
+        "discussion",
+        "consultation"
+      ],
+      "keywords": [
+        "bilik",
+        "bincang",
+        "discussion",
+        "room"
+      ],
+      "building": "Block A",
+      "floor": 2,
+      "room_number": null,
+      "description": "Discussion Room located on Level 2 of Block A.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_B_L2_AI_LAB_3",
+      "name": "Makmal Kepintaran Buatan 3 (FAIX) / AI Lab 3 (FAIX)",
+      "aliases": [
+        "AI Lab 3",
+        "Makmal Kepintaran Buatan 3 (FAIX)",
+        "Artificial Intelligence Lab 3",
+        "Makmal AI 3",
+        "AI Laboratory 3",
+        "AI 3",
+        "Makmal Kepintaran Buatan 3"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "(faix)",
+        "buatan",
+        "kepintaran",
+        "lab",
+        "makmal"
+      ],
+      "building": "Block B",
+      "floor": 2,
+      "room_number": null,
+      "description": "AI Lab 3 located on Level 2 of Block B. Part of FAIX.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_B_L2_RECAP_ROOM",
+      "name": "Bilik ReCap / ReCap Room",
+      "aliases": [
+        "ReCap Room",
+        "Bilik ReCap"
+      ],
+      "category": "meeting_room",
+      "purposes": [
+        "meeting",
+        "discussion",
+        "consultation"
+      ],
+      "keywords": [
+        "bilik",
+        "recap",
+        "room"
+      ],
+      "building": "Block B",
+      "floor": 2,
+      "room_number": null,
+      "description": "ReCap Room located on Level 2 of Block B.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_B_L2_AI_LAB_4",
+      "name": "Makmal Kepintaran Buatan 4 (FAIX) / AI Lab 4 (FAIX)",
+      "aliases": [
+        "AI Lab 4",
+        "Makmal Kepintaran Buatan 4 (FAIX)",
+        "Artificial Intelligence Lab 4",
+        "Makmal AI 4",
+        "AI Laboratory 4",
+        "AI 4",
+        "Makmal Kepintaran Buatan 4"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "(faix)",
+        "buatan",
+        "kepintaran",
+        "lab",
+        "makmal"
+      ],
+      "building": "Block B",
+      "floor": 2,
+      "room_number": null,
+      "description": "AI Lab 4 located on Level 2 of Block B. Part of FAIX.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_C_L2_DATABASE_LAB_3",
+      "name": "Makmal Pangkalan Data 3 / Database Lab 3",
+      "aliases": [
+        "Database Lab 3",
+        "Makmal Pangkalan Data 3",
+        "DB Lab 3",
+        "Data Lab 3",
+        "DB 3",
+        "Makmal DB 3"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "data",
+        "database",
+        "lab",
+        "makmal",
+        "pangkalan"
+      ],
+      "building": "Block C",
+      "floor": 2,
+      "room_number": null,
+      "description": "Database Lab 3 located on Level 2 of Block C.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_C_L2_DATABASE_LAB_2",
+      "name": "Makmal Pangkalan Data 2 / Database Lab 2",
+      "aliases": [
+        "Database Lab 2",
+        "Makmal Pangkalan Data 2",
+        "DB Lab 2",
+        "Data Lab 2",
+        "DB 2",
+        "Makmal DB 2"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "data",
+        "database",
+        "lab",
+        "makmal",
+        "pangkalan"
+      ],
+      "building": "Block C",
+      "floor": 2,
+      "room_number": null,
+      "description": "Database Lab 2 located on Level 2 of Block C.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_C_L2_DATABASE_LAB_1",
+      "name": "Makmal Pangkalan Data 1 / Database Lab 1",
+      "aliases": [
+        "Database Lab 1",
+        "Makmal Pangkalan Data 1",
+        "DB Lab 1",
+        "Data Lab 1",
+        "DB 1",
+        "Makmal DB 1"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "data",
+        "database",
+        "lab",
+        "makmal",
+        "pangkalan"
+      ],
+      "building": "Block C",
+      "floor": 2,
+      "room_number": null,
+      "description": "Database Lab 1 located on Level 2 of Block C.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_C_L2_NETWORK_LAB_2",
+      "name": "Makmal Rangkaian 2 / Network Lab 2",
+      "aliases": [
+        "Network Lab 2",
+        "Makmal Rangkaian 2",
+        "Net Lab 2",
+        "Network 2",
+        "Rangkaian 2"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "lab",
+        "makmal",
+        "network",
+        "rangkaian"
+      ],
+      "building": "Block C",
+      "floor": 2,
+      "room_number": null,
+      "description": "Network Lab 2 located on Level 2 of Block C.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_C_L2_C_ACT_ROOM",
+      "name": "Bilik C-Act / C-Act Room",
+      "aliases": [
+        "C-Act Room",
+        "Bilik C-Act"
+      ],
+      "category": "meeting_room",
+      "purposes": [
+        "meeting",
+        "discussion",
+        "consultation"
+      ],
+      "keywords": [
+        "bilik",
+        "c-act",
+        "room"
+      ],
+      "building": "Block C",
+      "floor": 2,
+      "room_number": null,
+      "description": "C-Act Room located on Level 2 of Block C.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_D_L2_FTMK_CLEAR_ROOM",
+      "name": "Bilik CLeaR FTMK / FTMK CLeaR Room",
+      "aliases": [
+        "FTMK CLeaR Room",
+        "Bilik CLeaR FTMK"
+      ],
+      "category": "meeting_room",
+      "purposes": [
+        "meeting",
+        "discussion",
+        "consultation"
+      ],
+      "keywords": [
+        "bilik",
+        "clear",
+        "ftmk",
+        "room"
+      ],
+      "building": "Block D",
+      "floor": 2,
+      "room_number": null,
+      "description": "FTMK CLeaR Room located on Level 2 of Block D.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_D_L2_COMPUTER_GAMES_LAB",
+      "name": "Makmal Permainan Komputer / Computer Games Lab",
+      "aliases": [
+        "Computer Games Lab",
+        "Makmal Permainan Komputer",
+        "Games Lab",
+        "Game Lab"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "computer",
+        "games",
+        "komputer",
+        "lab",
+        "makmal",
+        "permainan"
+      ],
+      "building": "Block D",
+      "floor": 2,
+      "room_number": null,
+      "description": "Computer Games Lab located on Level 2 of Block D.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_D_L2_MULTIMEDIA_LAB_2",
+      "name": "Makmal Multimedia 2 / Multimedia Lab 2",
+      "aliases": [
+        "Multimedia Lab 2",
+        "Makmal Multimedia 2",
+        "MM Lab 2",
+        "MM 2",
+        "Media Lab 2"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "lab",
+        "makmal",
+        "multimedia"
+      ],
+      "building": "Block D",
+      "floor": 2,
+      "room_number": null,
+      "description": "Multimedia Lab 2 located on Level 2 of Block D.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_D_L2_MULTIMEDIA_LAB_1",
+      "name": "Makmal Multimedia 1 / Multimedia Lab 1",
+      "aliases": [
+        "Multimedia Lab 1",
+        "Makmal Multimedia 1",
+        "MM Lab 1",
+        "MM 1",
+        "Media Lab 1"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "lab",
+        "makmal",
+        "multimedia"
+      ],
+      "building": "Block D",
+      "floor": 2,
+      "room_number": null,
+      "description": "Multimedia Lab 1 located on Level 2 of Block D.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_E_L2_CYBERSECURITY_COMPETENCE_CENTER",
+      "name": "Cybersecurity Competence Center (FAIX)",
+      "aliases": [
+        "Cybersecurity Competence Center",
+        "Cybersecurity Competence Center (FAIX)"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "(faix)",
+        "center",
+        "competence",
+        "cybersecurity"
+      ],
+      "building": "Block E",
+      "floor": 2,
+      "room_number": null,
+      "description": "Cybersecurity Competence Center located on Level 2 of Block E. Part of FAIX.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_E_L2_CCNA_CCNP_LAB",
+      "name": "Makmal CCNA & CCNP / CCNA & CCNP Lab",
+      "aliases": [
+        "CCNA & CCNP Lab",
+        "Makmal CCNA & CCNP"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "ccna",
+        "ccnp",
+        "lab",
+        "makmal"
+      ],
+      "building": "Block E",
+      "floor": 2,
+      "room_number": null,
+      "description": "CCNA & CCNP Lab located on Level 2 of Block E.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_E_L2_FIBER_OPTIC_LAB",
+      "name": "Makmal Fiber Optic / Fiber Optic Lab",
+      "aliases": [
+        "Fiber Optic Lab",
+        "Makmal Fiber Optic"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "fiber",
+        "lab",
+        "makmal",
+        "optic"
+      ],
+      "building": "Block E",
+      "floor": 2,
+      "room_number": null,
+      "description": "Fiber Optic Lab located on Level 2 of Block E.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_A_L3_ADMINISTRATIVE_DISCUSSION_ROOM",
+      "name": "Bilik Bincang Pentadbiran / Administrative Discussion Room",
+      "aliases": [
+        "Administrative Discussion Room",
+        "Bilik Bincang Pentadbiran"
+      ],
+      "category": "meeting_room",
+      "purposes": [
+        "meeting",
+        "discussion",
+        "consultation"
+      ],
+      "keywords": [
+        "administrative",
+        "bilik",
+        "bincang",
+        "discussion",
+        "pentadbiran",
+        "room"
+      ],
+      "building": "Block A",
+      "floor": 3,
+      "room_number": null,
+      "description": "Administrative Discussion Room located on Level 3 of Block A.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_B_L3_SKK_LAB",
+      "name": "Bengkel SKK / SKK Lab",
+      "aliases": [
+        "SKK Lab",
+        "Bengkel SKK"
+      ],
+      "category": "workshop",
+      "purposes": [
+        "workshop",
+        "project",
+        "hands-on work"
+      ],
+      "keywords": [
+        "bengkel",
+        "lab",
+        "skk"
+      ],
+      "building": "Block B",
+      "floor": 3,
+      "room_number": null,
+      "description": "SKK Lab located on Level 3 of Block B.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_B_L3_BITI_WORKSHOP",
+      "name": "Bengkel BITI (FAIX) / BITI Workshop (FAIX)",
+      "aliases": [
+        "BITI Workshop",
+        "Bengkel BITI (FAIX)"
+      ],
+      "category": "workshop",
+      "purposes": [
+        "workshop",
+        "project",
+        "hands-on work"
+      ],
+      "keywords": [
+        "(faix)",
+        "bengkel",
+        "biti",
+        "workshop"
+      ],
+      "building": "Block B",
+      "floor": 3,
+      "room_number": null,
+      "description": "BITI Workshop located on Level 3 of Block B. Part of FAIX.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_B_L3_CMERP_LAB",
+      "name": "Makmal CMERP (FAIX) / CMERP Lab (FAIX)",
+      "aliases": [
+        "CMERP Lab",
+        "Makmal CMERP (FAIX)"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "(faix)",
+        "cmerp",
+        "lab",
+        "makmal"
+      ],
+      "building": "Block B",
+      "floor": 3,
+      "room_number": null,
+      "description": "CMERP Lab located on Level 3 of Block B. Part of FAIX.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_B_L3_LECTURE_ROOM_15",
+      "name": "Bilik Kuliah 15 / Lecture Room 15",
+      "aliases": [
+        "Lecture Room 15",
+        "Bilik Kuliah 15",
+        "BK 15",
+        "BK15",
+        "Lec Room 15",
+        "Kuliah 15"
+      ],
+      "category": "lecture_hall",
+      "purposes": [
+        "lecture",
+        "class",
+        "presentation",
+        "exam"
+      ],
+      "keywords": [
+        "bilik",
+        "kuliah",
+        "lecture",
+        "room"
+      ],
+      "building": "Block B",
+      "floor": 3,
+      "room_number": null,
+      "description": "Lecture Room 15 located on Level 3 of Block B.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_B_L3_IS3_RESEARCH_LAB",
+      "name": "Makmal Penyelidikan IS3 / IS3 Research Lab",
+      "aliases": [
+        "IS3 Research Lab",
+        "Makmal Penyelidikan IS3"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "is3",
+        "lab",
+        "makmal",
+        "penyelidikan",
+        "research"
+      ],
+      "building": "Block B",
+      "floor": 3,
+      "room_number": null,
+      "description": "IS3 Research Lab located on Level 3 of Block B.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_C_L3_SYSTEMS_AND_HARDWARE_LAB",
+      "name": "Makmal Sistem dan Perkakasan / Systems and Hardware Lab",
+      "aliases": [
+        "Systems and Hardware Lab",
+        "Makmal Sistem dan Perkakasan",
+        "System and Hardware Lab",
+        "Hardware Lab",
+        "Makmal Perkakasan",
+        "Systems & Hardware Lab"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "and",
+        "dan",
+        "hardware",
+        "lab",
+        "makmal",
+        "perkakasan",
+        "sistem",
+        "systems"
+      ],
+      "building": "Block C",
+      "floor": 3,
+      "room_number": null,
+      "description": "Systems and Hardware Lab located on Level 3 of Block C.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_C_L3_SYSTEMS_LAB",
+      "name": "Makmal Sistem / Systems Lab",
+      "aliases": [
+        "Systems Lab",
+        "Makmal Sistem",
+        "System Lab",
+        "Makmal System",
+        "Sys Lab"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "lab",
+        "makmal",
+        "sistem",
+        "systems"
+      ],
+      "building": "Block C",
+      "floor": 3,
+      "room_number": null,
+      "description": "Systems Lab located on Level 3 of Block C.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_C_L3_NETWORK_LAB_1",
+      "name": "Makmal Rangkaian 1 / Network Lab 1",
+      "aliases": [
+        "Network Lab 1",
+        "Makmal Rangkaian 1",
+        "Net Lab 1",
+        "Network 1",
+        "Rangkaian 1"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "lab",
+        "makmal",
+        "network",
+        "rangkaian"
+      ],
+      "building": "Block C",
+      "floor": 3,
+      "room_number": null,
+      "description": "Network Lab 1 located on Level 3 of Block C.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_C_L3_EXECUTIVE_LAB",
+      "name": "Makmal Eksekutif / Executive Lab",
+      "aliases": [
+        "Executive Lab",
+        "Makmal Eksekutif"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "eksekutif",
+        "executive",
+        "lab",
+        "makmal"
+      ],
+      "building": "Block C",
+      "floor": 3,
+      "room_number": null,
+      "description": "Executive Lab located on Level 3 of Block C.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_C_L3_STUDENTS_WORKSHOP",
+      "name": "Bengkel Pelajar / Students' Workshop",
+      "aliases": [
+        "Students' Workshop",
+        "Bengkel Pelajar"
+      ],
+      "category": "workshop",
+      "purposes": [
+        "workshop",
+        "project",
+        "hands-on work"
+      ],
+      "keywords": [
+        "bengkel",
+        "pelajar",
+        "students'",
+        "workshop"
+      ],
+      "building": "Block C",
+      "floor": 3,
+      "room_number": null,
+      "description": "Students' Workshop located on Level 3 of Block C.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_D_L3_MULTIMEDIA_LAB_4",
+      "name": "Makmal Multimedia 4 / Multimedia Lab 4",
+      "aliases": [
+        "Multimedia Lab 4",
+        "Makmal Multimedia 4",
+        "MM Lab 4",
+        "MM 4",
+        "Media Lab 4"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "lab",
+        "makmal",
+        "multimedia"
+      ],
+      "building": "Block D",
+      "floor": 3,
+      "room_number": null,
+      "description": "Multimedia Lab 4 located on Level 3 of Block D.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_D_L3_VIRTUAL_REALITY_LAB",
+      "name": "Makmal Realiti Maya / Virtual Reality Lab",
+      "aliases": [
+        "Virtual Reality Lab",
+        "Makmal Realiti Maya",
+        "VR Lab",
+        "Makmal VR"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "lab",
+        "makmal",
+        "maya",
+        "realiti",
+        "reality",
+        "virtual"
+      ],
+      "building": "Block D",
+      "floor": 3,
+      "room_number": null,
+      "description": "Virtual Reality Lab located on Level 3 of Block D.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_D_L3_MULTIMEDIA_LAB_3",
+      "name": "Makmal Multimedia 3 / Multimedia Lab 3",
+      "aliases": [
+        "Multimedia Lab 3",
+        "Makmal Multimedia 3",
+        "MM Lab 3",
+        "MM 3",
+        "Media Lab 3"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "lab",
+        "makmal",
+        "multimedia"
+      ],
+      "building": "Block D",
+      "floor": 3,
+      "room_number": null,
+      "description": "Multimedia Lab 3 located on Level 3 of Block D.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_D_L3_AUDIO_RECORDING_ROOM_1",
+      "name": "Bilik Rakaman Audio 1 / Audio Recording Room 1",
+      "aliases": [
+        "Audio Recording Room 1",
+        "Bilik Rakaman Audio 1"
+      ],
+      "category": "studio",
+      "purposes": [
+        "recording",
+        "filming",
+        "creative project"
+      ],
+      "keywords": [
+        "audio",
+        "bilik",
+        "rakaman",
+        "recording",
+        "room"
+      ],
+      "building": "Block D",
+      "floor": 3,
+      "room_number": null,
+      "description": "Audio Recording Room 1 located on Level 3 of Block D.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_D_L3_AUDIO_RECORDING_ROOM_2",
+      "name": "Bilik Rakaman Audio 2 / Audio Recording Room 2",
+      "aliases": [
+        "Audio Recording Room 2",
+        "Bilik Rakaman Audio 2"
+      ],
+      "category": "studio",
+      "purposes": [
+        "recording",
+        "filming",
+        "creative project"
+      ],
+      "keywords": [
+        "audio",
+        "bilik",
+        "rakaman",
+        "recording",
+        "room"
+      ],
+      "building": "Block D",
+      "floor": 3,
+      "room_number": null,
+      "description": "Audio Recording Room 2 located on Level 3 of Block D.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_D_L3_SHOOTING_STUDIO",
+      "name": "Studio Pengambaran / Shooting Studio",
+      "aliases": [
+        "Shooting Studio",
+        "Studio Pengambaran"
+      ],
+      "category": "studio",
+      "purposes": [
+        "recording",
+        "filming",
+        "creative project"
+      ],
+      "keywords": [
+        "pengambaran",
+        "shooting",
+        "studio"
+      ],
+      "building": "Block D",
+      "floor": 3,
+      "room_number": null,
+      "description": "Shooting Studio located on Level 3 of Block D.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_E_L3_WIRELESS_LAB",
+      "name": "Makmal Tanpa Wayar / Wireless Lab",
+      "aliases": [
+        "Wireless Lab",
+        "Makmal Tanpa Wayar"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "lab",
+        "makmal",
+        "tanpa",
+        "wayar",
+        "wireless"
+      ],
+      "building": "Block E",
+      "floor": 3,
+      "room_number": null,
+      "description": "Wireless Lab located on Level 3 of Block E.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_E_L3_SECURITY_LAB_2",
+      "name": "Makmal Keselamatan 2 (FAIX) / Security Lab 2 (FAIX)",
+      "aliases": [
+        "Security Lab 2",
+        "Makmal Keselamatan 2 (FAIX)"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "(faix)",
+        "keselamatan",
+        "lab",
+        "makmal",
+        "security"
+      ],
+      "building": "Block E",
+      "floor": 3,
+      "room_number": null,
+      "description": "Security Lab 2 located on Level 3 of Block E. Part of FAIX.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_E_L3_CLOUD_COMPUTING_LAB",
+      "name": "Makmal Pengkomputeran Awan / Cloud Computing Lab",
+      "aliases": [
+        "Cloud Computing Lab",
+        "Makmal Pengkomputeran Awan",
+        "Cloud Lab"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "awan",
+        "cloud",
+        "computing",
+        "lab",
+        "makmal",
+        "pengkomputeran"
+      ],
+      "building": "Block E",
+      "floor": 3,
+      "room_number": null,
+      "description": "Cloud Computing Lab located on Level 3 of Block E.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_A_L4_SEMINAR_HALL",
+      "name": "Dewan Seminar / Seminar Hall",
+      "aliases": [
+        "Seminar Hall",
+        "Dewan Seminar",
+        "Seminar Room",
+        "Exam Hall",
+        "Dewan"
+      ],
+      "category": "lecture_hall",
+      "purposes": [
+        "lecture",
+        "class",
+        "presentation",
+        "exam"
+      ],
+      "keywords": [
+        "dewan",
+        "hall",
+        "seminar"
+      ],
+      "building": "Block A",
+      "floor": 4,
+      "room_number": null,
+      "description": "Seminar Hall located on Level 4 of Block A.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_A_L4_MAIN_MEETING_ROOM",
+      "name": "Bilik Mesyuarat Utama / Main Meeting Room",
+      "aliases": [
+        "Main Meeting Room",
+        "Bilik Mesyuarat Utama",
+        "Meeting Room",
+        "Bilik Mesyuarat",
+        "Board Room"
+      ],
+      "category": "meeting_room",
+      "purposes": [
+        "meeting",
+        "discussion",
+        "consultation"
+      ],
+      "keywords": [
+        "bilik",
+        "main",
+        "meeting",
+        "mesyuarat",
+        "room",
+        "utama"
+      ],
+      "building": "Block A",
+      "floor": 4,
+      "room_number": null,
+      "description": "Main Meeting Room located on Level 4 of Block A.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_B_L4_LECTURE_ROOM_16",
+      "name": "Bilik Kuliah 16 / Lecture Room 16",
+      "aliases": [
+        "Lecture Room 16",
+        "Bilik Kuliah 16",
+        "BK 16",
+        "BK16",
+        "Lec Room 16",
+        "Kuliah 16"
+      ],
+      "category": "lecture_hall",
+      "purposes": [
+        "lecture",
+        "class",
+        "presentation",
+        "exam"
+      ],
+      "keywords": [
+        "bilik",
+        "kuliah",
+        "lecture",
+        "room"
+      ],
+      "building": "Block B",
+      "floor": 4,
+      "room_number": null,
+      "description": "Lecture Room 16 located on Level 4 of Block B.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_B_L4_INFORSNET_RESEARCH_LAB",
+      "name": "Makmal Penyelidikan INFORSNET (FAIX) / INFORSNET Research Lab (FAIX)",
+      "aliases": [
+        "INFORSNET Research Lab",
+        "Makmal Penyelidikan INFORSNET (FAIX)"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "(faix)",
+        "inforsnet",
+        "lab",
+        "makmal",
+        "penyelidikan",
+        "research"
+      ],
+      "building": "Block B",
+      "floor": 4,
+      "room_number": null,
+      "description": "INFORSNET Research Lab located on Level 4 of Block B. Part of FAIX.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_C_L4_PROGRAMMING_LAB_3",
+      "name": "Makmal Pengaturcaraan 3 / Programming Lab 3",
+      "aliases": [
+        "Programming Lab 3",
+        "Makmal Pengaturcaraan 3",
+        "Program Lab 3",
+        "Prog Lab 3",
+        "Makmal Program 3"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "lab",
+        "makmal",
+        "pengaturcaraan",
+        "programming"
+      ],
+      "building": "Block C",
+      "floor": 4,
+      "room_number": null,
+      "description": "Programming Lab 3 located on Level 4 of Block C.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_C_L4_PROGRAMMING_LAB_4",
+      "name": "Makmal Pengaturcaraan 4 / Programming Lab 4",
+      "aliases": [
+        "Programming Lab 4",
+        "Makmal Pengaturcaraan 4",
+        "Program Lab 4",
+        "Prog Lab 4",
+        "Makmal Program 4"
+      ],
+      "category": "laboratory",
+      "purposes": [
+        "lab session",
+        "programming",
+        "project",
+        "research"
+      ],
+      "keywords": [
+        "lab",
+        "makmal",
+        "pengaturcaraan",
+        "programming"
+      ],
+      "building": "Block C",
+      "floor": 4,
+      "room_number": null,
+      "description": "Programming Lab 4 located on Level 4 of Block C.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "B_C_L4_BITD_WORKSHOP",
+      "name": "Bengkel BITD / BITD Workshop",
+      "aliases": [
+        "BITD Workshop",
+        "Bengkel BITD"
+      ],
+      "category": "workshop",
+      "purposes": [
+        "workshop",
+        "project",
+        "hands-on work"
+      ],
+      "keywords": [
+        "bengkel",
+        "bitd",
+        "workshop"
+      ],
+      "building": "Block C",
+      "floor": 4,
+      "room_number": null,
+      "description": "BITD Workshop located on Level 4 of Block C.",
+      "opening_hours": null,
+      "capacity": null,
+      "facilities": [],
+      "is_active": true
+    },
+    {
+      "id": "TOILET_BLOCK_A_L1",
+      "name": "Tandas Aras 1 Blok A / Block A Level 1 Restroom",
+      "aliases": [
+        "Toilet Block A",
+        "Tandas Blok A",
+        "Restroom Block A",
+        "Washroom Block A",
+        "Lobby Toilet",
+        "Tandas Lobi",
+        "Toilet",
+        "Tandas",
+        "Restroom",
+        "Washroom",
+        "WC"
+      ],
+      "category": "toilet",
+      "purposes": [
+        "washroom",
+        "toilet",
+        "restroom",
+        "tandas",
+        "fresh up",
+        "relief"
+      ],
+      "keywords": [
+        "toilet",
+        "tandas",
+        "restroom",
+        "washroom",
+        "lavatory",
+        "wc",
+        "bilik air",
+        "jamban",
+        "pee",
+        "poop",
+        "relief"
+      ],
+      "building": "Block A",
+      "floor": 1,
+      "room_number": null,
+      "description": "Restroom facilities located in Block A, Level 1 near the Main Entrance / Lobby and C-ACT.",
+      "opening_hours": {
+        "weekday": "24 hours",
+        "weekend": "24 hours"
+      },
+      "capacity": null,
+      "facilities": [
+        "Male Restroom",
+        "Female Restroom",
+        "OKU / Accessible Toilet"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "TOILET_BLOCK_A_L2",
+      "name": "Tandas Aras 2 Blok A / Block A Level 2 Restroom",
+      "aliases": [
+        "Toilet Block A Level 2",
+        "Tandas Blok A Aras 2",
+        "Restroom Block A Level 2"
+      ],
+      "category": "toilet",
+      "purposes": [
+        "washroom",
+        "toilet",
+        "restroom",
+        "tandas"
+      ],
+      "keywords": [
+        "toilet",
+        "tandas",
+        "restroom",
+        "washroom",
+        "bilik air"
+      ],
+      "building": "Block A",
+      "floor": 2,
+      "room_number": null,
+      "description": "Restroom facilities located in Block A, Level 2 near the discussion rooms and walkway bridge to Block B.",
+      "opening_hours": {
+        "weekday": "24 hours",
+        "weekend": "24 hours"
+      },
+      "capacity": null,
+      "facilities": [
+        "Male Restroom",
+        "Female Restroom"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "TOILET_BLOCK_B_L1",
+      "name": "Tandas Aras 1 Blok B / Block B Level 1 Restroom",
+      "aliases": [
+        "Toilet Block B",
+        "Tandas Blok B",
+        "Restroom Block B",
+        "Toilet Block B Level 1",
+        "Tandas Blok B Aras 1"
+      ],
+      "category": "toilet",
+      "purposes": [
+        "washroom",
+        "toilet",
+        "restroom",
+        "tandas"
+      ],
+      "keywords": [
+        "toilet",
+        "tandas",
+        "restroom",
+        "washroom",
+        "bilik air"
+      ],
+      "building": "Block B",
+      "floor": 1,
+      "room_number": null,
+      "description": "Restroom facilities located in Block B, Level 1 near the Programming Labs and main stairs.",
+      "opening_hours": {
+        "weekday": "24 hours",
+        "weekend": "24 hours"
+      },
+      "capacity": null,
+      "facilities": [
+        "Male Restroom",
+        "Female Restroom"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "TOILET_BLOCK_B_L2",
+      "name": "Tandas Aras 2 Blok B / Block B Level 2 Restroom",
+      "aliases": [
+        "Toilet Block B Level 2",
+        "Tandas Blok B Aras 2",
+        "AI Lab Toilet",
+        "Tandas Makmal AI"
+      ],
+      "category": "toilet",
+      "purposes": [
+        "washroom",
+        "toilet",
+        "restroom",
+        "tandas"
+      ],
+      "keywords": [
+        "toilet",
+        "tandas",
+        "restroom",
+        "washroom",
+        "bilik air"
+      ],
+      "building": "Block B",
+      "floor": 2,
+      "room_number": null,
+      "description": "Restroom facilities located in Block B, Level 2 near the AI Labs and the Level 2 bridge.",
+      "opening_hours": {
+        "weekday": "24 hours",
+        "weekend": "24 hours"
+      },
+      "capacity": null,
+      "facilities": [
+        "Male Restroom",
+        "Female Restroom"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "TOILET_BLOCK_C_L1",
+      "name": "Tandas Aras 1 Blok C / Block C Level 1 Restroom",
+      "aliases": [
+        "Toilet Block C",
+        "Tandas Blok C",
+        "Restroom Block C",
+        "Toilet Block C Level 1"
+      ],
+      "category": "toilet",
+      "purposes": [
+        "washroom",
+        "toilet",
+        "restroom",
+        "tandas"
+      ],
+      "keywords": [
+        "toilet",
+        "tandas",
+        "restroom",
+        "washroom",
+        "bilik air"
+      ],
+      "building": "Block C",
+      "floor": 1,
+      "room_number": null,
+      "description": "Restroom facilities located in Block C, Level 1 near Software Engineering Labs.",
+      "opening_hours": {
+        "weekday": "24 hours",
+        "weekend": "24 hours"
+      },
+      "capacity": null,
+      "facilities": [
+        "Male Restroom",
+        "Female Restroom"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "TOILET_BLOCK_C_L2",
+      "name": "Tandas Aras 2 Blok C / Block C Level 2 Restroom",
+      "aliases": [
+        "Toilet Block C Level 2",
+        "Tandas Blok C Aras 2",
+        "Database Lab Toilet"
+      ],
+      "category": "toilet",
+      "purposes": [
+        "washroom",
+        "toilet",
+        "restroom",
+        "tandas"
+      ],
+      "keywords": [
+        "toilet",
+        "tandas",
+        "restroom",
+        "washroom",
+        "bilik air"
+      ],
+      "building": "Block C",
+      "floor": 2,
+      "room_number": null,
+      "description": "Restroom facilities located in Block C, Level 2 near the Database Labs.",
+      "opening_hours": {
+        "weekday": "24 hours",
+        "weekend": "24 hours"
+      },
+      "capacity": null,
+      "facilities": [
+        "Male Restroom",
+        "Female Restroom"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "TOILET_BLOCK_D_L1",
+      "name": "Tandas Aras 1 Blok D / Block D Level 1 Restroom",
+      "aliases": [
+        "Toilet Block D",
+        "Tandas Blok D",
+        "Restroom Block D",
+        "Common Room Toilet"
+      ],
+      "category": "toilet",
+      "purposes": [
+        "washroom",
+        "toilet",
+        "restroom",
+        "tandas"
+      ],
+      "keywords": [
+        "toilet",
+        "tandas",
+        "restroom",
+        "washroom",
+        "bilik air"
+      ],
+      "building": "Block D",
+      "floor": 1,
+      "room_number": null,
+      "description": "Restroom facilities located in Block D, Level 1 near Students' Common Room and Metaverse Studio.",
+      "opening_hours": {
+        "weekday": "24 hours",
+        "weekend": "24 hours"
+      },
+      "capacity": null,
+      "facilities": [
+        "Male Restroom",
+        "Female Restroom"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "TOILET_BLOCK_D_L3",
+      "name": "Tandas Aras 3 Blok D / Block D Level 3 Restroom",
+      "aliases": [
+        "Toilet Block D Level 3",
+        "Tandas Blok D Aras 3",
+        "Multimedia Lab Toilet"
+      ],
+      "category": "toilet",
+      "purposes": [
+        "washroom",
+        "toilet",
+        "restroom",
+        "tandas"
+      ],
+      "keywords": [
+        "toilet",
+        "tandas",
+        "restroom",
+        "washroom",
+        "bilik air"
+      ],
+      "building": "Block D",
+      "floor": 3,
+      "room_number": null,
+      "description": "Restroom facilities located in Block D, Level 3 near Multimedia Labs 3 & 4 and Mini Theatre.",
+      "opening_hours": {
+        "weekday": "24 hours",
+        "weekend": "24 hours"
+      },
+      "capacity": null,
+      "facilities": [
+        "Male Restroom",
+        "Female Restroom"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "TOILET_BLOCK_E_L1",
+      "name": "Tandas Aras 1 Blok E / Block E Level 1 Restroom",
+      "aliases": [
+        "Toilet Block E",
+        "Tandas Blok E",
+        "Restroom Block E",
+        "Game Arena Toilet"
+      ],
+      "category": "toilet",
+      "purposes": [
+        "washroom",
+        "toilet",
+        "restroom",
+        "tandas"
+      ],
+      "keywords": [
+        "toilet",
+        "tandas",
+        "restroom",
+        "washroom",
+        "bilik air"
+      ],
+      "building": "Block E",
+      "floor": 1,
+      "room_number": null,
+      "description": "Restroom facilities located in Block E, Level 1 near Game Arena.",
+      "opening_hours": {
+        "weekday": "24 hours",
+        "weekend": "24 hours"
+      },
+      "capacity": null,
+      "facilities": [
+        "Male Restroom",
+        "Female Restroom"
+      ],
+      "is_active": true
+    },
+    {
+      "id": "TOILET_BLOCK_E_L2",
+      "name": "Tandas Aras 2 Blok E / Block E Level 2 Restroom",
+      "aliases": [
+        "Toilet Block E Level 2",
+        "Tandas Blok E Aras 2",
+        "Cybersecurity Toilet"
+      ],
+      "category": "toilet",
+      "purposes": [
+        "washroom",
+        "toilet",
+        "restroom",
+        "tandas"
+      ],
+      "keywords": [
+        "toilet",
+        "tandas",
+        "restroom",
+        "washroom",
+        "bilik air"
+      ],
+      "building": "Block E",
+      "floor": 2,
+      "room_number": null,
+      "description": "Restroom facilities located in Block E, Level 2 near Cybersecurity Competence Center and CCNA Lab.",
+      "opening_hours": {
+        "weekday": "24 hours",
+        "weekend": "24 hours"
+      },
+      "capacity": null,
+      "facilities": [
+        "Male Restroom",
+        "Female Restroom"
+      ],
+      "is_active": true
+    }
+  ]
+}
