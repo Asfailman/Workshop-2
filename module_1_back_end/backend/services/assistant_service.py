@@ -2,7 +2,7 @@ import os
 import re
 import sys
 from pathlib import Path
-from typing import Dict, Any, Optional, List
+from typing import Dict, Any, Optional, List, Tuple
 
 # Ensure the AI module directory and repo root are in sys.path
 CURRENT_DIR = Path(__file__).resolve().parent
