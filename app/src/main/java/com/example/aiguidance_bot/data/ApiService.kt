@@ -21,7 +21,7 @@ class ApiService {
     private val gson = Gson()
 
     private val apiUrl =
-        "https://rinse-upstart-favorable.ngrok-free.dev/api/v1/assistant/query"
+        "https://dazzling-endurance-huddle.ngrok-free.dev/api/v1/assistant/query"
 
     // Module 2 Endpoints
     var campusApiUrl: String = "http://10.0.2.2:8000" // Replace with actual FastAPI URL
