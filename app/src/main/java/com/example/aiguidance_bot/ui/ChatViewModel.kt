@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.aiguidance_bot.data.ChatMessage
 import com.example.aiguidance_bot.data.ChatRepository
+import com.example.aiguidance_bot.data.FtmkLocationDatabase
 import com.example.aiguidance_bot.data.Sender
 import kotlinx.coroutines.launch
 
@@ -18,12 +19,15 @@ class ChatViewModel(private val repository: ChatRepository = ChatRepository()) :
     val isLoading: LiveData<Boolean> get() = _isLoading
 
     init {
+        clearChat()
+    }
+
+    fun clearChat() {
         val welcomeMsg = ChatMessage(
-            text = "Hello Member 1! I am your AI Guidance Assistant for BAXU3923. Ask me anything about your project or tasks.",
+            text = "Hello Member 1! I am your AI Guidance Assistant for BAXU3923. Ask me about any room or location in FTMK!",
             sender = Sender.AI
         )
-        _messages.value?.add(welcomeMsg)
-        _messages.value = _messages.value
+        _messages.value = mutableListOf(welcomeMsg)
     }
 
     fun sendMessage(text: String) {
@@ -37,8 +41,25 @@ class ChatViewModel(private val repository: ChatRepository = ChatRepository()) :
 
         viewModelScope.launch {
             val aiReplyText = repository.getAiResponse(text)
-            val aiMsg = ChatMessage(text = aiReplyText, sender = Sender.AI)
             
+            // Check if user query matches any FTMK Room
+            val matchedRoom = FtmkLocationDatabase.findRoomByQuery(text) 
+                ?: FtmkLocationDatabase.findRoomByQuery(aiReplyText)
+
+            val aiMsg = if (matchedRoom != null) {
+                val locationInfo = "\n\n📍 FTMK Location Found:\n• Room: ${matchedRoom.nameMalay} (${matchedRoom.nameEnglish})\n• Floor: Level ${matchedRoom.level} (Aras ${matchedRoom.level})\n• Block: ${matchedRoom.block}"
+                ChatMessage(
+                    text = aiReplyText + locationInfo,
+                    sender = Sender.AI,
+                    roomId = matchedRoom.id,
+                    roomName = matchedRoom.nameMalay,
+                    roomLevel = matchedRoom.level,
+                    roomBlock = matchedRoom.block
+                )
+            } else {
+                ChatMessage(text = aiReplyText, sender = Sender.AI)
+            }
+
             val updatedList = _messages.value ?: mutableListOf()
             updatedList.add(aiMsg)
             _messages.value = updatedList
