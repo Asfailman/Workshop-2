@@ -88,16 +88,40 @@ class CampusNLP:
         # Programming Lab
         (r'\bprog(?:ram(?:ming)?)?\s*(?:lab(?:oratory)?)?\s*([1-4])\b', r'programming lab \1'),
         (r'\bmakmal\s*program(?:ming)?\s*([1-4])\b', r'makmal pengaturcaraan \1'),
+        (r'\bmakmal\s*pengaturcaraan\s*([1-4])\b', r'makmal pengaturcaraan \1'),
+        (r'\bprog(?:ram(?:ming)?)?\s*lab(?:oratory)?(?!\s*[0-9])\b', 'programming lab 1'),
+        (r'\bmakmal\s*(?:pengaturcaraan|program(?:ming)?)(?!\s*[0-9])\b', 'programming lab 1'),
+
         # AI Lab
         (r'\bai\s*(?:lab(?:oratory)?)?\s*([1-4])\b', r'ai lab \1'),
+        (r'\bmakmal\s*(?:kepintaran\s*buatan|ai)\s*([1-4])\b', r'ai lab \1'),
+        (r'\bai\s*lab(?:oratory)?(?!\s*[0-9])\b', 'ai lab 1'),
+        (r'\bmakmal\s*(?:kepintaran\s*buatan|ai)(?!\s*[0-9])\b', 'ai lab 1'),
+
         # Database Lab
         (r'\b(?:data(?:base)?|db)\s*(?:lab(?:oratory)?)?\s*([1-3])\b', r'database lab \1'),
+        (r'\bmakmal\s*(?:pangkalan\s*data|db)\s*([1-3])\b', r'database lab \1'),
+        (r'\b(?:data(?:base)?|db)\s*lab(?:oratory)?(?!\s*[0-9])\b', 'database lab 1'),
+        (r'\bmakmal\s*(?:pangkalan\s*data|db)(?!\s*[0-9])\b', 'database lab 1'),
+
         # Software Engineering Lab
         (r'\b(?:soft(?:ware)?\s*eng(?:ineering)?|se)\s*(?:lab(?:oratory)?)?\s*([1-3])\b', r'software engineering lab \1'),
+        (r'\bmakmal\s*(?:kejuruteraan\s*perisian|se)\s*([1-3])\b', r'software engineering lab \1'),
+        (r'\b(?:soft(?:ware)?(?:\s*eng(?:ineering)?)?|se)\s*lab(?:oratory)?(?!\s*[0-9])\b', 'software engineering lab 1'),
+        (r'\bmakmal\s*(?:kejuruteraan\s*perisian|perisian)(?!\s*[0-9])\b', 'software engineering lab 1'),
+
         # Multimedia Lab
         (r'\b(?:multi(?:media)?|mm)\s*(?:lab(?:oratory)?)?\s*([1-4])\b', r'multimedia lab \1'),
+        (r'\bmakmal\s*(?:multimedia|mm)\s*([1-4])\b', r'multimedia lab \1'),
+        (r'\b(?:multi(?:media)?|mm)\s*lab(?:oratory)?(?!\s*[0-9])\b', 'multimedia lab 1'),
+        (r'\bmakmal\s*(?:multimedia|mm)(?!\s*[0-9])\b', 'multimedia lab 1'),
+
         # Network Lab
-        (r'\b(?:net(?:work)?)\s*(?:lab(?:oratory)?)?\s*([1-2])\b', r'network lab \1'),
+        (r'\b(?:net(?:work(?:ing)?)?)\s*(?:lab(?:oratory)?)?\s*([1-2])\b', r'network lab \1'),
+        (r'\bmakmal\s*(?:rangkaian|net(?:work)?)\s*([1-2])\b', r'network lab \1'),
+        (r'\b(?:net(?:work(?:ing)?)?)\s*lab(?:oratory)?(?!\s*[0-9])\b', 'network lab 1'),
+        (r'\bmakmal\s*(?:rangkaian|net(?:work)?)(?!\s*[0-9])\b', 'network lab 1'),
+
         # Lecture Rooms (BK 1 - 16)
         (r'\b(?:lec(?:ture)?\s*room|bilik\s*kuliah|bk)\s*([0-9]{1,2})\b', r'lecture room \1'),
         # Audio Recording Room
@@ -208,8 +232,14 @@ class CampusNLP:
         # Sort strictly by length of alias in descending order (longest match wins!)
         alias_pairs.sort(key=lambda x: len(x[0]), reverse=True)
 
-        # Check in both preprocessed text and raw lower text
-        search_candidates = [clean, raw_clean.lower()]
+        # Check in preprocessed text, stripped candidate, and raw lower text
+        cand_stripped = re.sub(
+            r'^(?:can\s+(?:i|you)\s+(?:please\s+)?(?:know|tell\s+me|show\s+me)?\s*(?:where\s+is|where)?|where\s+is|where|show\s+me|guide\s+me\s+to|directions?\s+to|how\s+to\s+get\s+to|tunjukkan\s+jalan\s+ke|kat\s+mana|di\s+mana|dimana)\s+(?:the\s+)?',
+            '',
+            clean,
+            flags=re.IGNORECASE
+        ).strip()
+        search_candidates = [cand_stripped, clean, raw_clean.lower()]
 
         for search_str in search_candidates:
             for alias_text, loc in alias_pairs:

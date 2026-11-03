@@ -20,6 +20,7 @@ import com.example.aiguidance_bot.data.FtmkRoom
 class FtmkMapActivity : AppCompatActivity() {
 
     private var selectedLevel = 1
+    private var currentRoom: FtmkRoom? = null
     private lateinit var roomAdapter: FloorRoomAdapter
 
     private lateinit var tvSelectedRoomName: TextView
@@ -30,6 +31,7 @@ class FtmkMapActivity : AppCompatActivity() {
     private lateinit var ivFtmkMapImage: ImageView
     private lateinit var layoutRedDotMarker: View
     private lateinit var tvRedDotLabel: TextView
+    private lateinit var rvFloorRooms: RecyclerView
 
     private lateinit var btnLevel1: Button
     private lateinit var btnLevel2: Button
@@ -64,7 +66,7 @@ class FtmkMapActivity : AppCompatActivity() {
         btnLevel3 = findViewById(R.id.btnLevel3)
         btnLevel4 = findViewById(R.id.btnLevel4)
 
-        val rvFloorRooms = findViewById<RecyclerView>(R.id.rvFloorRooms)
+        rvFloorRooms = findViewById(R.id.rvFloorRooms)
         rvFloorRooms.layoutManager = LinearLayoutManager(this)
 
         roomAdapter = FloorRoomAdapter(emptyList()) { room ->
@@ -76,20 +78,22 @@ class FtmkMapActivity : AppCompatActivity() {
         val passedRoomId = intent.getStringExtra(EXTRA_ROOM_ID)
         val passedLevel = intent.getIntExtra(EXTRA_ROOM_LEVEL, 1)
 
-        selectedLevel = if (passedLevel in 1..4) passedLevel else 1
+        val targetRoom = FtmkLocationDatabase.findRoomById(passedRoomId)
+        selectedLevel = targetRoom?.level ?: (if (passedLevel in 1..4) passedLevel else 1)
 
         btnLevel1.setOnClickListener { switchLevel(1) }
         btnLevel2.setOnClickListener { switchLevel(2) }
         btnLevel3.setOnClickListener { switchLevel(3) }
         btnLevel4.setOnClickListener { switchLevel(4) }
 
+        ivFtmkMapImage.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
+            currentRoom?.let { positionMarkerForRoom(it) }
+        }
+
         switchLevel(selectedLevel)
 
-        if (passedRoomId != null) {
-            val matchedRoom = FtmkLocationDatabase.rooms.find { it.id == passedRoomId }
-            if (matchedRoom != null) {
-                displayRoomDetails(matchedRoom)
-            }
+        if (targetRoom != null) {
+            displayRoomDetails(targetRoom)
         } else {
             val firstRoomOnLevel = FtmkLocationDatabase.rooms.firstOrNull { it.level == selectedLevel }
             if (firstRoomOnLevel != null) {
@@ -128,6 +132,7 @@ class FtmkMapActivity : AppCompatActivity() {
     }
 
     private fun displayRoomDetails(room: FtmkRoom) {
+        currentRoom = room
         tvSelectedRoomName.text = "${room.nameMalay}\n(${room.nameEnglish})"
         tvSelectedLevelBadge.text = "LEVEL ${room.level} (ARAS ${room.level})"
         tvSelectedBlockBadge.text = "🔴 ${room.block}"
@@ -140,11 +145,46 @@ class FtmkMapActivity : AppCompatActivity() {
         layoutRedDotMarker.visibility = View.VISIBLE
         tvRedDotLabel.text = "📍 ${room.nameMalay}"
 
-        val params = layoutRedDotMarker.layoutParams as? ConstraintLayout.LayoutParams
-        if (params != null) {
-            params.horizontalBias = room.mapBiasX
-            params.verticalBias = room.mapBiasY
-            layoutRedDotMarker.layoutParams = params
+        positionMarkerForRoom(room)
+
+        // Highlight and scroll to the room in the floor directory list
+        val roomIndex = roomAdapter.selectRoom(room.id)
+        if (roomIndex != -1) {
+            rvFloorRooms.post {
+                rvFloorRooms.smoothScrollToPosition(roomIndex)
+            }
+        }
+    }
+
+    private fun positionMarkerForRoom(room: FtmkRoom) {
+        ivFtmkMapImage.post {
+            val viewW = ivFtmkMapImage.width.toFloat()
+            val viewH = ivFtmkMapImage.height.toFloat()
+            if (viewW <= 0f || viewH <= 0f) return@post
+
+            // SVG viewport aspect ratio is 400 x 300
+            val svgW = 400f
+            val svgH = 300f
+            val scale = minOf(viewW / svgW, viewH / svgH)
+            val drawnW = svgW * scale
+            val drawnH = svgH * scale
+            val offsetX = (viewW - drawnW) / 2f
+            val offsetY = (viewH - drawnH) / 2f
+
+            val pixelX = offsetX + (room.mapBiasX * drawnW)
+            val pixelY = offsetY + (room.mapBiasY * drawnH)
+
+            layoutRedDotMarker.post {
+                val markerW = layoutRedDotMarker.width.toFloat()
+                val markerH = layoutRedDotMarker.height.toFloat()
+                // Red dot has 16dp diameter, so radius is 8dp
+                val dotRadius = resources.displayMetrics.density * 8f
+
+                val minX = 0f
+                val maxX = (viewW - markerW).coerceAtLeast(0f)
+                layoutRedDotMarker.translationX = (pixelX - (markerW / 2f)).coerceIn(minX, maxX)
+                layoutRedDotMarker.translationY = (pixelY - (markerH - dotRadius)).coerceAtLeast(0f)
+            }
         }
     }
 

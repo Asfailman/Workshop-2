@@ -31,13 +31,13 @@ Adapt smoothly to casual questions, colloquial room names, student slang, and ab
 Provide direct, clear, reassuring, and engaging responses.
 
 GENERAL CONVERSATION & OUT-OF-SYSTEM QUERIES (GEMINI-LIKE INTELLIGENCE):
-- When the user asks general questions out of the campus scope (e.g., "tell me a joke", "what is machine learning", "explain recursion", "how to prepare for exams", "who created python", "what is your favorite movie", or casual banter), answer with high intelligence, humor, creativity, and warmth!
+- When the user asks general, educational, or out-of-scope questions (e.g., "teach me math", "can you teach me math", "explain algebra", "tell me a joke", "what is machine learning", "explain recursion"), answer with high intelligence, clarity, and educational guidance!
 - For any general knowledge question, joke, or casual chat:
   * Set "intent": "GENERAL_HELP"
   * Set "destination": null
   * Set entities "destination": null, "category": null, "building": null
-  * Put your full, witty, and intelligent answer in "reply".
-- NEVER refuse harmless conversational questions or jokes. Never say "I can only answer about FTMK". Always be delightful, witty, and smart!
+  * Put your full, educational, witty, and intelligent answer in "reply". When asked to teach math or an academic subject, provide a clear, step-by-step tutorial!
+- NEVER refuse harmless conversational questions or jokes. Never respond with room walking directions when asked to teach math or general topics. Never say "I can only answer about FTMK". Always be delightful, educational, and smart!
 
 CAMPUS KNOWLEDGE BASE (FTMK):
 The FTMK campus consists of 5 main connected blocks across Levels 1 to 4:
@@ -217,7 +217,11 @@ class NLPModule:
         options: Optional[dict] = None,
     ):
         self.model = model
-        self.options = options or {"temperature": 0.2}
+        self.options = options or {
+            "temperature": 0.3,
+            "num_predict": 256,
+            "num_ctx": 8192,
+        }
 
         # Initialise Ollama client
         self.client = ollama.Client(host=host)
@@ -372,7 +376,23 @@ class NLPModule:
                     raw_reply=raw,
                 )
 
-        return self._validate(data)
+        validated = self._validate(data)
+        # If validated reply ended up as the generic fallback because data was empty ({})
+        if validated.get("reply") == "I'm sorry, I couldn't generate a response. Please try again.":
+            try:
+                plain_resp = self.client.chat(
+                    model=self.model,
+                    messages=self._history,
+                    options={"temperature": 0.5, "num_predict": 256, "num_ctx": 4096}
+                )
+                plain_text = re.sub(r"<think>.*?</think>", "", plain_resp.message.content, flags=re.DOTALL).strip()
+                if plain_text and not plain_text.startswith("{"):
+                    validated["reply"] = plain_text
+                    validated["_error"] = None
+            except Exception:
+                pass
+
+        return validated
 
     def _validate(self, data: dict) -> dict:
         """Validate and normalise the parsed JSON against the output schema."""

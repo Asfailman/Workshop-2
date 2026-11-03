@@ -1,44 +1,54 @@
 # ==========================================
-# Android & Gradle Build Artifacts
+# Android & Gradle Build Artifacts & Caches
 # ==========================================
 .gradle/
+**/.gradle/
 build/
 **/build/
 app/build/
 captures/
+**/captures/
 .navigation/
+**/.navigation/
 output.json
 output-metadata.json
 local.properties
+lint/intermediates/
+lint/generated/
+lint/reports/
 
-# Android Output Binaries
+# Android Binaries & Packages
 *.apk
 *.ap_
 *.aab
 *.dex
 
-# Android Keystore & Signing Keys (Do not commit secrets!)
+# Android Keystore & Signing Keys (Never commit secrets!)
 *.jks
 *.keystore
 signing-config-versions.json
 
 # Native / NDK build cache
 .cxx/
+**/.cxx/
 .externalNativeBuild/
+**/.externalNativeBuild/
 
-# Android Studio / IntelliJ IDEA
-.idea/
-*.iml
-*.iws
-*.ipr
-out/
+# Memory Dumps & Profiler files
+*.hprof
+hs_err_pid*
+replay_pid*
+.attach_pid*
+core.*
 
-# Kotlin / Kotlin Multiplatform
+# ==========================================
+# Kotlin & Java Compiler Caches
+# ==========================================
 .kotlin/
+**/.kotlin/
 *.class
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+**/*.class
+kotlin-js-store/
 
 # Package Files & Archives (Keep Gradle wrapper jar!)
 *.jar
@@ -51,19 +61,38 @@ out/
 *.tar.gz
 *.rar
 
-# JVM crash logs
-hs_err_pid*
-replay_pid*
-
-# BlueJ files
+# BlueJ & IDE files
 *.ctxt
 
 # ==========================================
-# Python & Virtual Environments
+# Android Studio / IntelliJ IDEA / VS Code
+# ==========================================
+.idea/
+**/.idea/
+*.iml
+**/*.iml
+*.iws
+*.ipr
+out/
+**/out/
+.vscode/
+**/.vscode/
+.cursor/
+**/.cursor/
+.history/
+.directory
+
+# Antigravity & AI Agent caches
+.gemini/
+**/.gemini/
+
+# ==========================================
+# Python & FastAPI / Uvicorn Caches
 # ==========================================
 __pycache__/
 **/__pycache__/
 *.py[cod]
+**/*.py[cod]
 *$py.class
 *.so
 .Python
@@ -82,43 +111,70 @@ var/
 wheels/
 share/python-wheels/
 *.egg-info/
+**/*.egg-info/
 .installed.cfg
 *.egg
 MANIFEST
 
 # Virtual Environments
 env/
+**/env/
 venv/
+**/venv/
 .venv/
+**/.venv/
 ENV/
 env.bak/
 venv.bak/
 
-# Testing, Coverage & Linters
+# Testing, Coverage & Linters Caches
 .pytest_cache/
+**/.pytest_cache/
 .coverage
 .coverage.*
-.cache
+.cache/
+**/.cache/
 nosetests.xml
 coverage.xml
 *.cover
 *.py,cover
 .hypothesis/
+**/.hypothesis/
 htmlcov/
 .mypy_cache/
+**/.mypy_cache/
 .ruff_cache/
+**/.ruff_cache/
+.tox/
+.nox/
 
-# Logs & Databases
+# Python logs & local caches
+pip-log.txt
+pip-delete-this-directory.txt
+celerybeat-schedule
+celerybeat.pid
+
+# Logs & SQLite Databases
 *.log
+**/*.log
 *.sqlite
 *.sqlite3
+*.db
+!Thumbs.db
 
 # ==========================================
 # Temporary & Scratch Files
 # ==========================================
 scratch/
+**/scratch/
 tmp/
+**/tmp/
 temp/
+**/temp/
+*.swp
+*.swo
+*~
+*.bak
 
 # ==========================================
 # Environment Variables & Secrets
@@ -126,6 +182,10 @@ temp/
 .env
 .env.*
 !.env.example
+*.pem
+*.key
+*.cert
+*.crt
 
 # ==========================================
 # Operating System Files
@@ -140,14 +200,3 @@ Thumbs.db
 Thumbs.db:encryptable
 desktop.ini
 $RECYCLE.BIN/
-
-# ==========================================
-# Editors & IDE Configurations
-# ==========================================
-.vscode/
-*.swp
-*.swo
-*~
-.directory
-.cursor/
-.gemini/

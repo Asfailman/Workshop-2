@@ -47,10 +47,11 @@ class CampusFinderActivity : AppCompatActivity() {
         btnBack.setOnClickListener { finish() }
 
         recommendationAdapter = RecommendationAdapter(emptyList()) { selectedDest ->
-            val matchedRoom = FtmkLocationDatabase.rooms.find { it.id == selectedDest.id }
+            val matchedRoom = FtmkLocationDatabase.findRoomById(selectedDest.id)
+                ?: FtmkLocationDatabase.findRoomByQuery(selectedDest.name)
             val intent = Intent(this, FtmkMapActivity::class.java).apply {
-                putExtra(FtmkMapActivity.EXTRA_ROOM_ID, selectedDest.id)
-                putExtra(FtmkMapActivity.EXTRA_ROOM_NAME, selectedDest.name)
+                putExtra(FtmkMapActivity.EXTRA_ROOM_ID, matchedRoom?.id ?: selectedDest.id)
+                putExtra(FtmkMapActivity.EXTRA_ROOM_NAME, matchedRoom?.nameMalay ?: selectedDest.name)
                 putExtra(FtmkMapActivity.EXTRA_ROOM_LEVEL, matchedRoom?.level ?: 1)
                 putExtra(FtmkMapActivity.EXTRA_ROOM_BLOCK, matchedRoom?.block ?: "Blok E1")
             }

@@ -5,6 +5,10 @@ class ChatRepository(private val apiService: ApiService = ApiService()) {
         return apiService.sendMessage(prompt)
     }
 
+    suspend fun getAssistantResponse(prompt: String): AssistantQueryResponse {
+        return apiService.queryAssistant(prompt)
+    }
+
     suspend fun searchDestinations(query: String, category: String?): List<RecommendationItem> {
         return apiService.searchDestinations(query, category)
     }

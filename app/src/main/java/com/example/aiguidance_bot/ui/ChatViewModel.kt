@@ -40,11 +40,21 @@ class ChatViewModel(private val repository: ChatRepository = ChatRepository()) :
         _isLoading.value = true
 
         viewModelScope.launch {
-            val aiReplyText = repository.getAiResponse(text)
-            
-            // Check if user query matches any FTMK Room
-            val matchedRoom = FtmkLocationDatabase.findRoomByQuery(text) 
-                ?: FtmkLocationDatabase.findRoomByQuery(aiReplyText)
+            val response = repository.getAssistantResponse(text)
+            val aiReplyText = response.reply
+            val destinationId = response.destination_id
+            val entityDest = response.entities?.destination
+
+            // For general math, educational, or conversational questions, don't attach room marker
+            val matchedRoom = if (response.intent == "GENERAL_HELP" && destinationId == null) {
+                null
+            } else {
+                FtmkLocationDatabase.findRoom(
+                    backendId = destinationId,
+                    entityName = entityDest,
+                    query = text
+                )
+            }
 
             val aiMsg = if (matchedRoom != null) {
                 val locationInfo = "\n\n📍 FTMK Location Found:\n• Room: ${matchedRoom.nameMalay} (${matchedRoom.nameEnglish})\n• Floor: Level ${matchedRoom.level} (Aras ${matchedRoom.level})\n• Block: ${matchedRoom.block}"

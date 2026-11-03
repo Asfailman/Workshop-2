@@ -67,7 +67,10 @@ class AssistantService:
         if session_id not in self._sessions:
             if NLPModule is None:
                 raise RuntimeError("NLPModule could not be imported from AI/nlp_module.py")
-            self._sessions[session_id] = NLPModule(model=self.default_model)
+            self._sessions[session_id] = NLPModule(
+                model=self.default_model,
+                options={"temperature": 0.3, "num_predict": 256, "num_ctx": 8192}
+            )
             if session_id not in self._session_memory:
                 self._session_memory[session_id] = {
                     "last_destination": None,
@@ -119,18 +122,48 @@ class AssistantService:
         s = text.lower().strip()
         # Remove polite filler words and request phrases
         s = re.sub(
-            r'\b(can you|could you|please|pls|show me|bring me to|take me to|where is|how to get to|directions to|path to|route to|short path to|walking directions to)\b',
+            r'\b(can i know where is the|can i know where is|can i know where the|can i know where|can you please tell me where|can you tell me where|can you show me|can you bring me to|can you take me to|can you guide me to|can you please|could you please|can you|could you|please|pls|tell me where is|tell me where|show me where is|show me where|show me|bring me to|take me to|guide me to|how to get to|how do i get to|how can i get to|directions to|direction to|path to|route to|short path to|walking directions to|where is the|where are the|where is|where are|where the|where)\b',
             '',
             s
         ).strip()
+        s = re.sub(
+            r'\b(boleh tahu kat mana|boleh tahu di mana|tunjukkan jalan ke|macam mana nak pergi ke|macam mana nak ke|nak pergi ke|nak ke|kat mana|di mana|dimana)\b',
+            '',
+            s
+        ).strip()
+        s = re.sub(r'^(?:the|a|an)\s+', '', s).strip()
+
         # Contractions & room abbreviations with room numbers
         s = re.sub(r'\bprog(?:ram(?:ming)?)?\s*(?:lab(?:oratory)?)?\s*([1-4])\b', r'programming lab \1', s)
         s = re.sub(r'\bmakmal\s*program(?:ming)?\s*([1-4])\b', r'makmal pengaturcaraan \1', s)
+        s = re.sub(r'\bmakmal\s*pengaturcaraan\s*([1-4])\b', r'makmal pengaturcaraan \1', s)
+        s = re.sub(r'\bprog(?:ram(?:ming)?)?\s*lab(?:oratory)?(?!\s*[0-9])\b', 'programming lab 1', s)
+        s = re.sub(r'\bmakmal\s*(?:pengaturcaraan|program(?:ming)?)(?!\s*[0-9])\b', 'programming lab 1', s)
+
         s = re.sub(r'\bai\s*(?:lab(?:oratory)?)?\s*([1-4])\b', r'ai lab \1', s)
+        s = re.sub(r'\bmakmal\s*(?:kepintaran\s*buatan|ai)\s*([1-4])\b', r'ai lab \1', s)
+        s = re.sub(r'\bai\s*lab(?:oratory)?(?!\s*[0-9])\b', 'ai lab 1', s)
+        s = re.sub(r'\bmakmal\s*(?:kepintaran\s*buatan|ai)(?!\s*[0-9])\b', 'ai lab 1', s)
+
         s = re.sub(r'\b(?:data(?:base)?|db)\s*(?:lab(?:oratory)?)?\s*([1-3])\b', r'database lab \1', s)
+        s = re.sub(r'\bmakmal\s*(?:pangkalan\s*data|db)\s*([1-3])\b', r'database lab \1', s)
+        s = re.sub(r'\b(?:data(?:base)?|db)\s*lab(?:oratory)?(?!\s*[0-9])\b', 'database lab 1', s)
+        s = re.sub(r'\bmakmal\s*(?:pangkalan\s*data|db)(?!\s*[0-9])\b', 'database lab 1', s)
+
         s = re.sub(r'\b(?:soft(?:ware)?\s*eng(?:ineering)?|se)\s*(?:lab(?:oratory)?)?\s*([1-3])\b', r'software engineering lab \1', s)
+        s = re.sub(r'\bmakmal\s*(?:kejuruteraan\s*perisian|se)\s*([1-3])\b', r'software engineering lab \1', s)
+        s = re.sub(r'\b(?:soft(?:ware)?(?:\s*eng(?:ineering)?)?|se)\s*lab(?:oratory)?(?!\s*[0-9])\b', 'software engineering lab 1', s)
+        s = re.sub(r'\bmakmal\s*(?:kejuruteraan\s*perisian|perisian)(?!\s*[0-9])\b', 'software engineering lab 1', s)
+
         s = re.sub(r'\b(?:multi(?:media)?|mm)\s*(?:lab(?:oratory)?)?\s*([1-4])\b', r'multimedia lab \1', s)
-        s = re.sub(r'\b(?:net(?:work)?)\s*(?:lab(?:oratory)?)?\s*([1-2])\b', r'network lab \1', s)
+        s = re.sub(r'\bmakmal\s*(?:multimedia|mm)\s*([1-4])\b', r'multimedia lab \1', s)
+        s = re.sub(r'\b(?:multi(?:media)?|mm)\s*lab(?:oratory)?(?!\s*[0-9])\b', 'multimedia lab 1', s)
+        s = re.sub(r'\bmakmal\s*(?:multimedia|mm)(?!\s*[0-9])\b', 'multimedia lab 1', s)
+
+        s = re.sub(r'\b(?:net(?:work(?:ing)?)?)\s*(?:lab(?:oratory)?)?\s*([1-2])\b', r'network lab \1', s)
+        s = re.sub(r'\bmakmal\s*(?:rangkaian|net(?:work)?)\s*([1-2])\b', r'network lab \1', s)
+        s = re.sub(r'\b(?:net(?:work(?:ing)?)?)\s*lab(?:oratory)?(?!\s*[0-9])\b', 'network lab 1', s)
+        s = re.sub(r'\bmakmal\s*(?:rangkaian|net(?:work)?)(?!\s*[0-9])\b', 'network lab 1', s)
         s = re.sub(r'\b(?:lec(?:ture)?\s*room|bilik\s*kuliah|bk)\s*([0-9]{1,2})\b', r'lecture room \1', s)
         s = re.sub(r'\b(?:audio\s*recording|rakaman\s*audio)\s*(?:room)?\s*([1-2])\b', r'audio recording room \1', s)
         # Facilities & common locations
@@ -236,19 +269,22 @@ class AssistantService:
         if not words:
             return False
 
-        # Common single affirmative tokens or typos
-        aff_tokens = {
-            "yes", "y", "ya", "yea", "yeah", "yep", "yup", "yess", "yesss",
-            "sure", "susre", "shure", "sue", "ok", "okay", "okeh", "k", "kk",
-            "alright", "allright", "please", "pls", "plz", "ples", "boleh", "nak",
-            "haah", "haa", "ha", "jom", "proceed", "go", "can", "wants", "want"
+        # Exclude substantive, educational, or general inquiries
+        substantive_tokens = {
+            "teach", "math", "maths", "algebra", "calculus", "geometry", "number", "numbers",
+            "solve", "equation", "calculate", "code", "coding", "program", "programming",
+            "python", "java", "cpp", "explain", "why", "what", "who", "when", "how",
+            "joke", "story", "riddle", "song", "weather", "translate", "meaning", "definition",
+            "recommend", "suggest", "where", "find", "search", "difference", "help"
         }
+        if any(w in substantive_tokens for w in words):
+            return False
 
         # Multi-word exact affirmations
         exact_phrases = {
             "yes sure", "yes susre", "yes please", "yes pls", "yes ples", "yes please bring me",
             "yes please take me", "sure please", "sure thing", "of course",
-            "definitely", "why not", "go ahead", "all right", "can you",
+            "definitely", "why not", "go ahead", "all right",
             "please do", "yes i would", "yes i want", "yes bring me", "yes guide me",
             "ya tolong", "boleh tolong", "haah nak", "jom pergi", "yes tolong",
             "yes show me", "yes directions", "sure directions", "yes walk", "yes walking",
@@ -261,12 +297,20 @@ class AssistantService:
         if msg in exact_phrases:
             return True
 
-        if len(words) <= 5:
-            if words[0] in aff_tokens:
-                return True
-            if any(w in aff_tokens for w in words) and any(
-                w in {"bring", "take", "guide", "lead", "show", "direct", "directions", "way", "walk", "walking", "path"}
-                for w in words
+        # Common strictly affirmative standalone tokens
+        aff_tokens = {
+            "yes", "y", "ya", "yea", "yeah", "yep", "yup", "yess", "yesss",
+            "sure", "susre", "shure", "sue", "ok", "okay", "okeh", "k", "kk",
+            "alright", "allright", "haah", "haa", "jom", "proceed"
+        }
+
+        if len(words) == 1 and words[0] in aff_tokens:
+            return True
+
+        if len(words) <= 4:
+            if words[0] in aff_tokens and any(
+                w in {"bring", "take", "guide", "lead", "show", "direct", "directions", "way", "walk", "walking", "path", "please", "pls"}
+                for w in words[1:]
             ):
                 return True
 
@@ -1897,6 +1941,18 @@ class AssistantService:
             if remainder:
                 message = remainder
 
+        # Cancel pending direction confirmation if user asks an educational, general, or conversational question
+        substantive_inquiry = bool(re.search(
+            r'\b(teach|explain|math|maths|algebra|calculus|equation|solve|calculate|'
+            r'joke|riddle|weather|who|what|why|when|how|tell|give|story|song|'
+            r'code|python|java|algorithm|capital|history|science|define|meaning|describe|summarize)\b',
+            message,
+            re.IGNORECASE
+        ))
+        if substantive_inquiry and not self._is_affirmative(message):
+            session_mem["awaiting_direction_confirmation"] = False
+            session_mem["direction_destination"] = None
+
         # Step 0: Check for Negative Response ("no", "no thanks", "takpe", etc.)
         if self._is_negative(message) and session_mem.get("awaiting_direction_confirmation"):
             session_mem["awaiting_direction_confirmation"] = False
@@ -2208,7 +2264,9 @@ class AssistantService:
 
         # Confirmation / Follow-up direction trigger:
         # User confirmed ("yes", "sure", "susre", "ok", "yes from ai lab3") OR requested navigation ("can you bring me", "bring me there")
-        if (is_aff or is_nav or (custom_origin_loc and session_mem.get("awaiting_direction_confirmation"))) and (session_mem.get("awaiting_direction_confirmation") or session_mem.get("last_destination")):
+        # Affirmation requires awaiting_direction_confirmation to be active, navigation commands can trigger anytime
+        can_trigger_direction = (is_aff and session_mem.get("awaiting_direction_confirmation")) or is_nav or (custom_origin_loc and session_mem.get("awaiting_direction_confirmation"))
+        if can_trigger_direction and (session_mem.get("awaiting_direction_confirmation") or session_mem.get("last_destination")):
             target_dest = direct_loc_check or session_mem.get("direction_destination") or session_mem.get("last_destination")
             if not target_dest and session_mem.get("last_topic") == "library":
                 target_dest = self.repository.get("C-ACT") or self.repository.search_by_name("C-ACT")
@@ -2286,6 +2344,85 @@ class AssistantService:
         # Step 3: Try finding a referenced destination in user message
         direct_loc_match = self._find_location_in_text(message)
 
+        # FAST PATH: If a campus destination was directly identified and this is NOT an educational/general knowledge question,
+        # return walking directions or location info immediately (<15ms) without blocking on Ollama LLM.
+        msg_lower_fast = message.lower().strip()
+        # Check if query is educational/general-knowledge (not a campus location query).
+        # If so, skip the fast-path and let Ollama answer freely.
+        is_educational_prompt = bool(re.search(
+            r'\b(teach|explain|math|maths|algebra|calculus|equation|solve|calculate|'
+            r'joke|riddle|weather|who created|who made|who is|who was|what is|what are|'
+            r'capital|history|science|why|when was|define|meaning|how does|how do|'
+            r'difference between|tell me a|give me a|can you give|tell me about|'
+            r'fun fact|trivia|quiz|story|describe|summarize|translate|'
+            r'berapa|apakah|siapa|kenapa|bagaimana|cerita|lawak)\b',
+            msg_lower_fast
+        ))
+
+        if direct_loc_match and not is_educational_prompt:
+            is_guidance_fast = (
+                self._is_navigation_command(message)
+                or any(kw in msg_lower_fast for kw in [
+                    "where", "kat mana", "di mana", "dimana", "how to get", "directions", "direction",
+                    "route", "path", "jalan ke", "nak ke", "take me", "bring me", "guide me", "lead me",
+                    "walking directions", "walk to", "cara ke", "can i know where"
+                ])
+                or len(msg_lower_fast.split()) <= 4
+            )
+
+            if is_guidance_fast:
+                extra_tip = None
+                if direct_loc_match["id"] == "MAIN_ENTRANCE" or session_mem.get("last_topic") == "food":
+                    extra_tip = "Once you arrive at the lobby on Level 1, the food vendors (selling Nasi Lemak, Karipap, Pau, snacks & drinks) are set up right near the entrance!"
+
+                dir_res = self._build_walking_directions_response(current_loc, direct_loc_match, extra_tip)
+                dir_res["session_id"] = session_id
+                session_mem["last_destination"] = direct_loc_match
+                session_mem["last_building"] = direct_loc_match.get("building")
+                session_mem["last_topic"] = direct_loc_match.get("category")
+                session_mem["awaiting_direction_confirmation"] = False
+                self._record_nlp_turn(session_id, message, dir_res["reply"], dir_res.get("entities"))
+                return dir_res
+            else:
+                bld = direct_loc_match.get("building", "FTMK")
+                flr = direct_loc_match.get("floor", 1)
+                desc = direct_loc_match.get("description", "")
+                facs = ", ".join(direct_loc_match.get("facilities", [])) if direct_loc_match.get("facilities") else "standard facilities"
+                hours = direct_loc_match.get("opening_hours")
+                hours_str = f"Weekdays: {hours.get('weekday', 'N/A')}" if hours else "Regular campus hours (8:00 AM – 6:00 PM)"
+
+                session_mem["last_destination"] = direct_loc_match
+                session_mem["direction_destination"] = direct_loc_match
+                session_mem["last_building"] = bld
+                session_mem["last_topic"] = direct_loc_match.get("category")
+                session_mem["awaiting_direction_confirmation"] = True
+
+                fast_reply = (
+                    f"📍 **{direct_loc_match['name']}** is located in **{bld}** on **Level {flr}**.\n\n"
+                    f"{desc}\n\n"
+                    f"• Facilities: {facs}\n"
+                    f"• Hours: {hours_str}\n\n"
+                    f"Would you like walking directions from the Main Entrance to this location?"
+                )
+                fast_entities = {
+                    "destination": direct_loc_match["name"],
+                    "category": direct_loc_match.get("category"),
+                    "building": bld,
+                }
+                self._record_nlp_turn(session_id, message, fast_reply, fast_entities)
+                return {
+                    "reply": fast_reply,
+                    "intent": "LOCATION_QUERY",
+                    "destination_id": direct_loc_match["id"],
+                    "confidence": 1.0,
+                    "entities": fast_entities,
+                    "handoff": None,
+                    "route_info": None,
+                    "recommendations": None,
+                    "session_id": session_id,
+                    "error": None,
+                }
+
         # Step 4: Run Ollama NLP processing
         try:
             nlp = self.get_or_create_session(session_id)
@@ -2311,6 +2448,11 @@ class AssistantService:
             reply = None
 
         # Step 5: Resolve Location (priority: direct text match > raw NLP entity > session memory)
+        if intent == "GENERAL_HELP":
+            direct_loc_match = None
+            raw_dest = None
+            session_mem["awaiting_direction_confirmation"] = False
+            session_mem["direction_destination"] = None
         loc_match = direct_loc_match
         if not loc_match and raw_dest:
             loc_match = self.repository.get(raw_dest)
@@ -2319,7 +2461,11 @@ class AssistantService:
             if not loc_match:
                 matches = self.repository.search(raw_dest)
                 if matches:
-                    loc_match = matches[0]
+                    if not re.search(r'\b(toilet|toilets|restroom|restrooms|tandas|washroom|washrooms|wc)\b', msg_lower):
+                        non_toilets = [m for m in matches if m.get("category") != "toilet"]
+                        loc_match = non_toilets[0] if non_toilets else None
+                    else:
+                        loc_match = matches[0]
 
         # Multi-turn reference resolution: if user says "it", "there", "how to go there"
         msg_lower = message.lower()

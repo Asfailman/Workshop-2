@@ -20,6 +20,10 @@ class ApiService {
 
     private val gson = Gson()
 
+    // Unique session ID per ApiService instance (= per app launch).
+    // This prevents session memory from one conversation contaminating another.
+    private val sessionId: String = java.util.UUID.randomUUID().toString()
+
     private val apiUrl =
         "https://dazzling-endurance-huddle.ngrok-free.dev/api/v1/assistant/query"
 
@@ -57,9 +61,14 @@ class ApiService {
 
     suspend fun sendMessage(prompt: String): String =
         withContext(Dispatchers.IO) {
+            queryAssistant(prompt).reply
+        }
+
+    suspend fun queryAssistant(prompt: String): AssistantQueryResponse =
+        withContext(Dispatchers.IO) {
             try {
                 val requestData = AssistantQueryRequest(
-                    session_id = "android_session",
+                    session_id = sessionId,
                     message = prompt,
                     current_location_id = "MAIN_ENTRANCE"
                 )
@@ -85,19 +94,26 @@ class ApiService {
                         )
                     }
 
-                    val result = gson.fromJson(
+                    gson.fromJson(
                         responseBody,
                         AssistantQueryResponse::class.java
                     )
-
-                    result.reply
                 }
             } catch (e: Exception) {
-                "Unable to connect to the guidance backend: " +
-                    (e.message ?: "Unknown error")
+                AssistantQueryResponse(
+                    reply = "Unable to connect to the guidance backend: " +
+                        (e.message ?: "Unknown error"),
+                    error = e.message
+                )
             }
         }
 }
+
+data class AssistantEntities(
+    val destination: String? = null,
+    val category: String? = null,
+    val building: String? = null
+)
 
 data class AssistantQueryRequest(
     val session_id: String,
@@ -110,6 +126,7 @@ data class AssistantQueryResponse(
     val intent: String? = null,
     val destination_id: String? = null,
     val confidence: Double? = null,
+    val entities: AssistantEntities? = null,
     val session_id: String? = null,
     val error: String? = null
 )

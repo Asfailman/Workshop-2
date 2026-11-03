@@ -14,7 +14,10 @@ class FloorRoomAdapter(
     private val onRoomSelected: (FtmkRoom) -> Unit
 ) : RecyclerView.Adapter<FloorRoomAdapter.ViewHolder>() {
 
+    private var selectedRoomId: String? = null
+
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val container: View = view
         val tvBlockBadge: TextView = view.findViewById(R.id.tvRoomBlockBadge)
         val tvMalayName: TextView = view.findViewById(R.id.tvRoomMalayName)
         val tvEnglishName: TextView = view.findViewById(R.id.tvRoomEnglishName)
@@ -34,6 +37,13 @@ class FloorRoomAdapter(
         holder.tvEnglishName.text = room.nameEnglish
         holder.tvCategory.text = room.category
 
+        val isSelected = room.id == selectedRoomId
+        if (isSelected) {
+            holder.container.setBackgroundColor(Color.parseColor("#E0F2FE"))
+        } else {
+            holder.container.setBackgroundColor(Color.WHITE)
+        }
+
         when (room.block) {
             "Blok A" -> holder.tvBlockBadge.setBackgroundColor(Color.parseColor("#1E40AF"))
             "Blok C1" -> holder.tvBlockBadge.setBackgroundColor(Color.parseColor("#B91C1C"))
@@ -44,6 +54,8 @@ class FloorRoomAdapter(
         }
 
         holder.itemView.setOnClickListener {
+            selectedRoomId = room.id
+            notifyDataSetChanged()
             onRoomSelected(room)
         }
     }
@@ -53,5 +65,11 @@ class FloorRoomAdapter(
     fun updateRooms(newRooms: List<FtmkRoom>) {
         this.rooms = newRooms
         notifyDataSetChanged()
+    }
+
+    fun selectRoom(roomId: String?): Int {
+        this.selectedRoomId = roomId
+        notifyDataSetChanged()
+        return rooms.indexOfFirst { it.id == roomId }
     }
 }

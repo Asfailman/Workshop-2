@@ -204,14 +204,10 @@
                 android:id="@+id/layoutRedDotMarker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:gravity="center_horizontal"
                 android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="@id/ivFtmkMapImage"
-                app:layout_constraintEnd_toEndOf="@id/ivFtmkMapImage"
-                app:layout_constraintHorizontal_bias="0.82"
                 app:layout_constraintStart_toStartOf="@id/ivFtmkMapImage"
-                app:layout_constraintTop_toTopOf="@id/ivFtmkMapImage"
-                app:layout_constraintVertical_bias="0.72">
+                app:layout_constraintTop_toTopOf="@id/ivFtmkMapImage">
 
                 <TextView
                     android:id="@+id/tvRedDotLabel"
@@ -226,6 +222,7 @@
                     android:textStyle="bold" />
 
                 <View
+                    android:id="@+id/viewRedDot"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_marginTop="2dp"
