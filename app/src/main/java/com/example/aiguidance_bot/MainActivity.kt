@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity() {
 
     private val chatViewModel: ChatViewModel by viewModels()
     private lateinit var chatAdapter: ChatAdapter
-
     private lateinit var textToSpeech: TextToSpeech
     private var isTtsReady = false
 
@@ -63,7 +62,6 @@ class MainActivity : AppCompatActivity() {
         textToSpeech = TextToSpeech(this) { status ->
             if (status == TextToSpeech.SUCCESS) {
                 val result = textToSpeech.setLanguage(java.util.Locale.US)
-
                 isTtsReady = result != TextToSpeech.LANG_MISSING_DATA &&
                         result != TextToSpeech.LANG_NOT_SUPPORTED
             }
