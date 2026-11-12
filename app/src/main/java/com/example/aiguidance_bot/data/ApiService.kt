@@ -27,15 +27,25 @@ class ApiService {
     var campusApiUrl: String = "http://10.0.2.2:8000" // Replace with actual FastAPI URL
 
     suspend fun searchDestinations(query: String, category: String?): List<RecommendationItem> = withContext(Dispatchers.IO) {
-        // Mock Implementation for Module 2 UI testing
-        delay(1000)
-        return@withContext listOf(
-            RecommendationItem("1", "Main Library", "Building B, Level 1", 120, description = "Quiet study area and printing facilities."),
-            RecommendationItem("2", "FTMK Block A", "Block A, Level 2", 250, description = "Computer science labs and lecture halls."),
-            RecommendationItem("3", "Cafeteria Utama", "Student Center, Ground Floor", 80, description = "Food and beverages.")
-        ).filter { 
-            (query.isBlank() || it.name.contains(query, ignoreCase = true)) &&
-            (category == null || category == "All" || it.description?.contains(category, ignoreCase = true) == true)
+        delay(300)
+        val allRooms = FtmkLocationDatabase.rooms.mapIndexed { index, room ->
+            RecommendationItem(
+                id = room.id,
+                name = room.nameMalay,
+                location = "${room.block}, Level ${room.level} (Aras ${room.level})",
+                distanceMeters = 50 + (index * 15) % 200,
+                description = "${room.nameEnglish} • ${room.category}"
+            )
+        }
+
+        return@withContext allRooms.filter { item ->
+            val matchesQuery = query.isBlank() ||
+                item.name.contains(query, ignoreCase = true) ||
+                item.location.contains(query, ignoreCase = true) ||
+                (item.description?.contains(query, ignoreCase = true) == true)
+
+
+            matchesQuery
         }
     }
 
