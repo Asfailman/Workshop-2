@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainFinderLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F8FAFC">
@@ -78,26 +79,6 @@
             app:tint="#1987b8" />
     </LinearLayout>
 
-    <!-- Category Chips (Horizontal Scroll) -->
-    <HorizontalScrollView
-        android:id="@+id/categoryScrollView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:clipToPadding="false"
-        android:paddingHorizontal="16dp"
-        android:scrollbars="none"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchBarContainer">
-
-        <LinearLayout
-            android:id="@+id/categoryContainer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" />
-    </HorizontalScrollView>
-
     <!-- Loading Indicator -->
     <ProgressBar
         android:id="@+id/progressBarFinder"
@@ -107,7 +88,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/categoryScrollView" />
+        app:layout_constraintTop_toBottomOf="@id/searchBarContainer" />
 
     <!-- Error Message -->
     <TextView
@@ -119,7 +100,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/categoryScrollView" />
+        app:layout_constraintTop_toBottomOf="@id/searchBarContainer" />
 
     <!-- Recommendations List -->
     <androidx.recyclerview.widget.RecyclerView
@@ -132,7 +113,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/categoryScrollView" />
+        app:layout_constraintTop_toBottomOf="@id/searchBarContainer" />
 
     <!-- Route Preview Card (Bottom Sheet style) -->
     <androidx.cardview.widget.CardView

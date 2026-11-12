@@ -17,8 +17,10 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aiguidance_bot.R
+import com.example.aiguidance_bot.ui.InteractiveMapActivity
 import com.example.aiguidance_bot.data.DestinationCategory
 import com.example.aiguidance_bot.data.FtmkLocationDatabase
+import com.example.aiguidance_bot.data.PreferencesHelper
 
 class CampusFinderActivity : AppCompatActivity() {
 
@@ -39,20 +41,30 @@ class CampusFinderActivity : AppCompatActivity() {
         val btnBack = findViewById<ImageView>(R.id.btnBackFinder)
         val etSearchQuery = findViewById<EditText>(R.id.etSearchQuery)
         val btnSearch = findViewById<ImageView>(R.id.btnSearch)
-        val categoryContainer = findViewById<LinearLayout>(R.id.categoryContainer)
         val rvRecommendations = findViewById<RecyclerView>(R.id.rvRecommendations)
         val progressBar = findViewById<ProgressBar>(R.id.progressBarFinder)
         val tvError = findViewById<TextView>(R.id.tvErrorFinder)
 
+        val currentTheme = PreferencesHelper.getThemeMode(this)
+        val isDarkMode = (currentTheme == PreferencesHelper.THEME_DARK)
+        
+        val mainLayout = findViewById<View>(R.id.mainFinderLayout)
+
+        if (isDarkMode) {
+            mainLayout.setBackgroundColor(Color.parseColor("#262B33")) // Soft Slate Grey
+            etSearchQuery.setTextColor(Color.WHITE)
+            etSearchQuery.setHintTextColor(Color.parseColor("#94A3B8"))
+        } else {
+            mainLayout.setBackgroundColor(Color.parseColor("#F8FAFC")) // Light mode background
+            etSearchQuery.setTextColor(Color.parseColor("#1E293B"))
+            etSearchQuery.setHintTextColor(Color.parseColor("#94A3B8"))
+        }
+
         btnBack.setOnClickListener { finish() }
 
         recommendationAdapter = RecommendationAdapter(emptyList()) { selectedDest ->
-            val matchedRoom = FtmkLocationDatabase.rooms.find { it.id == selectedDest.id }
-            val intent = Intent(this, FtmkMapActivity::class.java).apply {
-                putExtra(FtmkMapActivity.EXTRA_ROOM_ID, selectedDest.id)
-                putExtra(FtmkMapActivity.EXTRA_ROOM_NAME, selectedDest.name)
-                putExtra(FtmkMapActivity.EXTRA_ROOM_LEVEL, matchedRoom?.level ?: 1)
-                putExtra(FtmkMapActivity.EXTRA_ROOM_BLOCK, matchedRoom?.block ?: "Blok E1")
+            val intent = Intent(this, InteractiveMapActivity::class.java).apply {
+                putExtra("DESTINATION_NAME", selectedDest.name)
             }
             startActivity(intent)
         }
@@ -63,33 +75,9 @@ class CampusFinderActivity : AppCompatActivity() {
             viewModel.searchDestinations(etSearchQuery.text.toString())
         }
 
-        viewModel.categories.observe(this) { categories ->
-            categoryContainer.removeAllViews()
-            categories.forEach { category ->
-                val chip = TextView(this).apply {
-                    text = category.name
-                    textSize = 14f
-                    setPadding(32, 16, 32, 16)
-                    val params = LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                    ).apply { marginEnd = 16 }
-                    layoutParams = params
-
-                    setOnClickListener {
-                        viewModel.selectCategory(if (viewModel.currentCategory == category.name) null else category.name)
-                    }
-                }
-                categoryContainer.addView(chip)
-            }
-            updateCategoryChips(categoryContainer, categories)
-        }
-
-        // Re-update chips styling when selected category changes
         viewModel.recommendations.observe(this) { recommendations ->
             recommendationAdapter.updateData(recommendations)
             tvError.visibility = View.GONE
-            updateCategoryChips(categoryContainer, viewModel.categories.value ?: emptyList())
         }
 
         viewModel.isLoading.observe(this) { isLoading ->
@@ -106,18 +94,6 @@ class CampusFinderActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateCategoryChips(container: LinearLayout, categories: List<DestinationCategory>) {
-        for (i in 0 until container.childCount) {
-            val chip = container.getChildAt(i) as TextView
-            val isSelected = chip.text.toString() == viewModel.currentCategory || (viewModel.currentCategory == null && chip.text.toString() == "All")
-            
-            if (isSelected) {
-                chip.setBackgroundResource(R.drawable.bg_chip_selected)
-                chip.setTextColor(Color.WHITE)
-            } else {
-                chip.setBackgroundResource(R.drawable.bg_chip_unselected)
-                chip.setTextColor(Color.parseColor("#475569"))
-            }
-        }
-    }
+
+
 }

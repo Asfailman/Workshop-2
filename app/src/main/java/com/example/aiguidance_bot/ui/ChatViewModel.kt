@@ -24,7 +24,7 @@ class ChatViewModel(private val repository: ChatRepository = ChatRepository()) :
 
     fun clearChat() {
         val welcomeMsg = ChatMessage(
-            text = "Hello Member 1! I am your AI Guidance Assistant for BAXU3923. Ask me about any room or location in FTMK!",
+            text = "Hello! I am your AI Guidance Assistant. Ask me about any room or location in FTMK!",
             sender = Sender.AI
         )
         _messages.value = mutableListOf(welcomeMsg)

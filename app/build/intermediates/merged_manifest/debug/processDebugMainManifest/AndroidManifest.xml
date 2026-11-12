@@ -10,6 +10,19 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- OpenGL ES 3.0 required -->
+    <uses-feature
+        android:glEsVersion="0x00030000"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.wifi"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <permission
         android:name="com.example.aiguidance_bot.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
         android:protectionLevel="signature" />
@@ -35,9 +48,9 @@
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name="com.example.aiguidance_bot.ui.FtmkMapActivity"
+            android:name="com.example.aiguidance_bot.ui.InteractiveMapActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:hardwareAccelerated="true" />
         <activity
             android:name="com.example.aiguidance_bot.MainActivity"
             android:exported="true"

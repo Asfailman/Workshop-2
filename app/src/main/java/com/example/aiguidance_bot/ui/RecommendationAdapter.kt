@@ -1,11 +1,14 @@
 package com.example.aiguidance_bot.ui
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aiguidance_bot.R
+import com.example.aiguidance_bot.data.PreferencesHelper
 import com.example.aiguidance_bot.data.RecommendationItem
 
 class RecommendationAdapter(
@@ -28,6 +31,21 @@ class RecommendationAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = items[position]
+        
+        val context = holder.itemView.context
+        val currentTheme = PreferencesHelper.getThemeMode(context)
+        val isDarkMode = (currentTheme == PreferencesHelper.THEME_DARK)
+        
+        if (isDarkMode) {
+            holder.itemView.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#363D47"))
+            holder.tvName.setTextColor(Color.WHITE)
+            holder.tvDescription.setTextColor(Color.parseColor("#CBD5E1"))
+        } else {
+            holder.itemView.backgroundTintList = ColorStateList.valueOf(Color.WHITE)
+            holder.tvName.setTextColor(Color.parseColor("#1E293B"))
+            holder.tvDescription.setTextColor(Color.parseColor("#64748B"))
+        }
+        
         holder.tvName.text = item.name
         holder.tvLocation.text = "Location: ${item.location}"
         holder.tvDistance.text = "${item.distanceMeters} meters away"

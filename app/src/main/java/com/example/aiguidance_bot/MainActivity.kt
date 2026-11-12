@@ -14,6 +14,7 @@ import android.widget.PopupWindow
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import android.speech.RecognizerIntent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -25,6 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aiguidance_bot.data.PreferencesHelper
 import com.example.aiguidance_bot.ui.CampusFinderActivity
+import com.example.aiguidance_bot.ui.InteractiveMapActivity
 import com.example.aiguidance_bot.ui.ChatAdapter
 import com.example.aiguidance_bot.ui.ChatViewModel
 
@@ -51,6 +53,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private val speechLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK && result.data != null) {
+            val res = result.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+            val spokenText = res?.get(0)
+            if (!spokenText.isNullOrEmpty()) {
+                chatViewModel.sendMessage(spokenText)
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -67,6 +79,7 @@ class MainActivity : AppCompatActivity() {
         val btnSend = findViewById<ImageView>(R.id.btnSend)
         val btnMenu = findViewById<ImageView>(R.id.btnMenu)
         val btnAdd = findViewById<ImageView>(R.id.btnAdd)
+        val btnMic = findViewById<ImageView>(R.id.btnMic)
         val progressBar = findViewById<ProgressBar>(R.id.progressBar)
         val headerLayout = findViewById<View>(R.id.headerLayout)
 
@@ -196,6 +209,20 @@ class MainActivity : AppCompatActivity() {
             }
             fileLauncher.launch(fileIntent)
         }
+
+        // Speech-to-Text Button
+        btnMic.setOnClickListener {
+            closeAttachmentMenu()
+            val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+                putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+                putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak now...")
+            }
+            try {
+                speechLauncher.launch(intent)
+            } catch (e: Exception) {
+                Toast.makeText(this, "Speech recognition not available on this device", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun showClearChatConfirmationDialog() {
@@ -317,7 +344,7 @@ class MainActivity : AppCompatActivity() {
         if (isDarkMode) {
             mainLayout.setBackgroundColor(Color.parseColor("#262B33")) // Soft Slate Grey
             layoutInput?.setBackgroundColor(Color.parseColor("#1E2229")) // Dark Grey Bar
-            etMessageInput?.setTextColor(Color.WHITE)
+            etMessageInput?.setTextColor(Color.parseColor("#1E293B")) // Keep text dark because container is white
             etMessageInput?.setHintTextColor(Color.parseColor("#94A3B8"))
         } else {
             mainLayout.setBackgroundColor(Color.WHITE)
@@ -330,4 +357,22 @@ class MainActivity : AppCompatActivity() {
             chatAdapter.updateSettings(currentFontSize, isDarkMode)
         }
     }
+    private fun openFtmkMap(selectedRoomName: String) {
+
+        val mapIntent = Intent(this, InteractiveMapActivity::class.java)
+
+        mapIntent.putExtra("DESTINATION_NAME", selectedRoomName)
+
+        startActivity(mapIntent)
+    }
+    private fun setupMapButton() {
+
+        val mapButton = findViewById<android.widget.Button>(R.id.btnViewMap)
+
+        mapButton.setOnClickListener {
+
+            openFtmkMap("Artificial Intelligence Lab 1")
+        }
+    }
 }
+

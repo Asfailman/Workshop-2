@@ -1,157 +1,220 @@
 package com.example.aiguidance_bot.ui
 
+import com.example.aiguidance_bot.R
 import android.graphics.Color
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.aiguidance_bot.R
-import com.example.aiguidance_bot.data.FtmkLocationDatabase
-import com.example.aiguidance_bot.data.FtmkRoom
+import org.maplibre.android.MapLibre
+import org.maplibre.android.camera.CameraPosition
+import org.maplibre.android.camera.CameraUpdateFactory
+import org.maplibre.android.geometry.LatLng
+import org.maplibre.android.maps.MapLibreMap
+import org.maplibre.android.maps.MapView
+import org.maplibre.android.maps.Style
+import org.maplibre.android.style.expressions.Expression.*
+import org.maplibre.android.style.layers.CircleLayer
+import org.maplibre.android.style.layers.FillExtrusionLayer
+import org.maplibre.android.style.layers.LineLayer
+import org.maplibre.android.style.layers.PropertyFactory.*
+import org.maplibre.android.style.sources.GeoJsonSource
+import org.maplibre.geojson.Feature
+import org.maplibre.geojson.FeatureCollection
+import org.maplibre.geojson.LineString
+import org.maplibre.geojson.Point
+import org.maplibre.android.style.layers.Property.LINE_CAP_ROUND
+import org.maplibre.android.style.layers.Property.LINE_JOIN_ROUND
+import java.io.InputStreamReader
 
 class FtmkMapActivity : AppCompatActivity() {
 
-    private var selectedLevel = 1
-    private lateinit var roomAdapter: FloorRoomAdapter
+    private lateinit var mapView: MapView
+    private var mapLibreMap: MapLibreMap? = null
+    private var activeFloor: Int = 1
 
-    private lateinit var tvSelectedRoomName: TextView
-    private lateinit var tvSelectedLevelBadge: TextView
-    private lateinit var tvSelectedBlockBadge: TextView
-    private lateinit var tvFloorTitle: TextView
+    private lateinit var tvFloorBadge: TextView
+    private lateinit var tvSelectedTitle: TextView
+    private lateinit var tvSelectedSubtitle: TextView
 
-    private lateinit var ivFtmkMapImage: ImageView
-    private lateinit var layoutRedDotMarker: View
-    private lateinit var tvRedDotLabel: TextView
-
-    private lateinit var btnLevel1: Button
-    private lateinit var btnLevel2: Button
-    private lateinit var btnLevel3: Button
-    private lateinit var btnLevel4: Button
+    companion object {
+        private const val ROOMS_SOURCE_ID = "ftmk-rooms-source"
+        private const val ROOMS_LAYER_ID = "ftmk-rooms-3d-layer"
+        private const val ROUTE_SOURCE_ID = "ftmk-route-source"
+        private const val ROUTE_LAYER_ID = "ftmk-route-line-layer"
+        private const val DEST_SOURCE_ID = "ftmk-dest-dot-source"
+        private const val DEST_LAYER_ID = "ftmk-dest-dot-layer"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        MapLibre.getInstance(this)
         setContentView(R.layout.activity_ftmk_map)
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.headerLayoutMap)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(v.paddingLeft, systemBars.top + 16, v.paddingRight, v.paddingBottom)
-            insets
-        }
+        tvFloorBadge = findViewById(R.id.tvFloorBadge)
+        tvSelectedTitle = findViewById(R.id.tvSelectedTitle)
+        tvSelectedSubtitle = findViewById(R.id.tvSelectedSubtitle)
 
-        val btnBack = findViewById<ImageView>(R.id.btnBackMap)
-        btnBack.setOnClickListener { finish() }
+        mapView = findViewById(R.id.mapView)
+        mapView.onCreate(savedInstanceState)
 
-        tvSelectedRoomName = findViewById(R.id.tvSelectedRoomName)
-        tvSelectedLevelBadge = findViewById(R.id.tvSelectedLevelBadge)
-        tvSelectedBlockBadge = findViewById(R.id.tvSelectedBlockBadge)
-        tvFloorTitle = findViewById(R.id.tvFloorTitle)
+        mapView.getMapAsync { map ->
+            mapLibreMap = map
 
-        ivFtmkMapImage = findViewById(R.id.ivFtmkMapImage)
-        layoutRedDotMarker = findViewById(R.id.layoutRedDotMarker)
-        tvRedDotLabel = findViewById(R.id.tvRedDotLabel)
+            // Isometric 3D Camera Focus over FTMK Block A
+            val initialCam = CameraPosition.Builder()
+                .target(LatLng(2.31320, 102.27545))
+                .zoom(19.0)
+                .tilt(58.0)
+                .bearing(25.0)
+                .build()
+            map.cameraPosition = initialCam
 
-        btnLevel1 = findViewById(R.id.btnLevel1)
-        btnLevel2 = findViewById(R.id.btnLevel2)
-        btnLevel3 = findViewById(R.id.btnLevel3)
-        btnLevel4 = findViewById(R.id.btnLevel4)
-
-        val rvFloorRooms = findViewById<RecyclerView>(R.id.rvFloorRooms)
-        rvFloorRooms.layoutManager = LinearLayoutManager(this)
-
-        roomAdapter = FloorRoomAdapter(emptyList()) { room ->
-            displayRoomDetails(room)
-        }
-        rvFloorRooms.adapter = roomAdapter
-
-        // Check if passed a specific room from chat or Smart Campus Finder
-        val passedRoomId = intent.getStringExtra(EXTRA_ROOM_ID)
-        val passedLevel = intent.getIntExtra(EXTRA_ROOM_LEVEL, 1)
-
-        selectedLevel = if (passedLevel in 1..4) passedLevel else 1
-
-        btnLevel1.setOnClickListener { switchLevel(1) }
-        btnLevel2.setOnClickListener { switchLevel(2) }
-        btnLevel3.setOnClickListener { switchLevel(3) }
-        btnLevel4.setOnClickListener { switchLevel(4) }
-
-        switchLevel(selectedLevel)
-
-        if (passedRoomId != null) {
-            val matchedRoom = FtmkLocationDatabase.rooms.find { it.id == passedRoomId }
-            if (matchedRoom != null) {
-                displayRoomDetails(matchedRoom)
-            }
-        } else {
-            val firstRoomOnLevel = FtmkLocationDatabase.rooms.firstOrNull { it.level == selectedLevel }
-            if (firstRoomOnLevel != null) {
-                displayRoomDetails(firstRoomOnLevel)
+            val emptyStyle = """{"version": 8, "sources": {}, "layers": []}"""
+            map.setStyle(Style.Builder().fromJson(emptyStyle)) { style ->
+                initMapLayers(style)
             }
         }
+
+        setupFloorSwitcher()
     }
 
-    private fun switchLevel(level: Int) {
-        selectedLevel = level
-        tvFloorTitle.text = "FTMK MAP - LEVEL $selectedLevel (ARAS $selectedLevel)"
-
-        val mapDrawableRes = when (level) {
-            1 -> R.drawable.map_ftmk_level_1
-            2 -> R.drawable.map_ftmk_level_2
-            3 -> R.drawable.map_ftmk_level_3
-            4 -> R.drawable.map_ftmk_level_4
-            else -> R.drawable.map_ftmk_level_1
-        }
-        ivFtmkMapImage.setImageResource(mapDrawableRes)
-
-        val levelRooms = FtmkLocationDatabase.rooms.filter { it.level == level }
-        roomAdapter.updateRooms(levelRooms)
-
-        updateLevelButtonsState()
-    }
-
-    private fun updateLevelButtonsState() {
-        val selectedColor = Color.parseColor("#1987b8")
-        val defaultColor = Color.parseColor("#475569")
-
-        btnLevel1.setTextColor(if (selectedLevel == 1) selectedColor else defaultColor)
-        btnLevel2.setTextColor(if (selectedLevel == 2) selectedColor else defaultColor)
-        btnLevel3.setTextColor(if (selectedLevel == 3) selectedColor else defaultColor)
-        btnLevel4.setTextColor(if (selectedLevel == 4) selectedColor else defaultColor)
-    }
-
-    private fun displayRoomDetails(room: FtmkRoom) {
-        tvSelectedRoomName.text = "${room.nameMalay}\n(${room.nameEnglish})"
-        tvSelectedLevelBadge.text = "LEVEL ${room.level} (ARAS ${room.level})"
-        tvSelectedBlockBadge.text = "🔴 ${room.block}"
-
-        if (room.level != selectedLevel) {
-            switchLevel(room.level)
+    private fun initMapLayers(style: Style) {
+        val geoJson = assets.open("ftmk_map.geojson").use {
+            InputStreamReader(it).readText()
         }
 
-        // Dynamically position the RED DOT MARKER over the FTMK Map image
-        layoutRedDotMarker.visibility = View.VISIBLE
-        tvRedDotLabel.text = "📍 ${room.nameMalay}"
+        // 1. 3D Rooms Layer
+        val roomsSource = GeoJsonSource(ROOMS_SOURCE_ID, geoJson)
+        style.addSource(roomsSource)
 
-        val params = layoutRedDotMarker.layoutParams as? ConstraintLayout.LayoutParams
-        if (params != null) {
-            params.horizontalBias = room.mapBiasX
-            params.verticalBias = room.mapBiasY
-            layoutRedDotMarker.layoutParams = params
+        val extrusionLayer = FillExtrusionLayer(ROOMS_LAYER_ID, ROOMS_SOURCE_ID).apply {
+            setProperties(
+                fillExtrusionColor(toColor(get("color"))),
+                fillExtrusionHeight(get("height")),
+                fillExtrusionBase(get("base_height")),
+                fillExtrusionOpacity(0.92f)
+            )
+            setFilter(eq(get("level"), literal(activeFloor)))
+        }
+        style.addLayer(extrusionLayer)
+
+        // 2. Navigation Route Line Layer
+        val routeSource = GeoJsonSource(ROUTE_SOURCE_ID)
+        style.addSource(routeSource)
+
+        val routeLayer = LineLayer(ROUTE_LAYER_ID, ROUTE_SOURCE_ID).apply {
+            setProperties(
+                lineColor(Color.parseColor("#DC2626")),
+                lineWidth(4.5f),
+                lineCap(LINE_CAP_ROUND),
+                lineJoin(LINE_JOIN_ROUND)
+            )
+        }
+        style.addLayer(routeLayer)
+
+        // 3. Destination Marker Layer (Red Dot)
+        val destSource = GeoJsonSource(DEST_SOURCE_ID)
+        style.addSource(destSource)
+
+        val destDotLayer = CircleLayer(DEST_LAYER_ID, DEST_SOURCE_ID).apply {
+            setProperties(
+                circleRadius(9f),
+                circleColor(Color.parseColor("#DC2626")),
+                circleStrokeWidth(3f),
+                circleStrokeColor(Color.WHITE)
+            )
+        }
+        style.addLayer(destDotLayer)
+    }
+
+    private fun setupFloorSwitcher() {
+        val btnF1: Button = findViewById(R.id.btnFloor1)
+        val btnF2: Button = findViewById(R.id.btnFloor2)
+        val btnF3: Button = findViewById(R.id.btnFloor3)
+        val btnF4: Button = findViewById(R.id.btnFloor4)
+
+        val buttons = listOf(btnF1, btnF2, btnF3, btnF4)
+
+        buttons.forEachIndexed { index, button ->
+            val floor = index + 1
+            button.setOnClickListener {
+                setFloor(floor)
+                buttons.forEach { b ->
+                    b.setBackgroundColor(Color.TRANSPARENT)
+                    b.setTextColor(Color.parseColor("#CBD5E1"))
+                }
+                button.setBackgroundColor(Color.parseColor("#0284C7"))
+                button.setTextColor(Color.WHITE)
+            }
         }
     }
 
-    companion object {
-        const val EXTRA_ROOM_ID = "EXTRA_ROOM_ID"
-        const val EXTRA_ROOM_NAME = "EXTRA_ROOM_NAME"
-        const val EXTRA_ROOM_LEVEL = "EXTRA_ROOM_LEVEL"
-        const val EXTRA_ROOM_BLOCK = "EXTRA_ROOM_BLOCK"
+    private fun setFloor(floor: Int) {
+        activeFloor = floor
+        tvFloorBadge.text = "ARAS $floor"
+        mapLibreMap?.getStyle { style ->
+            val layer = style.getLayer(ROOMS_LAYER_ID) as? FillExtrusionLayer
+            layer?.setFilter(eq(get("level"), literal(floor)))
+        }
     }
+
+    /**
+     * Call this when user selects a destination from directory list or QR scan
+     */
+    fun navigateToRoom(
+        targetRoomId: String,
+        roomName: String,
+        targetFloor: Int,
+        destLatLng: LatLng,
+        waypoints: List<LatLng>
+    ) {
+        if (activeFloor != targetFloor) {
+            setFloor(targetFloor)
+        }
+
+        tvSelectedTitle.text = roomName
+        tvSelectedSubtitle.text = "Floor $targetFloor • Follow highlighted path"
+
+        mapLibreMap?.getStyle { style ->
+            // Highlight target room in RED
+            val roomLayer = style.getLayer(ROOMS_LAYER_ID) as? FillExtrusionLayer
+            roomLayer?.setProperties(
+                fillExtrusionColor(
+                    switchCase(
+                        eq(get("id"), literal(targetRoomId)),
+                        color(Color.parseColor("#EF4444")),
+                        toColor(get("color"))
+                    )
+                )
+            )
+
+            // Update corridor route line
+            val routeSource = style.getSourceAs<GeoJsonSource>(ROUTE_SOURCE_ID)
+            val linePoints = waypoints.map { Point.fromLngLat(it.longitude, it.latitude) }
+            routeSource?.setGeoJson(LineString.fromLngLats(linePoints))
+
+            // Place Red Dot destination marker exclusively at destination
+            val destSource = style.getSourceAs<GeoJsonSource>(DEST_SOURCE_ID)
+            val destPoint = Point.fromLngLat(destLatLng.longitude, destLatLng.latitude)
+            destSource?.setGeoJson(Feature.fromGeometry(destPoint))
+
+            // Smooth camera transition to target room
+            mapLibreMap?.animateCamera(
+                CameraUpdateFactory.newLatLngZoom(destLatLng, 19.5),
+                1000
+            )
+        }
+    }
+
+    override fun onStart() { super.onStart(); mapView.onStart() }
+    override fun onResume() { super.onResume(); mapView.onResume() }
+    override fun onPause() { super.onPause(); mapView.onPause() }
+    override fun onStop() { super.onStop(); mapView.onStop() }
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
+    }
+    override fun onLowMemory() { super.onLowMemory(); mapView.onLowMemory() }
+    override fun onDestroy() { super.onDestroy(); mapView.onDestroy() }
 }

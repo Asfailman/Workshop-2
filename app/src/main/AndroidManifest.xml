@@ -21,9 +21,9 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <activity
-            android:name=".ui.FtmkMapActivity"
+            android:name=".ui.InteractiveMapActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:hardwareAccelerated="true" />
 
         <activity
             android:name=".MainActivity"

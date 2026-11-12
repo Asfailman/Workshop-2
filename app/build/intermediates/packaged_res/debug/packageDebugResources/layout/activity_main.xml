@@ -274,10 +274,13 @@
                 tools:ignore="TouchTargetSizeCheck" />
 
             <ImageView
-                android:layout_width="17dp"
+                android:id="@+id/btnMic"
+                android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginStart="4dp"
-                android:src="@android:drawable/ic_menu_gallery" />
+                android:layout_marginStart="8dp"
+                android:src="@android:drawable/ic_btn_speak_now"
+                app:tint="#64748B"
+                android:contentDescription="Speech to Text" />
         </LinearLayout>
 
         <ImageView

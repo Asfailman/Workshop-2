@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.aiguidance_bot.R
+import com.example.aiguidance_bot.ui.InteractiveMapActivity
 import com.example.aiguidance_bot.data.ChatMessage
 import com.example.aiguidance_bot.data.Sender
 import java.text.SimpleDateFormat
@@ -98,16 +99,12 @@ class ChatAdapter(
                 tvMessage.setTextColor(Color.parseColor("#1E293B"))
                 tvTimestamp.setTextColor(Color.parseColor("#64748B"))
             }
-
             if (message.roomId != null) {
                 btnViewMap.visibility = View.VISIBLE
                 btnViewMap.setOnClickListener {
                     val context = itemView.context
-                    val intent = Intent(context, FtmkMapActivity::class.java).apply {
-                        putExtra(FtmkMapActivity.EXTRA_ROOM_ID, message.roomId)
-                        putExtra(FtmkMapActivity.EXTRA_ROOM_NAME, message.roomName)
-                        putExtra(FtmkMapActivity.EXTRA_ROOM_LEVEL, message.roomLevel ?: 1)
-                        putExtra(FtmkMapActivity.EXTRA_ROOM_BLOCK, message.roomBlock)
+                    val intent = Intent(context, InteractiveMapActivity::class.java).apply {
+                        putExtra("DESTINATION_NAME", message.roomName)
                     }
                     context.startActivity(intent)
                 }
