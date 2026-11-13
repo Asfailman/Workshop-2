@@ -222,7 +222,6 @@
         "Mini Theatre",
         "Teater",
         "Lecture Theatre",
-        "Dewan Kuliah",
         "Teater Mini",
         "Mini Theater",
         "Theater"
@@ -458,7 +457,9 @@
       "name": "Makmal Penyelidikan BIOCORE / BIOCORE Lab",
       "aliases": [
         "BIOCORE Lab",
-        "Makmal Penyelidikan BIOCORE"
+        "Makmal Penyelidikan BIOCORE",
+        "BIOCORE",
+        "Makmal BIOCORE"
       ],
       "category": "laboratory",
       "purposes": [
@@ -487,7 +488,10 @@
       "name": "Makmal Penyelidikan OPTIMASS / OPTIMASS Research Lab",
       "aliases": [
         "OPTIMASS Research Lab",
-        "Makmal Penyelidikan OPTIMASS"
+        "Makmal Penyelidikan OPTIMASS",
+        "OPTIMASS",
+        "Makmal OPTIMASS",
+        "Optimass Lab"
       ],
       "category": "laboratory",
       "purposes": [
@@ -883,7 +887,9 @@
       "aliases": [
         "Game Arena",
         "Arena Permainan",
-        "Esports Arena"
+        "Esports Arena",
+        "E-Sports Arena",
+        "Gaming Arena"
       ],
       "category": "facility",
       "purposes": [
@@ -943,7 +949,9 @@
       "name": "Makmal MTDS (FAIX) / MTDS Lab (FAIX)",
       "aliases": [
         "MTDS Lab",
-        "Makmal MTDS (FAIX)"
+        "Makmal MTDS (FAIX)",
+        "MTDS",
+        "Makmal MTDS"
       ],
       "category": "laboratory",
       "purposes": [
@@ -1038,7 +1046,8 @@
       "name": "Bilik ReCap / ReCap Room",
       "aliases": [
         "ReCap Room",
-        "Bilik ReCap"
+        "Bilik ReCap",
+        "ReCap"
       ],
       "category": "meeting_room",
       "purposes": [
@@ -1261,7 +1270,12 @@
       "name": "Bilik CLeaR FTMK / FTMK CLeaR Room",
       "aliases": [
         "FTMK CLeaR Room",
-        "Bilik CLeaR FTMK"
+        "Bilik CLeaR FTMK",
+        "Clear Room",
+        "Bilik Clear",
+        "Clear",
+        "FTMK Clear",
+        "Bilik CLeaR Room"
       ],
       "category": "meeting_room",
       "purposes": [
@@ -1384,7 +1398,14 @@
       "name": "Cybersecurity Competence Center (FAIX)",
       "aliases": [
         "Cybersecurity Competence Center",
-        "Cybersecurity Competence Center (FAIX)"
+        "Cybersecurity Competence Center (FAIX)",
+        "Cybersecurity Center",
+        "Cyber Security Center",
+        "Cybersecurity Lab",
+        "Cyber Security Lab",
+        "Pusat Keselamatan Siber",
+        "Cybersecurity",
+        "Cyber Security"
       ],
       "category": "laboratory",
       "purposes": [
@@ -1413,7 +1434,13 @@
       "name": "Makmal CCNA & CCNP / CCNA & CCNP Lab",
       "aliases": [
         "CCNA & CCNP Lab",
-        "Makmal CCNA & CCNP"
+        "Makmal CCNA & CCNP",
+        "CCNA Lab",
+        "CCNP Lab",
+        "CCNA",
+        "CCNP",
+        "Makmal CCNA",
+        "CCNA & CCNP"
       ],
       "category": "laboratory",
       "purposes": [
@@ -1442,7 +1469,12 @@
       "name": "Makmal Fiber Optic / Fiber Optic Lab",
       "aliases": [
         "Fiber Optic Lab",
-        "Makmal Fiber Optic"
+        "Makmal Fiber Optic",
+        "Fiber Optic",
+        "Fiber Lab",
+        "Optic Lab",
+        "Makmal Gentian Optik",
+        "Gentian Optik"
       ],
       "category": "laboratory",
       "purposes": [
@@ -1471,7 +1503,10 @@
       "name": "Bilik Bincang Pentadbiran / Administrative Discussion Room",
       "aliases": [
         "Administrative Discussion Room",
-        "Bilik Bincang Pentadbiran"
+        "Bilik Bincang Pentadbiran",
+        "Admin Discussion Room",
+        "Administrative Discussion",
+        "Discussion Room Level 3"
       ],
       "category": "meeting_room",
       "purposes": [
@@ -1501,7 +1536,9 @@
       "name": "Bengkel SKK / SKK Lab",
       "aliases": [
         "SKK Lab",
-        "Bengkel SKK"
+        "Bengkel SKK",
+        "SKK",
+        "Makmal SKK"
       ],
       "category": "workshop",
       "purposes": [
@@ -1528,7 +1565,10 @@
       "name": "Bengkel BITI (FAIX) / BITI Workshop (FAIX)",
       "aliases": [
         "BITI Workshop",
-        "Bengkel BITI (FAIX)"
+        "Bengkel BITI (FAIX)",
+        "Bengkel BITI",
+        "BITI Lab",
+        "BITI"
       ],
       "category": "workshop",
       "purposes": [
@@ -1556,7 +1596,9 @@
       "name": "Makmal CMERP (FAIX) / CMERP Lab (FAIX)",
       "aliases": [
         "CMERP Lab",
-        "Makmal CMERP (FAIX)"
+        "Makmal CMERP (FAIX)",
+        "CMERP",
+        "Makmal CMERP"
       ],
       "category": "laboratory",
       "purposes": [
@@ -1618,7 +1660,10 @@
       "name": "Makmal Penyelidikan IS3 / IS3 Research Lab",
       "aliases": [
         "IS3 Research Lab",
-        "Makmal Penyelidikan IS3"
+        "Makmal Penyelidikan IS3",
+        "IS3 Lab",
+        "IS3",
+        "Makmal IS3"
       ],
       "category": "laboratory",
       "purposes": [
@@ -1749,7 +1794,8 @@
       "name": "Makmal Eksekutif / Executive Lab",
       "aliases": [
         "Executive Lab",
-        "Makmal Eksekutif"
+        "Makmal Eksekutif",
+        "Exec Lab"
       ],
       "category": "laboratory",
       "purposes": [
@@ -1959,7 +2005,10 @@
       "name": "Studio Pengambaran / Shooting Studio",
       "aliases": [
         "Shooting Studio",
-        "Studio Pengambaran"
+        "Studio Pengambaran",
+        "Studio Penggambaran",
+        "Video Studio",
+        "Photo Studio"
       ],
       "category": "studio",
       "purposes": [
@@ -1986,7 +2035,9 @@
       "name": "Makmal Tanpa Wayar / Wireless Lab",
       "aliases": [
         "Wireless Lab",
-        "Makmal Tanpa Wayar"
+        "Makmal Tanpa Wayar",
+        "Makmal Wireless",
+        "Wireless"
       ],
       "category": "laboratory",
       "purposes": [
@@ -2016,7 +2067,10 @@
       "name": "Makmal Keselamatan 2 (FAIX) / Security Lab 2 (FAIX)",
       "aliases": [
         "Security Lab 2",
-        "Makmal Keselamatan 2 (FAIX)"
+        "Makmal Keselamatan 2 (FAIX)",
+        "Security 2",
+        "Makmal Security 2",
+        "Makmal Keselamatan 2"
       ],
       "category": "laboratory",
       "purposes": [
@@ -2047,7 +2101,10 @@
       "aliases": [
         "Cloud Computing Lab",
         "Makmal Pengkomputeran Awan",
-        "Cloud Lab"
+        "Cloud Lab",
+        "Cloud Computing",
+        "Makmal Awan",
+        "Cloud"
       ],
       "category": "laboratory",
       "purposes": [
@@ -2175,7 +2232,10 @@
       "name": "Makmal Penyelidikan INFORSNET (FAIX) / INFORSNET Research Lab (FAIX)",
       "aliases": [
         "INFORSNET Research Lab",
-        "Makmal Penyelidikan INFORSNET (FAIX)"
+        "Makmal Penyelidikan INFORSNET (FAIX)",
+        "INFORSNET",
+        "Makmal INFORSNET",
+        "INFORSNET Lab"
       ],
       "category": "laboratory",
       "purposes": [
@@ -2270,7 +2330,9 @@
       "name": "Bengkel BITD / BITD Workshop",
       "aliases": [
         "BITD Workshop",
-        "Bengkel BITD"
+        "Bengkel BITD",
+        "BITD Lab",
+        "BITD"
       ],
       "category": "workshop",
       "purposes": [

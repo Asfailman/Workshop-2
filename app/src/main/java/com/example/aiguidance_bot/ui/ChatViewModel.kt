@@ -8,6 +8,7 @@ import com.example.aiguidance_bot.data.ChatMessage
 import com.example.aiguidance_bot.data.ChatRepository
 import com.example.aiguidance_bot.data.Sender
 import kotlinx.coroutines.launch
+import java.io.File
 
 class ChatViewModel(private val repository: ChatRepository = ChatRepository()) : ViewModel() {
 
@@ -40,6 +41,22 @@ class ChatViewModel(private val repository: ChatRepository = ChatRepository()) :
             val aiMsg = ChatMessage(text = aiReplyText, sender = Sender.AI)
             
             val updatedList = _messages.value ?: mutableListOf()
+            updatedList.add(aiMsg)
+            _messages.value = updatedList
+            _isLoading.value = false
+        }
+    }
+
+    fun sendVoiceAudio(audioFile: File) {
+        _isLoading.value = true
+        viewModelScope.launch {
+            val response = repository.sendVoiceAudio(audioFile)
+            val userText = response.transcribed_text?.takeIf { it.isNotBlank() } ?: "🎤 [Voice Query]"
+            val userMsg = ChatMessage(text = userText, sender = Sender.USER)
+            val aiMsg = ChatMessage(text = response.reply, sender = Sender.AI)
+
+            val updatedList = _messages.value ?: mutableListOf()
+            updatedList.add(userMsg)
             updatedList.add(aiMsg)
             _messages.value = updatedList
             _isLoading.value = false

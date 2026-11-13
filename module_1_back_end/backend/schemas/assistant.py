@@ -25,6 +25,16 @@ class AssistantQueryResponse(BaseModel):
     recommendations: Optional[List[Dict[str, Any]]] = Field(None, description="Ranked destination recommendations when applicable")
     session_id: str = Field(..., description="Active session ID")
     error: Optional[str] = Field(None, description="Error message if any parsing or fallback occurred")
+    transcribed_text: Optional[str] = Field(None, description="Transcribed user speech if input was provided as voice/audio")
+    stt_duration_ms: Optional[float] = Field(None, description="Audio transcription duration in milliseconds")
+    stt_engine: Optional[str] = Field(None, description="Speech-to-text engine used (e.g. whisper, google)")
+
+
+class STTResponse(BaseModel):
+    text: str = Field(..., description="Transcribed text from speech")
+    engine: str = Field(..., description="Engine used (e.g. whisper, google)")
+    duration_ms: float = Field(..., description="Transcription duration in milliseconds")
+    language: Optional[str] = Field(None, description="Detected or specified audio language")
 
 
 class AssistantResetRequest(BaseModel):

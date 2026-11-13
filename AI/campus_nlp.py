@@ -83,6 +83,42 @@ class CampusNLP:
         r'\bmeetin\b': 'meeting',
     }
 
+    # Speech-To-Text (STT) phonetic corrections for acoustic slips
+    SPEECH_TO_TEXT_CORRECTIONS = [
+        # Bilik Kuliah / BK acoustic slips
+        (r'\bbilly\s*kulia\s*(?:to|too|two)\b', 'bilik kuliah 2'),
+        (r'\bbilly\s*kulia\s*(?:tree|free|three)\b', 'bilik kuliah 3'),
+        (r'\bbilly\s*kulia\s*(?:tour|for|door|four)\b', 'bilik kuliah 4'),
+        (r'\bbilly\s*kulia\s*(?:that|dat)\s*one\b', 'bilik kuliah 1'),
+        (r'\bbilly\s*kulia\s*([0-9]{1,2})\b', r'bilik kuliah \1'),
+        (r'\bbilly\s*kulia\b', 'bilik kuliah'),
+        (r'\bbillie\s*kulia\b', 'bilik kuliah'),
+        (r'\bbilly\s*clear\b', 'bilik clear'),
+        # Dewan Kuliah / DK acoustic slips
+        (r'\b(?:where\s+did\s+europe|where\s+do\s+you\s+and\s+europe)\b', 'where is dewan kuliah'),
+        (r'\b(?:the\s+one\s+cool\s+yeah|the\s+one\s+kulia)\b', 'dewan kuliah'),
+        (r'\b(?:die\s*k|day\s*k)\b', 'dk'),
+        (r'\b(?:bee\s*k|be\s*k)\b', 'bk'),
+        # Programming Lab acoustic slips
+        (r'\bprogram\s+(?:that|dat)\s*one\b', 'programming lab 1'),
+        (r'\bprog(?:ram(?:ming)?)?\s*lab\s+(?:that|dat)\s*one\b', 'programming lab 1'),
+        (r'\bprogram\s+that\s+two\b', 'programming lab 2'),
+        # AI Lab acoustic slips
+        (r'\bai\s+lab\s+(?:tour|for|door)\b', 'ai lab 4'),
+        (r'\bai\s+lab\s+(?:to|too)\b', 'ai lab 2'),
+        (r'\bai\s+lab\s+(?:tree|free)\b', 'ai lab 3'),
+        (r'\b(?:eye|ay)\s+lab\s*([1-4])\b', r'ai lab \1'),
+        # Makmal phonetic slips
+        (r'\b(?:mac\s*mall|mak\s*mal|muck\s*mall)\b', 'makmal'),
+        # Multimedia Lab slips
+        (r'\bmulti(?:media)?\s*(?:lab\s*)?(?:tour|for|door)\b', 'multimedia lab 4'),
+        (r'\bmulti(?:media)?\s*(?:lab\s*)?(?:to|too)\b', 'multimedia lab 2'),
+        (r'\bmulti(?:media)?\s*(?:lab\s*)?(?:tree|free)\b', 'multimedia lab 3'),
+        (r'\bmulti(?:media)?\s*(?:lab\s*)?(?:that|dat)\s*one\b', 'multimedia lab 1'),
+        # C-ACT slips
+        (r'\b(?:see\s*act|sea\s*act|c\s*act)\b', 'c-act'),
+    ]
+
     # Contractions and room abbreviations
     ABBREVIATION_PATTERNS = [
         # Programming Lab
@@ -100,6 +136,7 @@ class CampusNLP:
         (r'\b(?:net(?:work)?)\s*(?:lab(?:oratory)?)?\s*([1-2])\b', r'network lab \1'),
         # Lecture Rooms (BK 1 - 16)
         (r'\b(?:lec(?:ture)?\s*room|bilik\s*kuliah|bk)\s*([0-9]{1,2})\b', r'lecture room \1'),
+        (r'\bdewan\s*seminar\b', 'seminar hall'),
         # Audio Recording Room
         (r'\b(?:audio\s*recording|rakaman\s*audio)\s*(?:room)?\s*([1-2])\b', r'audio recording room \1'),
         # Systems Lab vs Systems and Hardware Lab
@@ -117,29 +154,42 @@ class CampusNLP:
         (r'\bviva\s*(?:room)?\b', 'viva room'),
         (r'\bmeeting\s*room\b', 'main meeting room'),
         (r'\bcact\b', 'c-act'),
+        (r'\b(?:bilik\s+)?clear(?:\s+room)?\b', 'clear room'),
     ]
 
     @classmethod
     def preprocess_text(cls, text: str) -> str:
         """
-        Cleans, fixes typos, and expands abbreviations in user input.
+        Cleans, fixes typos, corrects speech-to-text slips, and expands abbreviations in user input.
         """
         if not text:
             return ""
 
         s = text.lower().strip()
 
-        # 1. Apply typo corrections
+        # 1. Apply speech-to-text acoustic corrections
+        for pattern, replacement in cls.SPEECH_TO_TEXT_CORRECTIONS:
+            s = re.sub(pattern, replacement, s, flags=re.IGNORECASE)
+
+        # 2. Apply typo corrections
         for pattern, replacement in cls.TYPO_CORRECTIONS.items():
             s = re.sub(pattern, replacement, s, flags=re.IGNORECASE)
 
-        # 2. Expand abbreviations
+        # 3. Expand abbreviations
         for pattern, replacement in cls.ABBREVIATION_PATTERNS:
             s = re.sub(pattern, replacement, s, flags=re.IGNORECASE)
 
         # Normalize multiple spaces
         s = re.sub(r'\s+', ' ', s).strip()
         return s
+
+    @classmethod
+    def correct_speech_transcript(cls, transcript: str) -> str:
+        """
+        Dedicated speech post-processing layer:
+        Repairs acoustic slips, homophones, and campus terminology in raw transcripts.
+        """
+        return cls.preprocess_text(transcript)
 
     @classmethod
     def is_navigation_intent(cls, text: str) -> bool:
@@ -255,13 +305,19 @@ class CampusNLP:
         clean = cls.preprocess_text(message).rstrip("?.!,")
 
         patterns = [
-            # 1. "from <origin> to <dest>"
+            # 1. "to <dest> after [my class/class/event at] <orig>"
+            r'(?:.*?\b)?(?:to|ke|towards|head\s+to|walk\s+to|go\s+to|visit)\s+(.+?)\s+(?:after|lepas|selepas)\s+(?:(?:my\s+)?(?:class|lab|lecture|event)\s+(?:at|in|kat|dekat)\s+)?(.+)',
+            # 2. "after [my class/class/event at] <orig> ... <dest>"
+            r'(?:.*?\b)?(?:after|lepas|selepas)\s+(?:(?:my\s+)?(?:class|lab|lecture|event)\s+(?:at|in|kat|dekat)\s+)?(.+?)(?:,|\s+then|\s+and|\s+so)?\s+(?:i\s+want\s+to\s+go\s+to|i\s+need\s+to\s+go\s+to|how\s+to\s+go\s+to|how\s+do\s+i\s+get\s+to|how\s+can\s+i\s+get\s+to|take\s+me\s+to|bring\s+me\s+to|guide\s+me\s+to|go\s+to|head\s+to|walk\s+to|nak\s+pergi\s+ke|nak\s+ke|to|ke)\s+(.+)',
+            # 3. "I am at / currently at / starting from <orig> ... <dest>"
+            r'(?:.*?\b)?(?:i\s+am\s+at|i\'m\s+at|im\s+at|currently\s+at|saya\s+di|saya\s+kat|start\s+(?:at|from)|starting\s+(?:at|from))\s+(.+?)(?:,|\s+then|\s+and|\s+so)?\s+(?:how\s+(?:to|do\s+i|can\s+i)\s+(?:get|go|walk)\s+to|take\s+me\s+to|bring\s+me\s+to|guide\s+me\s+to|i\s+want\s+to\s+go\s+to|go\s+to|walk\s+to|head\s+to|nak\s+pergi\s+ke|nak\s+ke|to|ke)\s+(.+)',
+            # 4. "from <origin> to <dest>"
             r'\b(?:from|dari)\s+(.+?)\s+(?:to|ke|towards|sampai)\s+(.+)',
-            # 2. "between <origin> and <dest>"
+            # 5. "between <origin> and <dest>"
             r'\b(?:between|antara)\s+(.+?)\s+(?:and|dan|with|dengan)\s+(.+)',
-            # 3. "<dest> from <origin>"
+            # 6. "<dest> from <origin>"
             r'\b(?:to|ke|towards)\s+(.+?)\s+(?:from|dari)\s+(.+)',
-            # 4. Direct "<origin> to <dest>"
+            # 7. Direct "<origin> to <dest>"
             r'^(?:can\s+you\s+)?(?:show\s+(?:me\s+)?)?(?:short\s+|shortest\s+|nearest\s+)?(?:path\s+|route\s+)?(?:from\s+)?(.+?)\s+(?:to|ke|towards)\s+(.+)$',
         ]
 
@@ -269,9 +325,9 @@ class CampusNLP:
             match = re.search(pattern, clean, re.IGNORECASE)
             if match:
                 g1, g2 = match.group(1).strip(), match.group(2).strip()
-                if idx == 2:
+                if idx in (0, 5):  # dest, orig
                     dest_cand, orig_cand = g1, g2
-                else:
+                else:  # orig, dest
                     orig_cand, dest_cand = g1, g2
 
                 # Strip navigational filler words

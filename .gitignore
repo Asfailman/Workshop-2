@@ -114,10 +114,67 @@ htmlcov/
 .mypy_cache/
 .ruff_cache/
 
-# Logs & Databases
+# ==========================================
+# Audio, Media & Voice Recordings
+# ==========================================
+*.wav
+*.mp3
+*.m4a
+*.aac
+*.ogg
+*.flac
+*.pcm
+robot_voice_*.wav
+voice_recordings/
+recordings/
+
+# ==========================================
+# AI Models, Weights & Checkpoints
+# ==========================================
+models/
+model_cache/
+vosk-model*/
+*.pt
+*.pth
+*.bin
+*.onnx
+*.safetensors
+.cache/
+huggingface/
+whisper_cache/
+
+# ==========================================
+# Android Output Packages & Build Artifacts
+# ==========================================
+*.apk
+*.aab
+*.ap_
+*.dex
+app/release/
+app/debug/
+local.properties*
+
+# ==========================================
+# Logs, Processes & Databases
+# ==========================================
 *.log
+backend.log
+ngrok.log
+uvicorn.log
 *.sqlite
 *.sqlite3
+*.pid
+
+# ==========================================
+# Temporary Files & Scratch
+# ==========================================
+tmp/
+temp/
+*.tmp
+*.bak
+*.swp
+*.swo
+*~
 
 # ==========================================
 # Environment Variables & Secrets
@@ -125,14 +182,18 @@ htmlcov/
 .env
 .env.*
 !.env.example
+credentials.json
+api_keys.json
+openai_key.txt
+service_account.json
+*.pem
+*.key
 
 # ==========================================
 # Editors & IDE Configurations
 # ==========================================
 .vscode/
-*.swp
-*.swo
-*~
 .directory
 .cursor/
 .gemini/
+
