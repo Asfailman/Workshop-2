@@ -76,7 +76,7 @@ class ApiService {
                     .setType(MultipartBody.FORM)
                     .addFormDataPart("session_id", "android_robot_session")
                     .addFormDataPart("current_location_id", "MAIN_ENTRANCE")
-                    .addFormDataPart("language", "en")
+                    .addFormDataPart("language", "auto")
                     .addFormDataPart(
                         "file",
                         audioFile.name,
@@ -111,7 +111,9 @@ data class AssistantVoiceResponse(
     val reply: String,
     val transcribed_text: String? = null,
     val destination_id: String? = null,
-    val error: String? = null
+    val error: String? = null,
+    val stt_engine: String? = null,
+    val stt_duration_ms: Float? = null
 )
 
 data class AssistantQueryRequest(

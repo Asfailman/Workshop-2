@@ -259,6 +259,13 @@ class AssistantService:
         if not words:
             return False
 
+        # Never affirmative if it is an interrogative question or modal auxiliary query
+        # e.g. 'can you teach me', 'can i learn', 'could you explain', 'what is', 'who are'
+        if words[0] in {'can', 'could', 'would', 'should', 'will', 'may', 'might'} and len(words) > 1 and words[1] in {'you', 'i', 'we', 'they', 'he', 'she', 'u'}:
+            return False
+        if words[0] in {'what', 'who', 'where', 'when', 'why', 'how', 'which'}:
+            return False
+
         # Regex matching common affirmative tokens with elongated or repeated letters
         aff_token_pattern = re.compile(
             r'^(?:'
@@ -269,7 +276,7 @@ class AssistantService:
             r'p+l+(?:e+a*s+e*|s+|z+)|'
             r'b+o+l+e+h*|n+a+k+|'
             r'h+a+a*h*|'
-            r'j+o+m+|p+r+o+c+e+e+d+|g+o+|c+a+n+|w+a+n+t+s*'
+            r'j+o+m+|p+r+o+c+e+e+d+|g+o+|w+a+n+t+s*'
             r')$',
             re.IGNORECASE
         )
@@ -278,14 +285,15 @@ class AssistantService:
         exact_phrases = {
             "yes sure", "yes susre", "yes please", "yes pls", "yes ples", "yes please bring me",
             "yes please take me", "sure please", "sure thing", "of course",
-            "definitely", "why not", "go ahead", "all right", "can you",
+            "definitely", "why not", "go ahead", "all right",
             "please do", "yes i would", "yes i want", "yes bring me", "yes guide me",
             "ya tolong", "boleh tolong", "haah nak", "jom pergi", "yes tolong",
             "yes show me", "yes directions", "sure directions", "yes walk", "yes walking",
             "show direction", "show directions", "show me directions", "show me direction",
             "lead the way", "lets go", "let's go", "take me there", "guide me there",
             "bring it on", "yes please guide me", "alright guide me", "ok show me",
-            "lets do it", "let's do it", "show the way", "yes take me", "yes please lead"
+            "lets do it", "let's do it", "show the way", "yes take me", "yes please lead",
+            "can", "can can", "can lah", "can please", "yes can", "boleh"
         }
 
         if msg in exact_phrases:
@@ -556,8 +564,10 @@ class AssistantService:
                 f"{i+1}. {step}" for i, step in enumerate(route_calc.get("instructions", []))
             )
             tip_text = f"\n\n{extra_tip}" if extra_tip else ""
+            disp_dest = CampusNLP.get_preferred_name(dest_name, prefer_english=True) if CampusNLP else dest_name
+            disp_start = CampusNLP.get_preferred_name(start_name, prefer_english=True) if CampusNLP else start_name
             reply = (
-                f"🚶‍♂️ **Walking Directions to {dest_name} ({bld}, Level {flr}) from {start_name} ({dist}m):**\n\n"
+                f"🚶‍♂️ **Walking Directions to {disp_dest} ({bld}, Level {flr}) from {disp_start} ({dist}m):**\n\n"
                 f"{steps_formatted}"
                 f"{tip_text}\n\n"
                 f"Feel free to ask if you need directions to anywhere else!"
@@ -1479,26 +1489,32 @@ class AssistantService:
         Handles queries asking what is around, near, beside, or surrounding a location:
         e.g. 'what surrond ai 1', 'what is near AI Lab 1', 'apa ada dekat bilik viva', etc.
         """
-        msg_lower = message.lower().strip()
+        # Apply campus speech & acoustic preprocessing if available
+        processed_msg = CampusNLP.preprocess_text(message) if CampusNLP else message
+        msg_lower = processed_msg.lower().strip()
+        raw_lower = message.lower().strip()
+
         surround_kws = [
             "surround", "surrounds", "surrounding", "surrond", "suround",
             "around", "near", "nearby", "beside", "next to", "adjacent", "close to",
             "sebelah", "dekat", "berdekatan", "sekitar", "keliling", "apa ada dekat", "ada apa dekat"
         ]
 
-        if not any(kw in msg_lower for kw in surround_kws):
+        if not any(kw in msg_lower or kw in raw_lower for kw in surround_kws):
             return None
 
         # Clean filler surrounding words to isolate the location name
         cleaned_text = re.sub(
-            r'\b(what|what is|whats|what are|which|facilities|rooms?|labs?|surround|surrounds|surrounding|surrond|suround|around|near|nearby|beside|next to|adjacent|close to|sebelah|dekat|berdekatan|sekitar|keliling|apa ada|ada apa|show me|tell me|is there|ada)\b',
+            r'\b(what|what is|whats|what are|which|facilities|rooms?|labs?|class(?:es)?|glass(?:es)?|does|do|have|has|is|are|in|at|on|the|a|an|area|neighboring|neighbouring|surround|surrounds|surrounding|surrond|suround|around|near|nearby|beside|next to|adjacent|close to|sebelah|dekat|berdekatan|sekitar|keliling|apa ada|ada apa|show me|tell me|is there|ada)\b',
             '',
             msg_lower,
             flags=re.I
         ).strip()
+        cleaned_text = re.sub(r'\s+', ' ', cleaned_text).strip()
 
         target_loc = (
             self._find_location_in_text(cleaned_text)
+            or self._find_location_in_text(processed_msg)
             or self._find_location_in_text(message)
             or session_mem.get("last_destination")
         )
@@ -1524,10 +1540,14 @@ class AssistantService:
         elif bld == "Block B" and flr == 2:
             bridge_info = "• **Bridge to Block A:** Direct elevated walkway connecting to Block A (Level 2)\n"
 
+        disp_loc_name = CampusNLP.get_preferred_name(loc_name, prefer_english=True) if CampusNLP else loc_name
         if same_floor_locs or bridge_info:
-            places_list = "\n".join(f"• **{l['name']}**" for l in same_floor_locs)
+            places_list = "\n".join(
+                f"• **{CampusNLP.get_preferred_name(l['name'], prefer_english=True) if CampusNLP else l['name']}**"
+                for l in same_floor_locs
+            )
             reply = (
-                f"🏢 **Facilities surrounding {loc_name} ({bld}, Level {flr}):**\n\n"
+                f"🏢 **Facilities surrounding {disp_loc_name} ({bld}, Level {flr}):**\n\n"
                 f"Along this corridor and on this same floor, you will find:\n"
                 f"{places_list}\n"
                 f"{bridge_info}\n"
@@ -1535,7 +1555,7 @@ class AssistantService:
             )
         else:
             reply = (
-                f"📍 **{loc_name}** is situated in **{bld}, Level {flr}**.\n\n"
+                f"📍 **{disp_loc_name}** is situated in **{bld}, Level {flr}**.\n\n"
                 f"Would you like walking directions to this room?"
             )
 

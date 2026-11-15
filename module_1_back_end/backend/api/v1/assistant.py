@@ -43,6 +43,15 @@ async def assistant_voice_query(
     if not audio_bytes:
         raise HTTPException(status_code=400, detail="Empty audio file provided")
 
+    # Debug: Save last received audio file for analysis
+    try:
+        os.makedirs("scratch", exist_ok=True)
+        with open("scratch/last_debug_audio.wav", "wb") as dbg_f:
+            dbg_f.write(audio_bytes)
+        print(f"[assistant_voice_query] Received {len(audio_bytes)} bytes audio from client.")
+    except Exception as e:
+        print(f"[assistant_voice_query] Failed to save debug audio: {e}")
+
     # 1. Transcribe voice input using STT service
     stt_res = stt_service.transcribe(
         audio_bytes=audio_bytes,

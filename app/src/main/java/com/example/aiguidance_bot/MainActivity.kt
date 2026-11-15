@@ -52,6 +52,8 @@ class MainActivity : AppCompatActivity() {
     private val wavRecorder = WavRecorder()
     private var voiceRecordingFile: File? = null
     private var isRecordingAudio = false
+    private val recordingHandler = android.os.Handler(android.os.Looper.getMainLooper())
+    private var autoStopRunnable: Runnable? = null
 
     private val cameraLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
@@ -81,10 +83,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 val spokenText = CampusSpeechCorrector.correctTranscript(rawText)
                 if (::etMessageInput.isInitialized) {
-                    val currentText = etMessageInput.text.toString().trim()
-                    val combinedText = if (currentText.isNotEmpty()) "$currentText $spokenText" else spokenText
-                    etMessageInput.setText(combinedText)
-                    etMessageInput.setSelection(combinedText.length)
+                    etMessageInput.setText(spokenText)
+                    etMessageInput.setSelection(spokenText.length)
+                    chatViewModel.sendMessage(spokenText)
+                    etMessageInput.text.clear()
                 }
             }
         }
@@ -92,7 +94,7 @@ class MainActivity : AppCompatActivity() {
 
     private val micPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
         if (granted) {
-            toggleSpeechInput()
+            toggleAudioRecording()
         } else {
             Toast.makeText(this, "Microphone permission required for voice input", Toast.LENGTH_SHORT).show()
         }
@@ -162,6 +164,9 @@ class MainActivity : AppCompatActivity() {
                             val corrected = CampusSpeechCorrector.correctTranscript(text)
                             etMessageInput.setText(corrected)
                             etMessageInput.setSelection(corrected.length)
+                            // Auto-send as soon as user stops talking!
+                            chatViewModel.sendMessage(corrected)
+                            etMessageInput.text.clear()
                         }
                     }
                 }
@@ -296,22 +301,40 @@ class MainActivity : AppCompatActivity() {
                     textToSpeech.stop()
                 }
                 voiceRecordingFile = File(cacheDir, "robot_voice_${System.currentTimeMillis()}.wav")
-                wavRecorder.startRecording(voiceRecordingFile!!)
+                val started = wavRecorder.startRecording(voiceRecordingFile!!)
+                if (!started) {
+                    Toast.makeText(this, "Could not access microphone", Toast.LENGTH_SHORT).show()
+                    return
+                }
+
                 isRecordingAudio = true
                 if (::btnVoiceInput.isInitialized) {
                     btnVoiceInput.setColorFilter(Color.RED)
                     btnVoiceInput.animate().scaleX(1.25f).scaleY(1.25f).setDuration(200).start()
                 }
                 if (::etMessageInput.isInitialized) {
-                    etMessageInput.hint = "🔴 Recording audio... Tap to stop"
+                    etMessageInput.hint = "🔴 Listening... Speak now (Tap to send)"
                 }
-                Toast.makeText(this, "🎙️ Recording audio for server transcription...", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "🎙️ Listening... Speak your question!", Toast.LENGTH_SHORT).show()
+
+                // Auto-stop after 30s max if user forgets to tap again
+                autoStopRunnable?.let { recordingHandler.removeCallbacks(it) }
+                autoStopRunnable = Runnable {
+                    if (wavRecorder.isCurrentlyRecording()) {
+                        toggleAudioRecording()
+                    }
+                }
+                recordingHandler.postDelayed(autoStopRunnable!!, 30000L)
             } catch (e: Exception) {
                 isRecordingAudio = false
                 Toast.makeText(this, "Failed to start recorder: ${e.message}", Toast.LENGTH_SHORT).show()
             }
         } else {
-            wavRecorder.stopRecording()
+            // Cancel auto-stop timer
+            autoStopRunnable?.let { recordingHandler.removeCallbacks(it) }
+            autoStopRunnable = null
+
+            val file = wavRecorder.stopRecording() ?: voiceRecordingFile
             isRecordingAudio = false
 
             if (::btnVoiceInput.isInitialized) {
@@ -319,15 +342,16 @@ class MainActivity : AppCompatActivity() {
                 btnVoiceInput.animate().scaleX(1.0f).scaleY(1.0f).setDuration(200).start()
             }
             if (::etMessageInput.isInitialized) {
-                etMessageInput.hint = "Type or speak a message..."
+                etMessageInput.hint = "⚡ Processing with AI Whisper..."
             }
 
-            voiceRecordingFile?.let { file ->
-                if (file.exists() && file.length() > 44) {
-                    Toast.makeText(this, "Sending voice to AI...", Toast.LENGTH_SHORT).show()
-                    chatViewModel.sendVoiceAudio(file)
-                } else {
-                    Toast.makeText(this, "Audio too short, please speak again", Toast.LENGTH_SHORT).show()
+            if (file != null && file.exists() && file.length() > 44) {
+                Toast.makeText(this, "⚡ Sending audio to AI Whisper...", Toast.LENGTH_SHORT).show()
+                chatViewModel.sendVoiceAudio(file)
+            } else {
+                Toast.makeText(this, "No voice detected. Please speak closer to the mic.", Toast.LENGTH_SHORT).show()
+                if (::etMessageInput.isInitialized) {
+                    etMessageInput.hint = "Type or speak a message..."
                 }
             }
         }
@@ -432,6 +456,9 @@ class MainActivity : AppCompatActivity() {
             progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
             btnSend.isEnabled = !isLoading
             btnSend.alpha = if (isLoading) 0.5f else 1.0f
+            if (!isLoading && ::etMessageInput.isInitialized && !wavRecorder.isCurrentlyRecording()) {
+                etMessageInput.hint = "Type or speak a message..."
+            }
         }
 
         btnSend.setOnClickListener {
@@ -451,22 +478,23 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Tap mic icon to start/stop live speech-to-text with word-by-word streaming
+        // Tap mic icon: Live streaming speech-to-text with real-time word-by-word display & auto-send
         btnVoiceInput.setOnClickListener {
             closeAttachmentMenu()
             toggleSpeechInput()
         }
 
-        // Long press triggers fallback audio file recorder
+        // Long press: Whisper audio file recording
         btnVoiceInput.setOnLongClickListener {
             closeAttachmentMenu()
             toggleAudioRecording()
             true
         }
 
+        // Attachment menu option also invokes Whisper audio recording
         btnVoiceOption.setOnClickListener {
             closeAttachmentMenu()
-            toggleSpeechInput()
+            toggleAudioRecording()
         }
 
         // Close attachment menu if user scrolls or taps the chat list
