@@ -1,0 +1,779 @@
+{
+  "MAIN_ENTRANCE": {
+    "x": 500,
+    "y": 710,
+    "icon": "🍔",
+    "category": "entrance",
+    "label": "Main Entrance / Food Lobby"
+  },
+  "STAIRS_A_L1_L2": {
+    "x": 500,
+    "y": 620,
+    "icon": "🪜",
+    "category": "stairs",
+    "label": "Stairs A (L1-L2)"
+  },
+  "B_A_L1_C_ACT": {
+    "x": 400,
+    "y": 680,
+    "icon": "📚",
+    "category": "study",
+    "label": "C-ACT Study Hub"
+  },
+  "TOILET_BLOCK_A_L1": {
+    "x": 600,
+    "y": 680,
+    "icon": "🚻",
+    "category": "toilet",
+    "label": "Restroom Block A (L1)"
+  },
+  "CORRIDOR_A_L2": {
+    "x": 500,
+    "y": 650,
+    "icon": "🚶",
+    "category": "corridor",
+    "label": "Corridor A (L2)"
+  },
+  "STAIRS_A_L2_L3": {
+    "x": 500,
+    "y": 600,
+    "icon": "🪜",
+    "category": "stairs",
+    "label": "Stairs A (L2-L3)"
+  },
+  "BRIDGE_A_TO_B_L2": {
+    "x": 370,
+    "y": 570,
+    "icon": "🌉",
+    "category": "bridge",
+    "label": "Level 2 Bridge to Block B"
+  },
+  "B_A_L2_DISCUSSION_ROOM": {
+    "x": 420,
+    "y": 670,
+    "icon": "💬",
+    "category": "meeting",
+    "label": "Discussion Room"
+  },
+  "TOILET_BLOCK_A_L2": {
+    "x": 580,
+    "y": 670,
+    "icon": "🚻",
+    "category": "toilet",
+    "label": "Restroom Block A (L2)"
+  },
+  "CORRIDOR_A_L3": {
+    "x": 500,
+    "y": 650,
+    "icon": "🚶",
+    "category": "corridor",
+    "label": "Corridor A (L3)"
+  },
+  "STAIRS_A_L3_L4": {
+    "x": 500,
+    "y": 600,
+    "icon": "🪜",
+    "category": "stairs",
+    "label": "Stairs A (L3-L4)"
+  },
+  "B_A_L3_ADMINISTRATIVE_DISCUSSION_ROOM": {
+    "x": 420,
+    "y": 670,
+    "icon": "💼",
+    "category": "admin",
+    "label": "Admin Discussion Room"
+  },
+  "CORRIDOR_A_L4": {
+    "x": 500,
+    "y": 650,
+    "icon": "🚶",
+    "category": "corridor",
+    "label": "Corridor A (L4)"
+  },
+  "B_A_L4_SEMINAR_HALL": {
+    "x": 390,
+    "y": 670,
+    "icon": "🏛️",
+    "category": "hall",
+    "label": "Dewan Seminar / Hall"
+  },
+  "B_A_L4_MAIN_MEETING_ROOM": {
+    "x": 610,
+    "y": 670,
+    "icon": "👥",
+    "category": "meeting",
+    "label": "Main Meeting Room"
+  },
+  "CORRIDOR_B_L1": {
+    "x": 240,
+    "y": 480,
+    "icon": "🚶",
+    "category": "corridor",
+    "label": "Corridor B (L1)"
+  },
+  "STAIRS_B_L1_L2": {
+    "x": 240,
+    "y": 410,
+    "icon": "🪜",
+    "category": "stairs",
+    "label": "Stairs B (L1-L2)"
+  },
+  "B_B_L1_PROGRAMMING_LAB_1": {
+    "x": 130,
+    "y": 460,
+    "icon": "💻",
+    "category": "lab",
+    "label": "Programming Lab 1"
+  },
+  "B_B_L1_PROGRAMMING_LAB_2": {
+    "x": 130,
+    "y": 520,
+    "icon": "💻",
+    "category": "lab",
+    "label": "Programming Lab 2"
+  },
+  "B_B_L1_LECTURE_ROOM_6": {
+    "x": 220,
+    "y": 550,
+    "icon": "🎓",
+    "category": "lecture",
+    "label": "Lecture Room 6"
+  },
+  "B_B_L1_LECTURE_ROOM_7": {
+    "x": 310,
+    "y": 550,
+    "icon": "🎓",
+    "category": "lecture",
+    "label": "Lecture Room 7"
+  },
+  "B_B_L1_VIVA_ROOM": {
+    "x": 310,
+    "y": 480,
+    "icon": "🎤",
+    "category": "meeting",
+    "label": "VIVA Room"
+  },
+  "B_B_L1_BIOCORE_LAB": {
+    "x": 130,
+    "y": 400,
+    "icon": "🧬",
+    "category": "lab",
+    "label": "BIOCORE Lab"
+  },
+  "B_B_L1_OPTIMASS_RESEARCH_LAB": {
+    "x": 310,
+    "y": 420,
+    "icon": "🔬",
+    "category": "lab",
+    "label": "OPTIMASS Research Lab"
+  },
+  "TOILET_BLOCK_B_L1": {
+    "x": 240,
+    "y": 360,
+    "icon": "🚻",
+    "category": "toilet",
+    "label": "Restroom Block B (L1)"
+  },
+  "CORRIDOR_B_L2": {
+    "x": 240,
+    "y": 480,
+    "icon": "🚶",
+    "category": "corridor",
+    "label": "Corridor B (L2)"
+  },
+  "STAIRS_B_L2_L3": {
+    "x": 240,
+    "y": 410,
+    "icon": "🪜",
+    "category": "stairs",
+    "label": "Stairs B (L2-L3)"
+  },
+  "B_B_L2_AI_LAB_1": {
+    "x": 130,
+    "y": 460,
+    "icon": "🤖",
+    "category": "lab",
+    "label": "AI Lab 1 (FAIX)"
+  },
+  "B_B_L2_AI_LAB_2": {
+    "x": 130,
+    "y": 520,
+    "icon": "🤖",
+    "category": "lab",
+    "label": "AI Lab 2"
+  },
+  "B_B_L2_AI_LAB_3": {
+    "x": 310,
+    "y": 460,
+    "icon": "🤖",
+    "category": "lab",
+    "label": "AI Lab 3 (FAIX)"
+  },
+  "B_B_L2_AI_LAB_4": {
+    "x": 310,
+    "y": 520,
+    "icon": "🤖",
+    "category": "lab",
+    "label": "AI Lab 4 (FAIX)"
+  },
+  "B_B_L2_RECAP_ROOM": {
+    "x": 130,
+    "y": 400,
+    "icon": "📹",
+    "category": "studio",
+    "label": "ReCap Room"
+  },
+  "TOILET_BLOCK_B_L2": {
+    "x": 240,
+    "y": 360,
+    "icon": "🚻",
+    "category": "toilet",
+    "label": "Restroom Block B (L2)"
+  },
+  "CORRIDOR_B_L3": {
+    "x": 240,
+    "y": 480,
+    "icon": "🚶",
+    "category": "corridor",
+    "label": "Corridor B (L3)"
+  },
+  "STAIRS_B_L3_L4": {
+    "x": 240,
+    "y": 410,
+    "icon": "🪜",
+    "category": "stairs",
+    "label": "Stairs B (L3-L4)"
+  },
+  "B_B_L3_ROBOTICS_LAB": {
+    "x": 130,
+    "y": 460,
+    "icon": "🦾",
+    "category": "lab",
+    "label": "Robotics Lab (FAIX)"
+  },
+  "B_B_L3_SKK_LAB": {
+    "x": 130,
+    "y": 520,
+    "icon": "⚙️",
+    "category": "lab",
+    "label": "SKK Lab"
+  },
+  "B_B_L3_BITI_WORKSHOP": {
+    "x": 310,
+    "y": 460,
+    "icon": "🛠️",
+    "category": "workshop",
+    "label": "BITI Workshop (FAIX)"
+  },
+  "B_B_L3_CMERP_LAB": {
+    "x": 310,
+    "y": 520,
+    "icon": "🔬",
+    "category": "lab",
+    "label": "CMERP Lab"
+  },
+  "B_B_L3_LECTURE_ROOM_15": {
+    "x": 240,
+    "y": 550,
+    "icon": "🎓",
+    "category": "lecture",
+    "label": "Lecture Room 15"
+  },
+  "B_B_L3_IS3_RESEARCH_LAB": {
+    "x": 130,
+    "y": 400,
+    "icon": "🛡️",
+    "category": "lab",
+    "label": "IS3 Research Lab"
+  },
+  "CORRIDOR_B_L4": {
+    "x": 240,
+    "y": 480,
+    "icon": "🚶",
+    "category": "corridor",
+    "label": "Corridor B (L4)"
+  },
+  "B_B_L4_LECTURE_ROOM_16": {
+    "x": 130,
+    "y": 480,
+    "icon": "🎓",
+    "category": "lecture",
+    "label": "Lecture Room 16"
+  },
+  "B_B_L4_INFORSNET_RESEARCH_LAB": {
+    "x": 310,
+    "y": 480,
+    "icon": "🌐",
+    "category": "lab",
+    "label": "INFORSNET Research Lab"
+  },
+  "CORRIDOR_C_L1": {
+    "x": 240,
+    "y": 210,
+    "icon": "🚶",
+    "category": "corridor",
+    "label": "Corridor C (L1)"
+  },
+  "STAIRS_C_L1_L2": {
+    "x": 240,
+    "y": 140,
+    "icon": "🪜",
+    "category": "stairs",
+    "label": "Stairs C (L1-L2)"
+  },
+  "B_C_L1_SOFTWARE_ENGINEERING_LAB_1": {
+    "x": 130,
+    "y": 170,
+    "icon": "💻",
+    "category": "lab",
+    "label": "Software Engineering Lab 1"
+  },
+  "B_C_L1_SOFTWARE_ENGINEERING_LAB_2": {
+    "x": 130,
+    "y": 230,
+    "icon": "💻",
+    "category": "lab",
+    "label": "Software Engineering Lab 2"
+  },
+  "B_C_L1_SOFTWARE_ENGINEERING_LAB_3": {
+    "x": 130,
+    "y": 290,
+    "icon": "💻",
+    "category": "lab",
+    "label": "Software Engineering Lab 3"
+  },
+  "B_C_L1_LECTURE_ROOM_1": {
+    "x": 320,
+    "y": 150,
+    "icon": "🎓",
+    "category": "lecture",
+    "label": "Lecture Room 1"
+  },
+  "B_C_L1_LECTURE_ROOM_2": {
+    "x": 320,
+    "y": 190,
+    "icon": "🎓",
+    "category": "lecture",
+    "label": "Lecture Room 2"
+  },
+  "B_C_L1_LECTURE_ROOM_3": {
+    "x": 320,
+    "y": 230,
+    "icon": "🎓",
+    "category": "lecture",
+    "label": "Lecture Room 3"
+  },
+  "B_C_L1_LECTURE_ROOM_4": {
+    "x": 320,
+    "y": 270,
+    "icon": "🎓",
+    "category": "lecture",
+    "label": "Lecture Room 4"
+  },
+  "B_C_L1_LECTURE_ROOM_5": {
+    "x": 320,
+    "y": 310,
+    "icon": "🎓",
+    "category": "lecture",
+    "label": "Lecture Room 5"
+  },
+  "TOILET_BLOCK_C_L1": {
+    "x": 240,
+    "y": 90,
+    "icon": "🚻",
+    "category": "toilet",
+    "label": "Restroom Block C (L1)"
+  },
+  "CORRIDOR_C_L2": {
+    "x": 240,
+    "y": 210,
+    "icon": "🚶",
+    "category": "corridor",
+    "label": "Corridor C (L2)"
+  },
+  "STAIRS_C_L2_L3": {
+    "x": 240,
+    "y": 140,
+    "icon": "🪜",
+    "category": "stairs",
+    "label": "Stairs C (L2-L3)"
+  },
+  "B_C_L2_DATABASE_LAB_1": {
+    "x": 130,
+    "y": 170,
+    "icon": "🗄️",
+    "category": "lab",
+    "label": "Database Lab 1"
+  },
+  "B_C_L2_DATABASE_LAB_2": {
+    "x": 130,
+    "y": 230,
+    "icon": "🗄️",
+    "category": "lab",
+    "label": "Database Lab 2"
+  },
+  "B_C_L2_DATABASE_LAB_3": {
+    "x": 130,
+    "y": 290,
+    "icon": "🗄️",
+    "category": "lab",
+    "label": "Database Lab 3"
+  },
+  "B_C_L2_NETWORK_LAB_2": {
+    "x": 320,
+    "y": 180,
+    "icon": "🔌",
+    "category": "lab",
+    "label": "Network Lab 2"
+  },
+  "B_C_L2_C_ACT_ROOM": {
+    "x": 320,
+    "y": 240,
+    "icon": "📚",
+    "category": "study",
+    "label": "C-Act Room"
+  },
+  "TOILET_BLOCK_C_L2": {
+    "x": 240,
+    "y": 90,
+    "icon": "🚻",
+    "category": "toilet",
+    "label": "Restroom Block C (L2)"
+  },
+  "CORRIDOR_C_L3": {
+    "x": 240,
+    "y": 210,
+    "icon": "🚶",
+    "category": "corridor",
+    "label": "Corridor C (L3)"
+  },
+  "STAIRS_C_L3_L4": {
+    "x": 240,
+    "y": 140,
+    "icon": "🪜",
+    "category": "stairs",
+    "label": "Stairs C (L3-L4)"
+  },
+  "B_C_L3_SYSTEMS_LAB": {
+    "x": 130,
+    "y": 180,
+    "icon": "🖥️",
+    "category": "lab",
+    "label": "Systems Lab"
+  },
+  "B_C_L3_SYSTEMS_AND_HARDWARE_LAB": {
+    "x": 130,
+    "y": 250,
+    "icon": "🎛️",
+    "category": "lab",
+    "label": "Systems & Hardware Lab"
+  },
+  "B_C_L3_NETWORK_LAB_1": {
+    "x": 320,
+    "y": 180,
+    "icon": "🔌",
+    "category": "lab",
+    "label": "Network Lab 1"
+  },
+  "B_C_L3_EXECUTIVE_LAB": {
+    "x": 320,
+    "y": 240,
+    "icon": "💼",
+    "category": "lab",
+    "label": "Executive Lab"
+  },
+  "B_C_L3_STUDENTS_WORKSHOP": {
+    "x": 240,
+    "y": 290,
+    "icon": "🛠️",
+    "category": "workshop",
+    "label": "Students' Workshop"
+  },
+  "CORRIDOR_C_L4": {
+    "x": 240,
+    "y": 210,
+    "icon": "🚶",
+    "category": "corridor",
+    "label": "Corridor C (L4)"
+  },
+  "B_C_L4_PROGRAMMING_LAB_3": {
+    "x": 130,
+    "y": 200,
+    "icon": "💻",
+    "category": "lab",
+    "label": "Programming Lab 3"
+  },
+  "B_C_L4_PROGRAMMING_LAB_4": {
+    "x": 320,
+    "y": 200,
+    "icon": "💻",
+    "category": "lab",
+    "label": "Programming Lab 4"
+  },
+  "B_C_L4_BITD_WORKSHOP": {
+    "x": 240,
+    "y": 270,
+    "icon": "🛠️",
+    "category": "workshop",
+    "label": "BITD Workshop"
+  },
+  "CORRIDOR_E_L1": {
+    "x": 760,
+    "y": 480,
+    "icon": "🚶",
+    "category": "corridor",
+    "label": "Corridor E (L1)"
+  },
+  "STAIRS_E_L1_L2": {
+    "x": 760,
+    "y": 410,
+    "icon": "🪜",
+    "category": "stairs",
+    "label": "Stairs E (L1-L2)"
+  },
+  "B_E_L1_GAME_ARENA": {
+    "x": 870,
+    "y": 460,
+    "icon": "🎮",
+    "category": "arena",
+    "label": "Game Arena / Esports"
+  },
+  "B_E_L1_LECTURE_ROOM_13": {
+    "x": 870,
+    "y": 520,
+    "icon": "🎓",
+    "category": "lecture",
+    "label": "Lecture Room 13"
+  },
+  "B_E_L1_MTDS_LAB": {
+    "x": 670,
+    "y": 460,
+    "icon": "📱",
+    "category": "lab",
+    "label": "MTDS Lab (FAIX)"
+  },
+  "TOILET_BLOCK_E_L1": {
+    "x": 760,
+    "y": 360,
+    "icon": "🚻",
+    "category": "toilet",
+    "label": "Restroom Block E (L1)"
+  },
+  "CORRIDOR_E_L2": {
+    "x": 760,
+    "y": 480,
+    "icon": "🚶",
+    "category": "corridor",
+    "label": "Corridor E (L2)"
+  },
+  "STAIRS_E_L2_L3": {
+    "x": 760,
+    "y": 410,
+    "icon": "🪜",
+    "category": "stairs",
+    "label": "Stairs E (L2-L3)"
+  },
+  "B_E_L2_CYBERSECURITY_COMPETENCE_CENTER": {
+    "x": 870,
+    "y": 460,
+    "icon": "🔒",
+    "category": "center",
+    "label": "Cybersecurity Competence Center"
+  },
+  "B_E_L2_CCNA_CCNP_LAB": {
+    "x": 870,
+    "y": 520,
+    "icon": "🌐",
+    "category": "lab",
+    "label": "CCNA & CCNP Lab"
+  },
+  "B_E_L2_FIBER_OPTIC_LAB": {
+    "x": 670,
+    "y": 460,
+    "icon": "💡",
+    "category": "lab",
+    "label": "Fiber Optic Lab"
+  },
+  "TOILET_BLOCK_E_L2": {
+    "x": 760,
+    "y": 360,
+    "icon": "🚻",
+    "category": "toilet",
+    "label": "Restroom Block E (L2)"
+  },
+  "CORRIDOR_E_L3": {
+    "x": 760,
+    "y": 480,
+    "icon": "🚶",
+    "category": "corridor",
+    "label": "Corridor E (L3)"
+  },
+  "B_E_L3_WIRELESS_LAB": {
+    "x": 870,
+    "y": 460,
+    "icon": "📶",
+    "category": "lab",
+    "label": "Wireless Lab"
+  },
+  "B_E_L3_SECURITY_LAB_2": {
+    "x": 870,
+    "y": 520,
+    "icon": "🔐",
+    "category": "lab",
+    "label": "Security Lab 2 (FAIX)"
+  },
+  "B_E_L3_CLOUD_COMPUTING_LAB": {
+    "x": 670,
+    "y": 460,
+    "icon": "☁️",
+    "category": "lab",
+    "label": "Cloud Computing Lab"
+  },
+  "CORRIDOR_D_L1": {
+    "x": 760,
+    "y": 210,
+    "icon": "🚶",
+    "category": "corridor",
+    "label": "Corridor D (L1)"
+  },
+  "STAIRS_D_L1_L2": {
+    "x": 760,
+    "y": 140,
+    "icon": "🪜",
+    "category": "stairs",
+    "label": "Stairs D (L1-L2)"
+  },
+  "B_D_L1_METAVERSE_STUDIO": {
+    "x": 870,
+    "y": 180,
+    "icon": "🥽",
+    "category": "studio",
+    "label": "Metaverse Studio"
+  },
+  "B_D_L1_LECTURE_ROOM_14": {
+    "x": 870,
+    "y": 240,
+    "icon": "🎓",
+    "category": "lecture",
+    "label": "Lecture Room 14"
+  },
+  "B_D_L1_STUDENTS_COMMON_ROOM": {
+    "x": 670,
+    "y": 200,
+    "icon": "🛋️",
+    "category": "lounge",
+    "label": "Students' Common Room"
+  },
+  "TOILET_BLOCK_D_L1": {
+    "x": 760,
+    "y": 90,
+    "icon": "🚻",
+    "category": "toilet",
+    "label": "Restroom Block D (L1)"
+  },
+  "CORRIDOR_D_L2": {
+    "x": 760,
+    "y": 210,
+    "icon": "🚶",
+    "category": "corridor",
+    "label": "Corridor D (L2)"
+  },
+  "STAIRS_D_L2_L3": {
+    "x": 760,
+    "y": 140,
+    "icon": "🪜",
+    "category": "stairs",
+    "label": "Stairs D (L2-L3)"
+  },
+  "B_D_L2_MULTIMEDIA_LAB_1": {
+    "x": 870,
+    "y": 180,
+    "icon": "🎨",
+    "category": "lab",
+    "label": "Multimedia Lab 1"
+  },
+  "B_D_L2_MULTIMEDIA_LAB_2": {
+    "x": 870,
+    "y": 240,
+    "icon": "🎨",
+    "category": "lab",
+    "label": "Multimedia Lab 2"
+  },
+  "B_D_L2_COMPUTER_GAMES_LAB": {
+    "x": 670,
+    "y": 180,
+    "icon": "🕹️",
+    "category": "lab",
+    "label": "Computer Games Lab"
+  },
+  "B_D_L2_FTMK_CLEAR_ROOM": {
+    "x": 670,
+    "y": 240,
+    "icon": "✨",
+    "category": "study",
+    "label": "FTMK CLeaR Room"
+  },
+  "CORRIDOR_D_L3": {
+    "x": 760,
+    "y": 210,
+    "icon": "🚶",
+    "category": "corridor",
+    "label": "Corridor D (L3)"
+  },
+  "B_D_L3_MULTIMEDIA_LAB_3": {
+    "x": 870,
+    "y": 170,
+    "icon": "🎨",
+    "category": "lab",
+    "label": "Multimedia Lab 3"
+  },
+  "B_D_L3_MULTIMEDIA_LAB_4": {
+    "x": 870,
+    "y": 220,
+    "icon": "🎨",
+    "category": "lab",
+    "label": "Multimedia Lab 4"
+  },
+  "B_D_L3_VIRTUAL_REALITY_LAB": {
+    "x": 670,
+    "y": 170,
+    "icon": "🕶️",
+    "category": "lab",
+    "label": "Virtual Reality Lab"
+  },
+  "B_D_L3_MINI_THEATRE": {
+    "x": 760,
+    "y": 280,
+    "icon": "🎭",
+    "category": "theatre",
+    "label": "Mini Theatre"
+  },
+  "B_D_L3_AUDIO_RECORDING_ROOM_1": {
+    "x": 670,
+    "y": 220,
+    "icon": "🎙️",
+    "category": "studio",
+    "label": "Audio Recording Room 1"
+  },
+  "B_D_L3_AUDIO_RECORDING_ROOM_2": {
+    "x": 670,
+    "y": 260,
+    "icon": "🎙️",
+    "category": "studio",
+    "label": "Audio Recording Room 2"
+  },
+  "B_D_L3_SHOOTING_STUDIO": {
+    "x": 870,
+    "y": 270,
+    "icon": "🎬",
+    "category": "studio",
+    "label": "Shooting Studio"
+  },
+  "TOILET_BLOCK_D_L3": {
+    "x": 760,
+    "y": 90,
+    "icon": "🚻",
+    "category": "toilet",
+    "label": "Restroom Block D (L3)"
+  }
+}

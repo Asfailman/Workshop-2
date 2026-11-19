@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0F172A">
+
+    <!-- 3D Map Viewport -->
+    <org.maplibre.android.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Top Info Bar: Target Room Status -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardTopInfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        app:cardCornerRadius="12dp"
+        app:cardBackgroundColor="#E60F172A"
+        app:cardElevation="6dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/cardFloorControls"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tvFloorBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#0284C7"
+                    android:paddingHorizontal="6dp"
+                    android:paddingVertical="2dp"
+                    android:text="ARAS 1"
+                    android:textColor="#FFFFFF"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvSelectedTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Select a destination"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvSelectedSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:text="Corridor pathfinding active"
+                android:textColor="#94A3B8"
+                android:textSize="11sp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Floor Controls (A4 to A1 Stack) -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardFloorControls"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        app:cardCornerRadius="12dp"
+        app:cardBackgroundColor="#F20F172A"
+        app:cardElevation="6dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="4dp">
+
+            <Button
+                android:id="@+id/btnFloor4"
+                android:layout_width="48dp"
+                android:layout_height="40dp"
+                android:text="A4"
+                android:textSize="12sp"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:textColor="#CBD5E1"/>
+
+            <Button
+                android:id="@+id/btnFloor3"
+                android:layout_width="48dp"
+                android:layout_height="40dp"
+                android:text="A3"
+                android:textSize="12sp"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:textColor="#CBD5E1"/>
+
+            <Button
+                android:id="@+id/btnFloor2"
+                android:layout_width="48dp"
+                android:layout_height="40dp"
+                android:text="A2"
+                android:textSize="12sp"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:textColor="#CBD5E1"/>
+
+            <Button
+                android:id="@+id/btnFloor1"
+                android:layout_width="48dp"
+                android:layout_height="40dp"
+                android:text="A1"
+                android:textSize="12sp"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+                android:backgroundTint="#0284C7"
+                android:textColor="#FFFFFF"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

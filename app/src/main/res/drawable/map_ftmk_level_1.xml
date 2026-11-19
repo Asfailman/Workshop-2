@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="400dp"
+    android:height="300dp"
+    android:viewportWidth="400"
+    android:viewportHeight="300">
+    <!-- FTMK Level 1 Background -->
+    <path
+        android:fillColor="#FDFBF7"
+        android:pathData="M0,0h400v300h-400z" />
+
+    <!-- Title Text Header -->
+    <path
+        android:fillColor="#0F172A"
+        android:pathData="M15,20h370v2h-370z" />
+
+    <!-- Arch Corridor (Tan Background) -->
+    <path
+        android:fillColor="#F5EFE6"
+        android:pathData="M 180,40 L 220,40 L 370,250 L 330,280 L 200,90 L 70,280 L 30,250 Z" />
+
+    <!-- BLOK A (Blue - Top Center) -->
+    <path
+        android:fillColor="#1E40AF"
+        android:pathData="M170,45h60v35h-60z" />
+
+    <!-- BLOK C1 (Red Wing - Left Outer) -->
+    <path
+        android:fillColor="#B91C1C"
+        android:pathData="M45,210 L125,100 L145,115 L65,225 Z" />
+
+    <!-- BLOK C2 (Teal Wing - Left Inner) -->
+    <path
+        android:fillColor="#0F766E"
+        android:pathData="M100,240 L160,150 L180,165 L120,255 Z" />
+
+    <!-- BLOK E1 (Purple Wing - Right Outer) -->
+    <path
+        android:fillColor="#6B21A8"
+        android:pathData="M275,100 L355,210 L335,225 L255,115 Z" />
+
+    <!-- BLOK E2 (Olive Wing - Right Inner) -->
+    <path
+        android:fillColor="#854D0E"
+        android:pathData="M240,150 L300,240 L280,255 L220,165 Z" />
+
+</vector>
