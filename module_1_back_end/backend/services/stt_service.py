@@ -221,6 +221,18 @@ class STTService:
             if matches:
                 return matches[0]
 
+        # Auto-download base model on first startup if missing
+        if model_key == "base":
+            try:
+                from download_models import download_file_with_progress, MODELS
+                dest = os.path.join(candidate_dirs[0], target_file)
+                os.makedirs(candidate_dirs[0], exist_ok=True)
+                print(f"[STTService] '{target_file}' not found. Auto-downloading fast Whisper base model (~148MB)...")
+                if download_file_with_progress(MODELS["base"]["url"], dest, MODELS["base"]["size_mb"]):
+                    return dest
+            except Exception as e:
+                print(f"[STTService] Auto-download note: {e}. Run 'python download_models.py' to download speech models.")
+
         return None
 
     def _get_model(self, model_key: str = "base"):

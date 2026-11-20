@@ -131,7 +131,9 @@ recordings/
 # ==========================================
 # AI Models, Weights & Checkpoints
 # ==========================================
-models/
+models/*
+!models/.gitkeep
+!models/README.md
 model_cache/
 vosk-model*/
 *.pt
