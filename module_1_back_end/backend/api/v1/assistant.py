@@ -1,3 +1,4 @@
+import os
 from typing import Optional
 from fastapi import APIRouter, File, Form, HTTPException, UploadFile, status
 from backend.schemas.assistant import (
