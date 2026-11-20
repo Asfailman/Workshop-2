@@ -13,8 +13,19 @@ from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from backend.api.v1.router import api_router
+from backend.services.stt_service import stt_service
 
 app = FastAPI(title="Module 1 Backend", version="0.0.0")
+
+@app.on_event("startup")
+async def startup_event():
+    # Pre-warm local Whisper STT model in memory so first query has zero cold-start delay
+    try:
+        print("[Startup] Pre-loading Whisper base model into memory...")
+        stt_service._get_model("base")
+        print("[Startup] Whisper model warmed up and ready!")
+    except Exception as e:
+        print(f"[Startup] Note on Whisper model pre-load: {e}")
 
 # Enable CORS for frontend / Android connection
 app.add_middleware(

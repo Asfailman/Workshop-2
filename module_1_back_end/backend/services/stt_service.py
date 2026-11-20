@@ -30,6 +30,11 @@ try:
 except Exception:
     vosk = None
 
+try:
+    import numpy as np
+except ImportError:
+    np = None
+
 # Import CampusNLP preprocessor & entity resolver
 try:
     from AI.campus_nlp import CampusNLP
@@ -109,7 +114,8 @@ def _ensure_16k_mono_wav(input_wav_path: str, output_wav_path: str) -> Tuple[str
     duration_sec = 0.0
     try:
         import wave
-        import numpy as np
+        if np is None:
+            return input_wav_path, duration_sec
 
         with wave.open(input_wav_path, "rb") as wf:
             n_channels = wf.getnchannels()

@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity() {
 
     private val micPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
         if (granted) {
-            toggleAudioRecording()
+            toggleSpeechInput()
         } else {
             Toast.makeText(this, "Microphone permission required for voice input", Toast.LENGTH_SHORT).show()
         }
@@ -214,10 +214,10 @@ class MainActivity : AppCompatActivity() {
             putExtra(RecognizerIntent.EXTRA_LANGUAGE, "en-MY")
             putExtra("android.speech.extra.EXTRA_ADDITIONAL_LANGUAGES", arrayOf("en-MY", "ms-MY", "en-US"))
             putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 3)
-            // Extended silence windows so user is not cut off prematurely
-            putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS, 4000L)
-            putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS, 3000L)
-            putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_MINIMUM_LENGTH_MILLIS, 2000L)
+            // Snappy silence detection: finalizes speech in ~1.2s instead of waiting 4s
+            putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_COMPLETE_SILENCE_LENGTH_MILLIS, 1200L)
+            putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_POSSIBLY_COMPLETE_SILENCE_LENGTH_MILLIS, 1000L)
+            putExtra(RecognizerIntent.EXTRA_SPEECH_INPUT_MINIMUM_LENGTH_MILLIS, 1000L)
         }
 
         try {
@@ -243,6 +243,11 @@ class MainActivity : AppCompatActivity() {
             updateMicUi(isListening = false)
             if (::etMessageInput.isInitialized) {
                 etMessageInput.hint = "Type or speak a message..."
+                val currentText = etMessageInput.text.toString().trim()
+                if (currentText.isNotEmpty()) {
+                    chatViewModel.sendMessage(currentText)
+                    etMessageInput.text.clear()
+                }
             }
         }
     }
